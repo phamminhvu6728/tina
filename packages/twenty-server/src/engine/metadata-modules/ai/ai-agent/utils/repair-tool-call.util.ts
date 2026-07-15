@@ -7,12 +7,14 @@ import {
   type ToolSet,
   generateText,
 } from 'ai';
+import { isDefined } from 'twenty-shared/utils';
 import { type z } from 'zod';
 
 import { UsageOperationType } from 'src/engine/core-modules/usage/enums/usage-operation-type.enum';
 import { AiBillingService } from 'src/engine/metadata-modules/ai/ai-billing/services/ai-billing.service';
 import { extractCacheCreationTokensFromSteps } from 'src/engine/metadata-modules/ai/ai-billing/utils/extract-cache-creation-tokens.util';
 import { AI_TELEMETRY_CONFIG } from 'src/engine/metadata-modules/ai/ai-models/constants/ai-telemetry.const';
+import { unwrapNestedToolArguments } from 'src/engine/metadata-modules/ai/ai-agent/utils/unwrap-nested-tool-arguments.util';
 
 type ToolCall = {
   type: 'tool-call';
@@ -27,6 +29,50 @@ type RepairToolCallBillingContext = {
   workspaceId: string;
   userWorkspaceId: string | null;
   operationType: UsageOperationType;
+};
+
+const parseToolCallInput = (input: string): Record<string, unknown> => {
+  try {
+    const parsedInput = JSON.parse(input);
+
+    if (
+      typeof parsedInput === 'object' &&
+      parsedInput !== null &&
+      !Array.isArray(parsedInput)
+    ) {
+      return parsedInput as Record<string, unknown>;
+    }
+  } catch {
+    // Model sometimes emits non-JSON tool input; fall back to empty args.
+  }
+
+  return {};
+};
+
+const tryUnwrapInvalidToolInput = ({
+  toolCall,
+}: {
+  toolCall: ToolCall;
+  error: Error;
+}): ToolCall | null => {
+  const parsedInput = parseToolCallInput(toolCall.input);
+  const unwrappedInput = unwrapNestedToolArguments(parsedInput);
+
+  if (
+    unwrappedInput === parsedInput ||
+    typeof unwrappedInput !== 'object' ||
+    unwrappedInput === null ||
+    Array.isArray(unwrappedInput)
+  ) {
+    return null;
+  }
+
+  return {
+    type: 'tool-call',
+    toolCallId: toolCall.toolCallId,
+    toolName: toolCall.toolName,
+    input: JSON.stringify(unwrappedInput),
+  };
 };
 
 export const repairToolCall = async ({
@@ -44,9 +90,31 @@ export const repairToolCall = async ({
   model: LanguageModel;
   billingContext?: RepairToolCallBillingContext;
 }): Promise<ToolCall | null> => {
-  // Don't attempt to fix invalid tool names
+  // Remap unknown direct tool calls through execute_tool when available so the
+  // stream can continue instead of aborting on NoSuchToolError.
   if (NoSuchToolError.isInstance(error)) {
+    if (
+      toolCall.toolName !== 'execute_tool' &&
+      isDefined(tools.execute_tool)
+    ) {
+      return {
+        type: 'tool-call',
+        toolCallId: toolCall.toolCallId,
+        toolName: 'execute_tool',
+        input: JSON.stringify({
+          toolName: toolCall.toolName,
+          arguments: parseToolCallInput(toolCall.input),
+        }),
+      };
+    }
+
     return null;
+  }
+
+  const unwrappedToolCall = tryUnwrapInvalidToolInput({ toolCall, error });
+
+  if (isDefined(unwrappedToolCall)) {
+    return unwrappedToolCall;
   }
 
   const tool = tools[toolCall.toolName];

@@ -1389,5 +1389,91 @@
         "supportsReasoning": true
       }
     ]
+  },
+  "openrouter": {
+    "npm": "@ai-sdk/openai-compatible",
+    "name": "openrouter",
+    "label": "OpenRouter",
+    "baseUrl": "https://openrouter.ai/api/v1",
+    "apiKey": "{{OPENROUTER_API_KEY}}",
+    "models": [
+      {
+        "name": "deepseek/deepseek-v4-pro",
+        "label": "DeepSeek V4 Pro",
+        "inputCostPerMillionTokens": 0.3,
+        "outputCostPerMillionTokens": 1.2,
+        "contextWindowTokens": 163840,
+        "maxOutputTokens": 8192,
+        "supportsReasoning": true
+      },
+      {
+        "name": "tencent/hy3:free",
+        "label": "Tencent Hy3 (Free)",
+        "inputCostPerMillionTokens": 0,
+        "outputCostPerMillionTokens": 0,
+        "contextWindowTokens": 262000,
+        "maxOutputTokens": 8192
+      },
+      {
+        "name": "tencent/hy3-preview",
+        "label": "Tencent Hy3 Preview",
+        "inputCostPerMillionTokens": 0.2,
+        "outputCostPerMillionTokens": 0.8,
+        "contextWindowTokens": 262000,
+        "maxOutputTokens": 8192,
+        "supportsReasoning": true
+      }
+    ]
+  },
+  "groq": {
+    "npm": "@ai-sdk/openai-compatible",
+    "name": "groq",
+    "label": "Groq",
+    "baseUrl": "https://api.groq.com/openai/v1",
+    "apiKey": "{{GROQ_API_KEY}}",
+    "models": [
+      {
+        "name": "openai/gpt-oss-120b",
+        "label": "GPT-OSS 120B",
+        "inputCostPerMillionTokens": 0.15,
+        "outputCostPerMillionTokens": 0.6,
+        "contextWindowTokens": 131072,
+        "maxOutputTokens": 65536,
+        "supportsReasoning": true
+      },
+      {
+        "name": "openai/gpt-oss-20b",
+        "label": "GPT-OSS 20B",
+        "inputCostPerMillionTokens": 0.1,
+        "outputCostPerMillionTokens": 0.5,
+        "contextWindowTokens": 131072,
+        "maxOutputTokens": 65536,
+        "supportsReasoning": true
+      },
+      {
+        "name": "meta-llama/llama-4-scout-17b-16e-instruct",
+        "label": "Llama 4 Scout (Tool Use)",
+        "inputCostPerMillionTokens": 0.11,
+        "outputCostPerMillionTokens": 0.34,
+        "contextWindowTokens": 131072,
+        "maxOutputTokens": 8192
+      },
+      {
+        "name": "llama-3.3-70b-versatile",
+        "label": "Llama 3.3 70B",
+        "inputCostPerMillionTokens": 0.59,
+        "outputCostPerMillionTokens": 0.79,
+        "contextWindowTokens": 128000,
+        "maxOutputTokens": 32768
+      },
+      {
+        "name": "llama-3.1-8b-instant",
+        "label": "Llama 3.1 8B Instant",
+        "inputCostPerMillionTokens": 0.05,
+        "outputCostPerMillionTokens": 0.08,
+        "contextWindowTokens": 128000,
+        "maxOutputTokens": 8192
+      }
+    ]
   }
 }

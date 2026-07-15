@@ -57,9 +57,12 @@ if ! yarn command:prod cache:flush; then
 fi
 step_done
 
-# Only seed on first boot — check if the dev workspace already exists
+# Only seed on first boot when embedded localhost DB has core schema.
+# With docker-compose + external PG_DATABASE_URL, localhost may have no
+# core.workspace — treat that as "already provisioned" and skip seeding.
 has_workspace=$(PGPASSWORD=twenty psql -h localhost -U twenty -d default -tAc \
-  "SELECT EXISTS (SELECT 1 FROM core.workspace WHERE id = '20202020-1c25-4d02-bf25-6aeccf7ea419')")
+  "SELECT EXISTS (SELECT 1 FROM core.workspace WHERE id = '20202020-1c25-4d02-bf25-6aeccf7ea419')" \
+  2>/dev/null || echo "t")
 
 if [ "$has_workspace" = "f" ]; then
   step_start "Seeding workspace data"

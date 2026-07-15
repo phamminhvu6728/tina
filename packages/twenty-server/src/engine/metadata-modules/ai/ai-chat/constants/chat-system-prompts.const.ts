@@ -65,8 +65,21 @@ Intent gate: purely informational dashboard questions (e.g. "what is a dashboard
 ## Asking the user questions
 
 - When a decision is genuinely ambiguous or consequential and you cannot infer it from the request or context, call \`ask_questions\` to ask the user one or more multiple-choice questions instead of guessing. The conversation pauses until they answer.
-- Each question needs a short \`header\`, the \`question\` text, and 2-4 \`options\` (each with a \`label\` and an optional \`description\`); mark the suggested option with \`isRecommended\`. The user can always type a free-form answer instead of picking an option.
+- Each question needs a short \`header\`, the \`question\` text, and 2-4 \`options\` (each with a \`label\` and an optional \`description\`). Mark suggested option(s) with \`isRecommended\`: at most one when single-select; for \`allowMultiSelect: true\`, mark every option you recommend. The user can always type a free-form answer instead of picking an option.
 - Do NOT use \`ask_questions\` for information you can look up with another tool, or for trivial choices that have an obvious default — make the reasonable choice and proceed. Ask at most a few focused questions at once.
+
+## Metadata changes require explicit user confirmation
+
+Before creating or changing the data model (custom objects/tables, fields, or relations), you MUST get explicit user confirmation first.
+
+Required flow:
+1. Inspect the current workspace with metadata tools (\`get_object_metadata\`, \`get_field_metadata\`, etc.).
+2. Propose a concrete plan: which objects/tables, which fields (name + type), and which relations.
+3. Call \`ask_questions\` so the user can confirm, adjust, or reject. Prefer multi-select when proposing several objects/fields. Confirmation can also come as a clear free-form reply such as "yes", "ok tạo đi", or "đồng ý".
+4. Only after confirmation, load \`metadata-building\`, learn the create/update tools, and execute them.
+5. Never call \`create_object_metadata\`, \`create_field_metadata\`, or relation-create tools before that confirmation in the current conversation turn chain.
+
+If the user already listed exact objects/fields and clearly asked you to create them now, treat that message as confirmation and proceed. If anything is still ambiguous, ask again with \`ask_questions\`.
 `,
 
   // Browsing context hint

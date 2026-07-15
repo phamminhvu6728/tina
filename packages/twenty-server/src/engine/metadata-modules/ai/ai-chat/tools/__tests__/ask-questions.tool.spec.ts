@@ -77,7 +77,7 @@ describe('ask_questions tool', () => {
     expect(result.success).toBe(false);
   });
 
-  it('rejects more than one recommended option', () => {
+  it('rejects more than one recommended option on single-select', () => {
     const result = askQuestionsInputSchema.safeParse({
       questions: [
         {
@@ -92,6 +92,46 @@ describe('ask_questions tool', () => {
     });
 
     expect(result.success).toBe(false);
+  });
+
+  it('accepts multiple recommended options when allowMultiSelect is true', () => {
+    const result = askQuestionsInputSchema.safeParse({
+      questions: [
+        {
+          header: 'Tables',
+          question: 'Which tables should we create?',
+          allowMultiSelect: true,
+          options: [
+            { label: 'Services', isRecommended: true },
+            { label: 'Appointments', isRecommended: true },
+            { label: 'Packages', isRecommended: true },
+            { label: 'Products', isRecommended: false },
+          ],
+        },
+      ],
+    });
+
+    expect(result.success).toBe(true);
+  });
+
+  it('accepts payloads nested under arguments (OpenAI-compat wrappers)', () => {
+    const result = askQuestionsInputSchema.safeParse({
+      arguments: {
+        questions: [
+          {
+            header: 'Tables',
+            question: 'Which tables?',
+            allowMultiSelect: true,
+            options: [
+              { label: 'Services', isRecommended: true },
+              { label: 'Appointments', isRecommended: true },
+            ],
+          },
+        ],
+      },
+    });
+
+    expect(result.success).toBe(true);
   });
 
   it('accepts a valid multi-question payload', () => {
