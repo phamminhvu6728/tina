@@ -1,3 +1,4 @@
+import { TinaAiDisclaimer } from '@/ai/components/TinaAiDisclaimer';
 import { RecordPageSidePanelCommandMenu } from '@/command-menu-item/components/RecordPageSidePanelCommandMenu';
 import { RecordShowSidePanelOpenRecordButton } from '@/command-menu-item/components/RecordShowSidePanelOpenRecordButton';
 import { InformationBannerDeletedRecord } from '@/information-banner/components/deleted-record/InformationBannerDeletedRecord';
@@ -115,6 +116,7 @@ export const PageLayoutRecordPageRenderer = ({
 
         {isInSidePanel && (
           <SidePanelFooter
+            disclaimer={<TinaAiDisclaimer />}
             actions={[
               <RecordPageSidePanelCommandMenu key="options" />,
               ...(hasPinnedWidgetCommandMenuItems

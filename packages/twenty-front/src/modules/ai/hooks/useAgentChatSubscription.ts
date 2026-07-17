@@ -371,6 +371,10 @@ export const useAgentChatSubscription = (threadId: string | null) => {
           );
 
           resetStreamProcessing();
+          // Keep the user prompt visible: refetch persisted messages instead of
+          // letting stale fetchedMessages overwrite the optimistic user turn.
+          store.set(isAwaitingPersistedRefetchAtom, true);
+          dispatchBrowserEvent(AGENT_CHAT_REFETCH_MESSAGES_EVENT_NAME);
           store.set(isStreamingAtom, false);
           break;
         }

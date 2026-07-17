@@ -16,6 +16,7 @@ import { AiChatContextUsageButton } from '@/ai/components/internal/AiChatContext
 import { AiChatEditorFocusEffect } from '@/ai/components/internal/AiChatEditorFocusEffect';
 import { AiChatSkeletonLoader } from '@/ai/components/internal/AiChatSkeletonLoader';
 import { SendMessageButton } from '@/ai/components/internal/SendMessageButton';
+import { TinaAiDisclaimer } from '@/ai/components/TinaAiDisclaimer';
 import { useAgentChatModelId } from '@/ai/hooks/useAgentChatModelId';
 import { useAiChatEditor } from '@/ai/hooks/useAiChatEditor';
 import { useAiModelOptions } from '@/ai/hooks/useAiModelOptions';
@@ -197,6 +198,7 @@ export const AiChatEditorSection = () => {
             </StyledButtonsContainer>
           </StyledInputBox>
         )}
+        <TinaAiDisclaimer />
       </StyledInputArea>
     </>
   );

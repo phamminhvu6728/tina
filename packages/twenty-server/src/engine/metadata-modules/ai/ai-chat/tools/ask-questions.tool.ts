@@ -6,59 +6,74 @@ import {
   type AskQuestionsToolResult,
 } from 'twenty-shared/ai';
 
+import { unwrapNestedToolArguments } from 'src/engine/metadata-modules/ai/ai-agent/utils/unwrap-nested-tool-arguments.util';
+
 export { ASK_QUESTIONS_TOOL_NAME };
 
-export const askQuestionsInputSchema = z.object({
+const askQuestionsObjectSchema = z.object({
   questions: z
     .array(
-      z.object({
-        header: z
-          .string()
-          .describe(
-            'Very short label/tag for the question (≤ ~32 chars), e.g. "Email type".',
-          ),
-        question: z
-          .string()
-          .describe(
-            'The full question to ask the user. Be clear and specific.',
-          ),
-        options: z
-          .array(
-            z.object({
-              label: z
-                .string()
-                .describe('Concise option the user can pick (1-5 words).'),
-              description: z
-                .string()
-                .optional()
-                .describe(
-                  'Longer explanation shown when the user opens the option info icon.',
-                ),
-              isRecommended: z
-                .boolean()
-                .optional()
-                .describe('Mark the single suggested option, if any.'),
-            }),
-          )
-          .min(2)
-          .max(4)
-          .refine(
-            (options) =>
-              options.filter((option) => option.isRecommended === true)
-                .length <= 1,
-            { message: 'At most one option can be marked as recommended.' },
-          )
-          .describe('2-4 mutually exclusive options.'),
-        allowMultiSelect: z
-          .boolean()
-          .optional()
-          .describe('Allow the user to select more than one option.'),
-      }),
+      z
+        .object({
+          header: z
+            .string()
+            .describe(
+              'Very short label/tag for the question (≤ ~32 chars), e.g. "Email type".',
+            ),
+          question: z
+            .string()
+            .describe(
+              'The full question to ask the user. Be clear and specific.',
+            ),
+          options: z
+            .array(
+              z.object({
+                label: z
+                  .string()
+                  .describe('Concise option the user can pick (1-5 words).'),
+                description: z
+                  .string()
+                  .optional()
+                  .describe(
+                    'Longer explanation shown when the user opens the option info icon.',
+                  ),
+                isRecommended: z
+                  .boolean()
+                  .optional()
+                  .describe(
+                    'Suggested option(s). Single-select: at most one. Multi-select: mark every recommended choice.',
+                  ),
+              }),
+            )
+            .min(2)
+            .max(4)
+            .describe('2-4 options for the user to choose from.'),
+          allowMultiSelect: z
+            .boolean()
+            .optional()
+            .describe('Allow the user to select more than one option.'),
+        })
+        .refine(
+          (question) =>
+            question.allowMultiSelect === true ||
+            question.options.filter((option) => option.isRecommended === true)
+              .length <= 1,
+          {
+            message:
+              'At most one option can be marked as recommended unless allowMultiSelect is true.',
+            path: ['options'],
+          },
+        ),
     )
     .min(1)
     .max(4)
     .describe('One to four questions to ask the user.'),
 });
+
+export const askQuestionsInputSchema = z.preprocess(
+  unwrapNestedToolArguments,
+  askQuestionsObjectSchema,
+);
 
 type AskQuestionsPendingOutput = {
   success: true;

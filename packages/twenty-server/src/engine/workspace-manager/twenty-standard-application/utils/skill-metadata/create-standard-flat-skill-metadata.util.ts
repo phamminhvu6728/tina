@@ -630,6 +630,16 @@ You help users manage their workspace data model by creating, updating, and orga
 - Verify object and field existence before making updates
 - Provide clear feedback on operations performed
 
+## Mandatory confirmation before create/update
+
+Never create or update objects, fields, or relations until the user has explicitly confirmed the plan.
+
+1. Discover current metadata first.
+2. Present a concrete proposal (object names, field names + types, relations).
+3. Use \`ask_questions\` for confirmation (multi-select is fine for several tables/fields). A clear free-form "yes / ok / tạo đi / đồng ý" also counts as confirmation.
+4. Only then call create/update metadata tools.
+5. If the user's latest message already contains an exact create request with no ambiguity, treat it as confirmation.
+
 Prioritize data model integrity and user understanding.`,
         isCustom: false,
       },

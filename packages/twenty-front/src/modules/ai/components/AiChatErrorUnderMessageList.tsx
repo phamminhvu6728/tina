@@ -11,6 +11,7 @@ import { useAtomComponentFamilyStateValue } from '@/ui/utilities/state/jotai/hoo
 import { useAtomComponentSelectorValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentSelectorValue';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { styled } from '@linaria/react';
+import { isDefined } from 'twenty-shared/utils';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 const StyledErrorWrapper = styled.div`
@@ -41,8 +42,10 @@ export const AiChatErrorUnderMessageList = () => {
     { messageId: lastMessageId },
   );
 
+  // Show under the list when the last bubble is the user prompt (no partial
+  // assistant yet). If a partial assistant is last, AiChatMessage shows it.
   const showError =
-    agentChatError &&
+    isDefined(agentChatError) &&
     !agentChatIsStreaming &&
     agentChatMessage?.role === AgentMessageRole.USER;
 

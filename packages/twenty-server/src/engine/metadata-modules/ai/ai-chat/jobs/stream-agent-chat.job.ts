@@ -219,7 +219,10 @@ export class StreamAgentChatJob {
           workspaceId: data.workspaceId,
         });
 
-    userMessagePromise.catch(() => {});
+    // Keep the user prompt in DB even when the model stream fails mid-turn.
+    const settledUserMessagePromise = userMessagePromise.catch(() => ({
+      turnId: null as string | null,
+    }));
 
     const titlePromise = data.hasTitle
       ? Promise.resolve(null)
@@ -231,13 +234,18 @@ export class StreamAgentChatJob {
           })
           .catch(() => null);
 
-    await this.buildAndPublishStream({
-      workspace,
-      data,
-      userMessagePromise,
-      titlePromise,
-      abortSignal,
-    });
+    try {
+      await this.buildAndPublishStream({
+        workspace,
+        data,
+        userMessagePromise: settledUserMessagePromise,
+        titlePromise,
+        abortSignal,
+      });
+    } catch (error) {
+      await settledUserMessagePromise;
+      throw error;
+    }
   }
 
   private async buildAndPublishStream({

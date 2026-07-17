@@ -1,5 +1,6 @@
 import { styled } from '@linaria/react';
 
+import { CompanyDomainEnrichButton } from '@/companies/components/CompanyDomainEnrichButton';
 import { FieldContext } from '@/object-record/record-field/ui/contexts/FieldContext';
 import { useIsFieldEmpty } from '@/object-record/record-field/ui/hooks/useIsFieldEmpty';
 import { useIsFieldInputOnly } from '@/object-record/record-field/ui/hooks/useIsFieldInputOnly';
@@ -110,6 +111,7 @@ export const RecordInlineCellDisplayMode = ({
       {showEditButton && (
         <RecordInlineCellButton Icon={buttonIcon} onClick={onClick} />
       )}
+      <CompanyDomainEnrichButton isHovered={isHovered} />
     </>
   );
 };
