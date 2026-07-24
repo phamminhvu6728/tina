@@ -20,8 +20,8 @@ import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { useAtomFamilyStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomFamilyStateValue';
 
 const StyledButtonContainer = styled.div`
-  align-items: center;
-  display: flex;
+  align-items: center;
+  display: flex;
 `;
 
 type CompanyDomainEnrichButtonProps = {
