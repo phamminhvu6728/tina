@@ -93,10 +93,7 @@ export const repairToolCall = async ({
   // Remap unknown direct tool calls through execute_tool when available so the
   // stream can continue instead of aborting on NoSuchToolError.
   if (NoSuchToolError.isInstance(error)) {
-    if (
-      toolCall.toolName !== 'execute_tool' &&
-      isDefined(tools.execute_tool)
-    ) {
+    if (toolCall.toolName !== 'execute_tool' && isDefined(tools.execute_tool)) {
       return {
         type: 'tool-call',
         toolCallId: toolCall.toolCallId,

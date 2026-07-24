@@ -87,17 +87,17 @@ export const getDefaultSelectedCompanyEnrichmentFields = ({
   suggestedFields: CompanyEnrichmentSuggestedFields;
   record: ObjectRecord | null | undefined;
 }): CompanyEnrichmentFieldName[] => {
-  return (
-    Object.keys(suggestedFields) as CompanyEnrichmentFieldName[]
-  ).filter((fieldName) => {
-    const suggestion = suggestedFields[fieldName];
+  return (Object.keys(suggestedFields) as CompanyEnrichmentFieldName[]).filter(
+    (fieldName) => {
+      const suggestion = suggestedFields[fieldName];
 
-    if (suggestion === null || suggestion === undefined) {
-      return false;
-    }
+      if (suggestion === null || suggestion === undefined) {
+        return false;
+      }
 
-    return isCompanyEnrichmentFieldEmpty({ fieldName, record });
-  });
+      return isCompanyEnrichmentFieldEmpty({ fieldName, record });
+    },
+  );
 };
 
 export const buildCompanyEnrichmentUpdateInput = ({
@@ -139,7 +139,8 @@ export const formatCompanyEnrichmentFieldPreview = ({
     case 'name':
       return String(suggestion);
     case 'linkedinLink': {
-      const links = suggestion as CompanyEnrichmentSuggestedFields['linkedinLink'];
+      const links =
+        suggestion as CompanyEnrichmentSuggestedFields['linkedinLink'];
 
       return links?.primaryLinkUrl ?? '—';
     }
@@ -156,8 +157,7 @@ export const formatCompanyEnrichmentFieldPreview = ({
       return `${amount.toLocaleString()} ${currency.currencyCode ?? 'USD'}`;
     }
     case 'address': {
-      const address =
-        suggestion as CompanyEnrichmentSuggestedFields['address'];
+      const address = suggestion as CompanyEnrichmentSuggestedFields['address'];
 
       if (!address) {
         return '—';

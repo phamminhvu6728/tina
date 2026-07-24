@@ -1,11 +1,12 @@
 import { styled } from '@linaria/react';
-import { useEffect, useMemo, useState } from 'react';
 import { useLingui } from '@lingui/react/macro';
+import { useEffect, useMemo, useState } from 'react';
 import { isDefined } from 'twenty-shared/utils';
 import { Checkbox } from 'twenty-ui/input';
-import { H1Title, H1TitleFontColor } from 'twenty-ui/typography';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
+import { H1Title, H1TitleFontColor } from 'twenty-ui/typography';
 
+import { COMPANY_DOMAIN_ENRICH_PREVIEW_MODAL_ID } from '@/companies/constants/CompanyDomainEnrichPreviewModalId';
 import {
   type CompanyEnrichmentFieldName,
   type CompanyEnrichmentSuggestedFields,
@@ -13,12 +14,11 @@ import {
 import {
   formatCompanyEnrichmentFieldPreview,
   getDefaultSelectedCompanyEnrichmentFields,
-} from '@/companies/utils/companyEnrichmentApply.util';
+} from '@/companies/utils/companyEnrichmentApply';
 import { type ObjectRecord } from '@/object-record/types/ObjectRecord';
-import { ModalStatefulWrapper } from '@/ui/layout/modal/components/ModalStatefulWrapper';
 import { StyledCenteredButton } from '@/ui/layout/modal/components/ConfirmationModal';
+import { ModalStatefulWrapper } from '@/ui/layout/modal/components/ModalStatefulWrapper';
 import { useModal } from '@/ui/layout/modal/hooks/useModal';
-import { COMPANY_DOMAIN_ENRICH_PREVIEW_MODAL_ID } from '@/companies/constants/CompanyDomainEnrichPreviewModalId';
 
 const FIELD_LABELS: Record<CompanyEnrichmentFieldName, string> = {
   name: 'Name',
@@ -82,9 +82,9 @@ export const CompanyDomainEnrichPreviewModal = ({
   const { closeModal } = useModal();
 
   const availableFields = useMemo(() => {
-    return (Object.keys(suggestedFields) as CompanyEnrichmentFieldName[]).filter(
-      (fieldName) => isDefined(suggestedFields[fieldName]),
-    );
+    return (
+      Object.keys(suggestedFields) as CompanyEnrichmentFieldName[]
+    ).filter((fieldName) => isDefined(suggestedFields[fieldName]));
   }, [suggestedFields]);
 
   const [selectedFields, setSelectedFields] = useState<
@@ -129,7 +129,10 @@ export const CompanyDomainEnrichPreviewModal = ({
       size={'medium' as const}
       padding={'medium' as const}
     >
-      <H1Title title={t`Apply AI suggestions`} fontColor={H1TitleFontColor.Primary} />
+      <H1Title
+        title={t`Apply AI suggestions`}
+        fontColor={H1TitleFontColor.Primary}
+      />
       <StyledSection>
         {availableFields.map((fieldName) => (
           <StyledRow key={fieldName}>

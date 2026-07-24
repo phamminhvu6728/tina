@@ -3884,7 +3884,7 @@ msgstr "Join table linking message channel message associations to message folde
 #. js-lingui-id: PviVyk
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Join your team on Twenty"
-msgstr "Join your team on Twenty"
+msgstr "Join your team on Tina CRM"
 
 #. js-lingui-id: AQuLwi
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workflow-version-standard-flat-field-metadata.util.ts
@@ -6452,7 +6452,7 @@ msgstr "System fields cannot be updated"
 #. js-lingui-id: aK2k19
 #: src/engine/metadata-modules/index-metadata/services/index-metadata.service.ts
 msgid "System indexes are required for Twenty to work and cannot be deleted."
-msgstr "System indexes are required for Twenty to work and cannot be deleted."
+msgstr "System indexes are required for Tina CRM to work and cannot be deleted."
 
 #. js-lingui-id: /ojawH
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-object-metadata-validator.service.ts
@@ -7005,7 +7005,7 @@ msgstr "This API key has no role assigned."
 #: src/engine/core-modules/application/application.exception.ts
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 msgid "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
-msgstr "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
+msgstr "This app requires a newer version of the Tina CRM server. Please upgrade your server or use a compatible app version."
 
 #. js-lingui-id: 99gsJ/
 #: src/engine/metadata-modules/index-metadata/utils/validate-no-duplicate-unique-index.util.ts
@@ -8074,7 +8074,7 @@ msgstr "Wednesday"
 #. js-lingui-id: TVkCrJ
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Welcome to Twenty: Please Confirm Your Email"
-msgstr "Welcome to Twenty: Please Confirm Your Email"
+msgstr "Welcome to Tina CRM: Please Confirm Your Email"
 
 #. js-lingui-id: OHlJ1X
 #: src/engine/metadata-modules/page-layout-widget/utils/validate-widget-grid-position.util.ts

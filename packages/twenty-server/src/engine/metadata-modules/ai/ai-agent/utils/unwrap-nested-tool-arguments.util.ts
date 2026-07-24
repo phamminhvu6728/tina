@@ -10,11 +10,7 @@ const NESTED_TOOL_ARGUMENT_WRAPPER_KEYS = [
 export const unwrapNestedToolArguments = (
   value: unknown,
 ): Record<string, unknown> | unknown => {
-  if (
-    typeof value !== 'object' ||
-    value === null ||
-    Array.isArray(value)
-  ) {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
     return value;
   }
 

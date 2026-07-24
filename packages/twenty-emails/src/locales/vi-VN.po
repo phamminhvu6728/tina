@@ -50,7 +50,7 @@ msgstr "Không gian làm việc sẽ bị ngừng hoạt động trong {remainin
 #. js-lingui-explicit-id
 #: src/emails/warn-suspended-workspace.email.tsx
 msgid "If you wish to continue using Twenty, please update your subscription within the next {remainingDays} {dayOrDays}."
-msgstr ""
+msgstr "Nếu bạn muốn tiếp tục sử dụng Tina CRM, vui lòng gia hạn đăng ký của bạn trong thời gian tới. {remainingDays} {dayOrDays}."
 
 #. js-lingui-explicit-id
 #: src/emails/warn-suspended-workspace.email.tsx
@@ -76,7 +76,7 @@ msgstr "Kiểm tra email"
 #. js-lingui-explicit-id
 #: src/emails/send-invite-link.email.tsx
 msgid "Join your team on Twenty"
-msgstr "Tham gia vào đội ngũ của bạn trên Twenty"
+msgstr "Tham gia vào đội ngũ của bạn trên Tina CRM"
 
 #. js-lingui-explicit-id
 #: src/emails/send-invite-link.email.tsx
@@ -126,7 +126,7 @@ msgstr "Nếu bạn không khởi xướng việc thay đổi này, vui lòng li
 #. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
 msgid "Connect to Twenty"
-msgstr "Kết nối với Twenty"
+msgstr "Kết nối với Tina CRM"
 
 #. js-lingui-explicit-id
 #: src/emails/password-reset-link.email.tsx
@@ -171,7 +171,7 @@ msgstr "Tất cả dữ liệu trong không gian làm việc này đã bị xóa
 #. js-lingui-explicit-id
 #: src/emails/clean-suspended-workspace.email.tsx
 msgid "If you wish to use Twenty again, you can create a new workspace."
-msgstr "Nếu bạn muốn sử dụng Twenty lại, bạn có thể tạo một không gian làm việc mới."
+msgstr "Nếu bạn muốn sử dụng Tina CRM lại, bạn có thể tạo một không gian làm việc mới."
 
 #. js-lingui-explicit-id
 #: src/emails/clean-suspended-workspace.email.tsx
@@ -181,12 +181,12 @@ msgstr "Tạo không gian làm việc mới"
 #. js-lingui-explicit-id
 #: src/components/WhatIsTwenty.tsx
 msgid "What is Twenty?"
-msgstr "Twenty là gì?"
+msgstr "Tina CRM là gì?"
 
 #. js-lingui-explicit-id
 #: src/components/WhatIsTwenty.tsx
 msgid "It's a CRM, a software to help businesses manage their customer data and relationships efficiently."
-msgstr "Đó là một CRM, một phần mềm giúp doanh nghiệp quản lý dữ liệu và mối quan hệ khách hàng một cách hiệu quả."
+msgstr "Tina CRM là một nền tảng quản lý quan hệ khách hàng (Customer Relationship Management – CRM) hiện đại, được thiết kế dành cho các doanh nghiệp Việt Nam muốn tối ưu quy trình vận hành, tăng năng suất làm việc và nâng cao trải nghiệm khách hàng."
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -196,7 +196,7 @@ msgstr "Trang web"
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Visit Twenty's website"
-msgstr "Thăm trang web của Twenty"
+msgstr "Thăm trang web của Tina CRM"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -206,7 +206,7 @@ msgstr "Github"
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Visit Twenty's GitHub repository"
-msgstr "Thăm kho GitHub của Twenty"
+msgstr "Thăm kho GitHub của Tina CRM"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -216,7 +216,7 @@ msgstr "Hướng dẫn người dùng"
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Read Twenty's user guide"
-msgstr "Đọc hướng dẫn người dùng của Twenty"
+msgstr "Đọc hướng dẫn người dùng của Tina CRM"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -226,12 +226,12 @@ msgstr "Nhà phát triển"
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Visit Twenty's developer documentation"
-msgstr "Thăm tài liệu nhà phát triển của Twenty"
+msgstr "Thăm tài liệu nhà phát triển của Tina CRM"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Twenty.com, Public Benefit Corporation"
-msgstr "Twenty.com, Tập đoàn lợi ích công cộng"
+msgstr "tinacrm.com, Công ty Cổ Phần Tinasoft Việt Nam"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx

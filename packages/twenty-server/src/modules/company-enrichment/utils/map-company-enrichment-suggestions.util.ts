@@ -108,9 +108,7 @@ export const mapCompanyEnrichmentSuggestions = ({
         cityFromTwenty !== null && !isNonEmptyString(aiOutput?.addressCity)
           ? 'twenty-companies'
           : 'ai',
-      confidence: isNonEmptyString(aiOutput?.addressCountry)
-        ? 'medium'
-        : 'low',
+      confidence: isNonEmptyString(aiOutput?.addressCountry) ? 'medium' : 'low',
     });
   }
 
@@ -173,11 +171,7 @@ export const mapCompanyEnrichmentSuggestions = ({
   ].filter((value) => value !== null && value !== undefined).length;
 
   const status: CompanyEnrichmentStatus =
-    filledCount >= 3
-      ? 'MATCHED'
-      : filledCount >= 1
-        ? 'PARTIAL'
-        : 'NOT_FOUND';
+    filledCount >= 3 ? 'MATCHED' : filledCount >= 1 ? 'PARTIAL' : 'NOT_FOUND';
 
   return { suggestedFields, fieldSources, status };
 };

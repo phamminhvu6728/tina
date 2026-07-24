@@ -1298,7 +1298,7 @@ msgstr "Thêm vào mục yêu thích"
 #. js-lingui-id: VbareD
 #: src/modules/settings/playground/components/SettingsMcpSetup.tsx
 msgid "Add Twenty as a Model Context Protocol (MCP) server. Paste this config into Claude Desktop, Cursor, Cline, Continue, Zed, or any other MCP-aware client."
-msgstr ""
+msgstr "Thêm Tina CRM làm máy chủ Giao thức Ngữ cảnh Mô hình (MCP). Dán cấu hình này vào Claude Desktop, Cursor, Cline, Continue, Zed hoặc bất kỳ ứng dụng khách nào khác hỗ trợ MCP."
 
 #. js-lingui-id: XnwceV
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationRedirectURIsInput.tsx
@@ -8253,7 +8253,7 @@ msgstr ""
 #. js-lingui-id: 1ETc0T
 #: src/pages/settings/community/SettingsCommunity.tsx
 msgid "Hire a partner to help you implement and customize Twenty."
-msgstr ""
+msgstr "Hãy thuê một đối tác để giúp bạn triển khai và tùy chỉnh Tina CRM."
 
 #. js-lingui-id: i0qMbr
 #: src/modules/navigation/components/MainNavigationDrawerTabsRow.tsx
