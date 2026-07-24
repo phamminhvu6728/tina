@@ -66,8 +66,7 @@ export const useEnrichCompanyFromDomain = () => {
           error instanceof Error ? error.message : undefined;
 
         enqueueErrorSnackBar({
-          message:
-            apolloMessage ?? t`Couldn't enrich company from domain.`,
+          message: apolloMessage ?? t`Couldn't enrich company from domain.`,
         });
 
         return null;

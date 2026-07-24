@@ -3889,7 +3889,7 @@ msgstr ""
 #. js-lingui-id: PviVyk
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Join your team on Twenty"
-msgstr "Tham gia vào đội ngũ của bạn trên Twenty"
+msgstr "Tham gia vào đội ngũ của bạn trên Tina CRM"
 
 #. js-lingui-id: AQuLwi
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workflow-version-standard-flat-field-metadata.util.ts
@@ -6457,7 +6457,7 @@ msgstr "Các trường hệ thống không thể được cập nhật"
 #. js-lingui-id: aK2k19
 #: src/engine/metadata-modules/index-metadata/services/index-metadata.service.ts
 msgid "System indexes are required for Twenty to work and cannot be deleted."
-msgstr ""
+msgstr "Các chỉ mục hệ thống là cần thiết để Tina CRM hoạt động và không thể bị xóa."
 
 #. js-lingui-id: /ojawH
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-object-metadata-validator.service.ts
@@ -7010,7 +7010,7 @@ msgstr "Khóa API này chưa được gán vai trò."
 #: src/engine/core-modules/application/application.exception.ts
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 msgid "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
-msgstr ""
+msgstr "Ứng dụng này yêu cầu phiên bản máy chủ Tina CRM mới hơn. Vui lòng nâng cấp máy chủ hoặc sử dụng phiên bản ứng dụng tương thích."
 
 #. js-lingui-id: 99gsJ/
 #: src/engine/metadata-modules/index-metadata/utils/validate-no-duplicate-unique-index.util.ts
@@ -8079,7 +8079,7 @@ msgstr "Thứ Tư"
 #. js-lingui-id: TVkCrJ
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Welcome to Twenty: Please Confirm Your Email"
-msgstr "Chào mừng đến với Twenty: Vui lòng xác nhận email của bạn"
+msgstr "Chào mừng đến với Tina CRM: Vui lòng xác nhận email của bạn"
 
 #. js-lingui-id: OHlJ1X
 #: src/engine/metadata-modules/page-layout-widget/utils/validate-widget-grid-position.util.ts

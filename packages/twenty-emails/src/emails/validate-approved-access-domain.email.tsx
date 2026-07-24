@@ -80,7 +80,7 @@ export const SendApprovedAccessDomainValidation = ({
 };
 
 SendApprovedAccessDomainValidation.PreviewProps = {
-  link: 'https://app.twenty.com/validate-domain',
+  link: 'https://app.tinacrm.com/validate-domain',
   domain: 'example.com',
   workspace: {
     name: 'Acme Inc.',

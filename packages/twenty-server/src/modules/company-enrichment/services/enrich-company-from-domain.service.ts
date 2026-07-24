@@ -106,9 +106,7 @@ export class EnrichCompanyFromDomainService {
       )
         .filter(
           (fieldName) =>
-            suggestedFields[
-              fieldName as keyof typeof suggestedFields
-            ] !== null,
+            suggestedFields[fieldName as keyof typeof suggestedFields] !== null,
         )
         .join(',')}`,
     );

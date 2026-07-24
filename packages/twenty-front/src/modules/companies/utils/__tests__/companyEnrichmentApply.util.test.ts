@@ -2,7 +2,7 @@ import {
   buildCompanyEnrichmentUpdateInput,
   getDefaultSelectedCompanyEnrichmentFields,
   isCompanyEnrichmentFieldEmpty,
-} from '@/companies/utils/companyEnrichmentApply.util';
+} from '@/companies/utils/companyEnrichmentApply';
 
 describe('companyEnrichmentApply.util', () => {
   const suggestedFields = {

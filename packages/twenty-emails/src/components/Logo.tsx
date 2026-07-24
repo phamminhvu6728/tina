@@ -1,3 +1,4 @@
+import { DEFAULT_WORKSPACE_LOGO } from '@/constants/DefaultWorkspaceLogo';
 import { Img } from '@react-email/components';
 
 const logoStyle = {
@@ -7,8 +8,8 @@ const logoStyle = {
 export const Logo = () => {
   return (
     <Img
-      src="https://app.twenty.com/images/icons/windows11/Square150x150Logo.scale-100.png"
-      alt="Twenty logo"
+      src={DEFAULT_WORKSPACE_LOGO}
+      alt="Tina CRM logo"
       width="40"
       height="40"
       style={logoStyle}

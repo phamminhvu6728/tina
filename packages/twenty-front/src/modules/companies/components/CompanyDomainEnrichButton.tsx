@@ -1,18 +1,18 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { styled } from '@linaria/react';
 import { useLingui } from '@lingui/react/macro';
 import { isNonEmptyString } from '@sniptt/guards';
+import { useContext, useEffect, useState } from 'react';
 import { IconLoader, IconSparkles } from 'twenty-ui/icon';
 import { FloatingIconButton } from 'twenty-ui/input';
 import { AnimatedContainer } from 'twenty-ui/layout';
-import { styled } from '@linaria/react';
 
 import { useEnrichCompanyFromDomain } from '@/companies/hooks/useEnrichCompanyFromDomain';
 import {
   buildCompanyEnrichmentUpdateInput,
   getDefaultSelectedCompanyEnrichmentFields,
   isCompanyEnrichmentFieldEmpty,
-} from '@/companies/utils/companyEnrichmentApply.util';
-import { getCompanyNameFromDomainUrl } from '@/companies/utils/get-company-name-from-domain-url.util';
+} from '@/companies/utils/companyEnrichmentApply';
+import { getCompanyNameFromDomainUrl } from '@/companies/utils/getCompanyNameFromDomainUrl';
 import { useUpdateOneRecord } from '@/object-record/hooks/useUpdateOneRecord';
 import { FieldContext } from '@/object-record/record-field/ui/contexts/FieldContext';
 import { recordStoreFamilyState } from '@/object-record/record-store/states/recordStoreFamilyState';
@@ -20,8 +20,8 @@ import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { useAtomFamilyStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomFamilyStateValue';
 
 const StyledButtonContainer = styled.div`
-  align-items: center;
-  display: flex;
+  align-items: center;
+  display: flex;
 `;
 
 type CompanyDomainEnrichButtonProps = {
@@ -43,8 +43,8 @@ export const CompanyDomainEnrichButton = ({
     isRecordFieldReadOnly: isReadOnly,
   } = useContext(FieldContext);
 
-  const record = useAtomFamilyStateValue(recordStoreFamilyState, recordId);
-  const domainName = record?.domainName as
+  const recordStore = useAtomFamilyStateValue(recordStoreFamilyState, recordId);
+  const domainName = recordStore?.domainName as
     | { primaryLinkUrl?: string | null }
     | string
     | null
@@ -56,7 +56,9 @@ export const CompanyDomainEnrichButton = ({
       : (domainName?.primaryLinkUrl ?? null);
 
   const [isRequestInFlight, setIsRequestInFlight] = useState(false);
-  const lastAutoNamedDomainRef = useRef<string | null>(null);
+  const [lastAutoNamedDomain, setLastAutoNamedDomain] = useState<string | null>(
+    null,
+  );
 
   const objectNameSingular =
     fieldDefinition.metadata.objectMetadataNameSingular;
@@ -67,25 +69,24 @@ export const CompanyDomainEnrichButton = ({
     fieldName === 'domainName' &&
     !isReadOnly;
 
-  const canShow = isCompanyDomainField && isNonEmptyString(domainUrl);
+  const canShow = isCompanyDomainField && isNonEmptyString(domainUrl); // Auto-fill Name when domain is set and name is empty / Untitled
 
-  // Auto-fill Name when domain is set and name is empty / Untitled
   useEffect(() => {
     if (!isCompanyDomainField || !isNonEmptyString(domainUrl)) {
       return;
     }
 
-    if (lastAutoNamedDomainRef.current === domainUrl) {
+    if (lastAutoNamedDomain === domainUrl) {
       return;
     }
 
     if (
       !isCompanyEnrichmentFieldEmpty({
         fieldName: 'name',
-        record,
+        record: recordStore,
       })
     ) {
-      lastAutoNamedDomainRef.current = domainUrl;
+      setLastAutoNamedDomain(domainUrl);
 
       return;
     }
@@ -96,7 +97,7 @@ export const CompanyDomainEnrichButton = ({
       return;
     }
 
-    lastAutoNamedDomainRef.current = domainUrl;
+    setLastAutoNamedDomain(domainUrl);
 
     void updateOneRecord({
       objectNameSingular: 'company',
@@ -106,9 +107,10 @@ export const CompanyDomainEnrichButton = ({
   }, [
     domainUrl,
     isCompanyDomainField,
-    record,
+    recordStore,
     recordId,
     updateOneRecord,
+    lastAutoNamedDomain,
   ]);
 
   if (!canShow) {
@@ -144,7 +146,7 @@ export const CompanyDomainEnrichButton = ({
 
       const selectedFields = getDefaultSelectedCompanyEnrichmentFields({
         suggestedFields: enrichmentResult.suggestedFields,
-        record,
+        record: recordStore,
       });
 
       if (selectedFields.length === 0) {

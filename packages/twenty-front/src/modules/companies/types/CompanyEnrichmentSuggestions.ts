@@ -39,10 +39,12 @@ export type EnrichCompanyFromDomainResult = {
   domain: string;
   status: EnrichCompanyFromDomainStatus;
   suggestedFields: CompanyEnrichmentSuggestedFields | null;
-  fieldSources: {
-    fieldName: string;
-    source: string;
-    confidence: string | null;
-  }[] | null;
+  fieldSources:
+    | {
+        fieldName: string;
+        source: string;
+        confidence: string | null;
+      }[]
+    | null;
   message: string | null;
 };

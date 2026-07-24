@@ -68,7 +68,7 @@ export const SettingsCommunity = () => {
       cardTitle: t`Join our Discord`,
     },
     {
-      href: 'https://x.com/twentycrm',
+      href: 'https://x.com/tinacrm',
       Icon: IconBrandX,
       iconColor: themeCssVariables.font.color.primary,
       cardTitle: t`Follow us on X`,
@@ -130,7 +130,7 @@ export const SettingsCommunity = () => {
             description={t`Hire a partner to help you implement and customize Twenty.`}
           />
           <StyledCardLink
-            href="https://twenty.com/partners/list"
+            href="https://tinacrm.com/partners/list"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -154,7 +154,7 @@ export const SettingsCommunity = () => {
           <StyledFeaturesContent>
             <SettingsLabContent />
             <StyledCardLink
-              href="https://twenty.com/releases"
+              href="https://tinacrm.com/releases"
               target="_blank"
               rel="noopener noreferrer"
             >

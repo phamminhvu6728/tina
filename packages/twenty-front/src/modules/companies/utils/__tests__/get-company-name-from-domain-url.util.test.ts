@@ -1,4 +1,4 @@
-import { getCompanyNameFromDomainUrl } from '@/companies/utils/get-company-name-from-domain-url.util';
+import { getCompanyNameFromDomainUrl } from '@/companies/utils/getCompanyNameFromDomainUrl';
 
 describe('getCompanyNameFromDomainUrl', () => {
   it('should derive capitalized name from domain urls', () => {

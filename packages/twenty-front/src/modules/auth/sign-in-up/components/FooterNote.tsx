@@ -73,7 +73,7 @@ export const FooterNote = ({
       <StyledCopyContainer>
         <Trans>By using Twenty, you agree to the</Trans>{' '}
         <a
-          href="https://twenty.com/legal/terms"
+          href="https://tinacrm.com/privacy-policy"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -82,7 +82,7 @@ export const FooterNote = ({
         <Trans>and</Trans>{' '}
         {secondaryAgreement === 'dataProcessingAgreement' ? (
           <a
-            href="https://twenty.com/legal/dpa"
+            href="https://tinacrm.com/privacy-policy"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -90,7 +90,7 @@ export const FooterNote = ({
           </a>
         ) : (
           <a
-            href="https://twenty.com/legal/privacy"
+            href="https://tinacrm.com/privacy-policy"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -113,7 +113,7 @@ export const FooterNote = ({
         </>
       )}
       <a
-        href="https://twenty.com/legal/privacy"
+        href="https://tinacrm.com/privacy-policy"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -121,7 +121,7 @@ export const FooterNote = ({
       </a>
       <StyledSeparator>•</StyledSeparator>
       <a
-        href="https://twenty.com/legal/terms"
+        href="https://tinacrm.com/privacy-policy"
         target="_blank"
         rel="noopener noreferrer"
       >
