@@ -10,6 +10,7 @@ import { contextStoreCurrentViewIdComponentState } from '@/context-store/states/
 import { contextStoreCurrentViewTypeComponentState } from '@/context-store/states/contextStoreCurrentViewTypeComponentState';
 import { ContextStoreViewType } from '@/context-store/types/ContextStoreViewType';
 import { CoreObjectNamePlural } from '@/object-metadata/types/CoreObjectNamePlural';
+import { shouldOpenAiChatAfterOnboardingState } from '@/onboarding/states/shouldOpenAiChatAfterOnboardingState';
 import { useActiveRecordBoardCard } from '@/object-record/record-board/hooks/useActiveRecordBoardCard';
 import { useFocusedRecordBoardCard } from '@/object-record/record-board/hooks/useFocusedRecordBoardCard';
 import { useResetRecordBoardSelection } from '@/object-record/record-board/hooks/useResetRecordBoardSelection';
@@ -157,6 +158,13 @@ export const PageChangeEffect = () => {
       if (consumedReturnToPath) {
         clearReturnToPath();
       }
+
+      if (
+        store.get(shouldOpenAiChatAfterOnboardingState.atom) &&
+        pageChangeEffectNavigateLocation !== AppPath.WorkspaceSetup
+      ) {
+        store.set(shouldOpenAiChatAfterOnboardingState.atom, false);
+      }
     }
   }, [
     navigate,
@@ -166,6 +174,7 @@ export const PageChangeEffect = () => {
     saveReturnToPath,
     getReturnToPath,
     clearReturnToPath,
+    store,
   ]);
 
   useEffect(() => {
@@ -225,6 +234,22 @@ export const PageChangeEffect = () => {
             fieldName: location.state.labelIdentifierFieldName,
           });
         }
+        break;
+      }
+      case isMatchingLocation(location, AppPath.PageLayoutPage): {
+        resetFocusStackToFocusItem({
+          focusStackItem: {
+            focusId: PageFocusId.PageLayoutPage,
+            componentInstance: {
+              componentType: FocusComponentType.PAGE,
+              componentInstanceId: PageFocusId.PageLayoutPage,
+            },
+            globalHotkeysConfig: {
+              enableGlobalHotkeysWithModifiers: true,
+              enableGlobalHotkeysConflictingWithKeyboard: true,
+            },
+          },
+        });
         break;
       }
       case isMatchingLocation(location, AppPath.SignInUp): {

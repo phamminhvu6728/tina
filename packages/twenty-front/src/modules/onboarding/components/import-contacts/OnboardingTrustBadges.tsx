@@ -5,7 +5,6 @@ import { themeCssVariables } from 'twenty-ui/theme-constants';
 const BADGE_ASSET_PATH = '/images/onboarding/trust-badges';
 
 const TRUSTED_BY_LOGOS = [
-  { name: 'Bayer', src: `${BADGE_ASSET_PATH}/bayer.png` },
   { name: 'PwC', src: `${BADGE_ASSET_PATH}/pwc.png` },
   {
     name: 'République Française',
@@ -38,9 +37,7 @@ const StyledBadge = styled.div<{ hasClusterLeading: boolean }>`
   overflow: hidden;
   padding: 0 10px 0
     ${({ hasClusterLeading }) =>
-      hasClusterLeading
-        ? themeCssVariables.spacing['0.5']
-        : themeCssVariables.spacing[1]};
+      hasClusterLeading ? '10px' : themeCssVariables.spacing[1]};
 `;
 
 const StyledSeal = styled.img`

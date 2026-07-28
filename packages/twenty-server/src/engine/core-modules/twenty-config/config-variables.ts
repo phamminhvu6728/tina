@@ -5,6 +5,7 @@ import {
   IsDateString,
   IsDefined,
   IsEnum,
+  IsIn,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -14,6 +15,10 @@ import {
   type ValidationError,
   validateSync,
 } from 'class-validator';
+import {
+  ENTERPRISE_INSTANCE_TYPE,
+  type EnterpriseInstanceType,
+} from 'twenty-shared/constants';
 import { isDefined } from 'twenty-shared/utils';
 import { type LoggerOptions } from 'typeorm/logger/LoggerOptions';
 
@@ -23,8 +28,8 @@ import { NodeEnvironment } from 'src/engine/core-modules/twenty-config/interface
 import { SupportDriver } from 'src/engine/core-modules/twenty-config/interfaces/support.interface';
 
 import { CaptchaDriverType } from 'src/engine/core-modules/captcha/interfaces';
-import { DpaRegion } from 'src/engine/core-modules/dpa/enums/dpa-region.enum';
 import { CodeInterpreterDriverType } from 'src/engine/core-modules/code-interpreter/code-interpreter.interface';
+import { DpaRegion } from 'src/engine/core-modules/dpa/enums/dpa-region.enum';
 import { EmailDriver } from 'src/engine/core-modules/email/enums/email-driver.enum';
 import { EmailingDomainDriver } from 'src/engine/core-modules/emailing-domain/drivers/types/emailing-domain-driver.type';
 import { ExceptionHandlerDriver } from 'src/engine/core-modules/exception-handler/interfaces';
@@ -203,6 +208,16 @@ export class ConfigVariables {
   })
   @IsOptional()
   MESSAGING_GMAIL_PUBSUB_VERIFICATION_EMAIL: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.ADVANCED_SETTINGS,
+    description:
+      'Enable webhook-based sync for connected accounts (provider push ' +
+      'notifications on top of polling). Requires publicly reachable ' +
+      'webhook endpoints.',
+    type: ConfigVariableType.BOOLEAN,
+  })
+  IS_CONNECTED_ACCOUNT_WEBHOOK_SUBSCRIPTION_ENABLED = false;
 
   @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.ADVANCED_SETTINGS,
@@ -1247,6 +1262,26 @@ export class ConfigVariables {
   REDIS_QUEUE_URL: string;
 
   @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.ADVANCED_SETTINGS,
+    description:
+      'Comma-separated list of queues this worker processes (e.g. workspace-queue). Empty means all queues. Used to dedicate worker pods to specific queues.',
+    isEnvOnly: true,
+    type: ConfigVariableType.ARRAY,
+  })
+  @IsOptional()
+  WORKER_ENABLED_QUEUES: string[] = [];
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.ADVANCED_SETTINGS,
+    description:
+      'Comma-separated list of queues this worker does not process (e.g. workspace-queue). Applied after WORKER_ENABLED_QUEUES. Used to keep long-running queues off general-purpose worker pods.',
+    isEnvOnly: true,
+    type: ConfigVariableType.ARRAY,
+  })
+  @IsOptional()
+  WORKER_EXCLUDED_QUEUES: string[] = [];
+
+  @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.SERVER_CONFIG,
     description: 'Node environment (development, production, etc.)',
     type: ConfigVariableType.ENUM,
@@ -1338,12 +1373,23 @@ export class ConfigVariables {
   @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.SERVER_CONFIG,
     description:
-      'Unique identifier for this server instance, generated as UUID v4 during database seeding',
+      'Unique identifier for this server instance, generated as UUID v4 during database seeding and persisted in the database. Can be overridden via the environment when IS_CONFIG_VARIABLES_IN_DB_ENABLED is false.',
     type: ConfigVariableType.STRING,
-    isEnvOnly: true,
   })
   @IsOptional()
   SERVER_ID: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.SERVER_CONFIG,
+    description:
+      "Declares whether this instance is a 'production' (billable per seat) or 'development' (included at no additional cost) enterprise instance. A subscription can register a single free development instance in addition to its production one.",
+    type: ConfigVariableType.ENUM,
+    options: Object.values(ENTERPRISE_INSTANCE_TYPE),
+  })
+  @IsOptional()
+  @IsIn(Object.values(ENTERPRISE_INSTANCE_TYPE))
+  ENTERPRISE_INSTANCE_TYPE: EnterpriseInstanceType =
+    ENTERPRISE_INSTANCE_TYPE.PRODUCTION;
 
   @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.SERVER_CONFIG,
@@ -1456,6 +1502,24 @@ export class ConfigVariables {
   })
   @CastToPositiveNumber()
   API_RATE_LIMITING_LONG_LIMIT = 100;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.RATE_LIMITING,
+    description:
+      'Time-to-live for per-application API rate limiting in milliseconds',
+    type: ConfigVariableType.NUMBER,
+  })
+  @CastToPositiveNumber()
+  APPLICATION_API_RATE_LIMITING_TTL_IN_MS = 60_000;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.RATE_LIMITING,
+    description:
+      'Maximum number of API requests allowed per application across all workspaces in the rate limiting window',
+    type: ConfigVariableType.NUMBER,
+  })
+  @CastToPositiveNumber()
+  APPLICATION_API_RATE_LIMITING_LIMIT = 500;
 
   @CastToPositiveNumber()
   @ConfigVariablesMetadata({
@@ -2048,6 +2112,27 @@ export class ConfigVariables {
   @IsUrl({ require_tld: false })
   @IsOptional()
   APP_REGISTRY_CDN_URL: string = 'https://unpkg.com';
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.ADVANCED_SETTINGS,
+    description:
+      'Client ID of the GitHub OAuth app used to verify app ownership when claiming a marketplace application',
+    type: ConfigVariableType.STRING,
+  })
+  @IsString()
+  @IsOptional()
+  APP_CLAIM_GITHUB_CLIENT_ID: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.ADVANCED_SETTINGS,
+    isSensitive: true,
+    description:
+      'Client secret of the GitHub OAuth app used to verify app ownership when claiming a marketplace application',
+    type: ConfigVariableType.STRING,
+  })
+  @IsString()
+  @IsOptional()
+  APP_CLAIM_GITHUB_CLIENT_SECRET: string;
 
   @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.ADVANCED_SETTINGS,

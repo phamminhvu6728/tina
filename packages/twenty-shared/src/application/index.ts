@@ -9,6 +9,16 @@
 
 export type { AgentManifest } from './agentManifestType';
 export type { AppConnection } from './appConnectionType';
+export type { AppKeyValueScope } from './appKeyValueScopeType';
+export type { AppKeyValue } from './appKeyValueType';
+export type {
+  KnownApplicationCategory,
+  ApplicationCategory,
+} from './applicationCategoryType';
+export {
+  APPLICATION_CATEGORIES,
+  isKnownApplicationCategory,
+} from './applicationCategoryType';
 export type { ApplicationManifest } from './applicationType';
 export type {
   ApplicationVariableType,
@@ -67,6 +77,7 @@ export { getRoleUniversalIdentifier } from './deterministic-identifier/get-role-
 export { getSearchFieldUniversalIdentifier } from './deterministic-identifier/get-search-field-universal-identifier.util';
 export { getSelectOptionUniversalIdentifier } from './deterministic-identifier/get-select-option-universal-identifier.util';
 export { getSkillUniversalIdentifier } from './deterministic-identifier/get-skill-universal-identifier.util';
+export { getSystemRelationFieldUniversalIdentifier } from './deterministic-identifier/get-system-relation-field-universal-identifier.util';
 export { getViewFieldGroupUniversalIdentifier } from './deterministic-identifier/get-view-field-group-universal-identifier.util';
 export { getViewFieldUniversalIdentifier } from './deterministic-identifier/get-view-field-universal-identifier.util';
 export { getViewFilterUniversalIdentifier } from './deterministic-identifier/get-view-filter-universal-identifier.util';

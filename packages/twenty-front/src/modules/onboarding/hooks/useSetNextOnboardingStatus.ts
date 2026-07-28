@@ -9,36 +9,42 @@ import {
   currentWorkspaceState,
 } from '@/auth/states/currentWorkspaceState';
 import { billingState } from '@/client-config/states/billingState';
-import { calendarBookingPageIdState } from '@/client-config/states/calendarBookingPageIdState';
+import { isWelcomeAnimationVisibleState } from '@/onboarding/states/isWelcomeAnimationVisibleState';
+import { shouldOpenAiChatAfterOnboardingState } from '@/onboarding/states/shouldOpenAiChatAfterOnboardingState';
+import { getHasJustCompletedOnboarding } from '@/onboarding/utils/getHasJustCompletedOnboarding';
+import { getIsPlanRequired } from '@/onboarding/utils/getIsPlanRequired';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
+import { useIsFeatureEnabled } from '@/workspace/hooks/useIsFeatureEnabled';
 
 import { useCallback } from 'react';
-import { OnboardingStatus } from '~/generated-metadata/graphql';
+import { FeatureFlagKey, OnboardingStatus } from '~/generated-metadata/graphql';
 import { useStore } from 'jotai';
 
 type GetNextOnboardingStatusArgs = {
   currentUser: CurrentUser | null;
   currentWorkspace: CurrentWorkspace | null;
-  calendarBookingPageId: string | null;
   isBillingEnabled: boolean;
 };
 
 const getNextOnboardingStatus = ({
   currentUser,
   currentWorkspace,
-  calendarBookingPageId,
   isBillingEnabled,
 }: GetNextOnboardingStatusArgs) => {
-  const isPlanRequired =
-    isBillingEnabled &&
-    (currentWorkspace?.billingSubscriptions?.length ?? 0) === 0;
+  const isPlanRequired = getIsPlanRequired({
+    isBillingEnabled,
+    currentWorkspace,
+  });
 
   if (currentUser?.onboardingStatus === OnboardingStatus.WORKSPACE_ACTIVATION) {
     return OnboardingStatus.SYNC_EMAIL;
   }
 
   if (currentUser?.onboardingStatus === OnboardingStatus.SYNC_EMAIL) {
-    return OnboardingStatus.APPS_INSTALLATION;
+    if (currentWorkspace?.workspaceMembersCount === 1) {
+      return OnboardingStatus.APPS_INSTALLATION;
+    }
+    return OnboardingStatus.PROFILE_CREATION;
   }
 
   if (currentUser?.onboardingStatus === OnboardingStatus.APPS_INSTALLATION) {
@@ -54,14 +60,6 @@ const getNextOnboardingStatus = ({
       : OnboardingStatus.COMPLETED;
   }
   if (currentUser?.onboardingStatus === OnboardingStatus.INVITE_TEAM) {
-    if (isPlanRequired) {
-      return OnboardingStatus.PLAN_REQUIRED;
-    }
-    return isDefined(calendarBookingPageId)
-      ? OnboardingStatus.BOOK_ONBOARDING
-      : OnboardingStatus.COMPLETED;
-  }
-  if (currentUser?.onboardingStatus === OnboardingStatus.BOOK_ONBOARDING) {
     return isPlanRequired
       ? OnboardingStatus.PLAN_REQUIRED
       : OnboardingStatus.COMPLETED;
@@ -73,15 +71,16 @@ export const useSetNextOnboardingStatus = () => {
   const store = useStore();
   const currentUser = useAtomStateValue(currentUserState);
   const currentWorkspace = useAtomStateValue(currentWorkspaceState);
-  const calendarBookingPageId = useAtomStateValue(calendarBookingPageIdState);
   const billing = useAtomStateValue(billingState);
   const isBillingEnabled = billing?.isBillingEnabled ?? false;
+  const isOnboardingAiChatEnabled = useIsFeatureEnabled(
+    FeatureFlagKey.IS_ONBOARDING_AI_CHAT_ENABLED,
+  );
 
   return useCallback(() => {
     const nextOnboardingStatus = getNextOnboardingStatus({
       currentUser,
       currentWorkspace,
-      calendarBookingPageId,
       isBillingEnabled,
     });
     store.set(currentUserState.atom, (current) => {
@@ -93,11 +92,24 @@ export const useSetNextOnboardingStatus = () => {
       }
       return current;
     });
+
+    if (
+      getHasJustCompletedOnboarding({
+        previousOnboardingStatus: currentUser?.onboardingStatus,
+        nextOnboardingStatus,
+      })
+    ) {
+      store.set(isWelcomeAnimationVisibleState.atom, true);
+      store.set(
+        shouldOpenAiChatAfterOnboardingState.atom,
+        isOnboardingAiChatEnabled,
+      );
+    }
   }, [
     currentUser,
     currentWorkspace,
-    calendarBookingPageId,
     isBillingEnabled,
+    isOnboardingAiChatEnabled,
     store,
   ]);
 };

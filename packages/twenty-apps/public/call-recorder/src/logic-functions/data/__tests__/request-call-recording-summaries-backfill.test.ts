@@ -1,45 +1,39 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { GENERATE_CALL_RECORDING_SUMMARIES_ROUTE_PATH } from 'src/constants/generate-call-recording-summaries-route-path';
 import { requestCallRecordingSummariesBackfill } from 'src/logic-functions/data/request-call-recording-summaries-backfill.util';
 
-const postMock = vi.hoisted(() => vi.fn());
-
-vi.mock('twenty-client-sdk/rest', () => ({
-  RestApiClient: vi.fn(function RestApiClient() {
-    return {
-      post: postMock,
-    };
-  }),
-}));
+const fetchMock = vi.fn();
 
 describe('requestCallRecordingSummariesBackfill', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    postMock.mockResolvedValue({});
+    vi.stubGlobal('fetch', fetchMock);
+    vi.stubEnv('TWENTY_FUNCTIONS_URL', 'https://acme.functions.example.com');
+    vi.stubEnv('TWENTY_APP_ACCESS_TOKEN', 'app-access-token');
+    fetchMock.mockResolvedValue(new Response('{}', { status: 200 }));
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
   });
 
   it('posts an empty body to the summary generation route', async () => {
     const result = await requestCallRecordingSummariesBackfill();
 
     expect(result).toBe(true);
-    expect(postMock).toHaveBeenCalledWith(
-      `/s${GENERATE_CALL_RECORDING_SUMMARIES_ROUTE_PATH}`,
-      {},
-      { signal: expect.any(AbortSignal) },
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [requestUrl, requestInit] = fetchMock.mock.calls[0];
+    expect(requestUrl).toBe(
+      `https://acme.functions.example.com${GENERATE_CALL_RECORDING_SUMMARIES_ROUTE_PATH}`,
     );
+    expect(requestInit.method).toBe('POST');
+    expect(requestInit.body).toBe(JSON.stringify({}));
   });
 
-  it('treats timeout as a successfully flushed request', async () => {
-    const timeoutError = new Error('Timed out');
-    timeoutError.name = 'TimeoutError';
-    postMock.mockRejectedValue(timeoutError);
-
-    await expect(requestCallRecordingSummariesBackfill()).resolves.toBe(true);
-  });
-
-  it('returns false when the kickoff request fails before flushing', async () => {
-    postMock.mockRejectedValue(new Error('Network failed'));
+  it('reports a kickoff that failed to fire', async () => {
+    fetchMock.mockRejectedValue(new Error('Network failed'));
 
     await expect(requestCallRecordingSummariesBackfill()).resolves.toBe(false);
   });

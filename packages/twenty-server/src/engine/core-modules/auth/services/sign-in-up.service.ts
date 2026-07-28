@@ -39,6 +39,7 @@ import {
   type SignInUpNewUserPayload,
 } from 'src/engine/core-modules/auth/types/signInUp.type';
 import { BillingCreditService } from 'src/engine/core-modules/billing/services/billing-credit.service';
+import { BillingService } from 'src/engine/core-modules/billing/services/billing.service';
 import { SubdomainManagerService } from 'src/engine/core-modules/domain/subdomain-manager/services/subdomain-manager.service';
 import { DEFAULT_DPA_REGION } from 'src/engine/core-modules/dpa/config/dpa-region-config.constant';
 import { DpaAgreementEntity } from 'src/engine/core-modules/dpa/entities/dpa-agreement.entity';
@@ -93,6 +94,7 @@ export class SignInUpService {
     private readonly enterprisePlanService: EnterprisePlanService,
     private readonly eventLogEmitterService: EventLogEmitterService,
     private readonly billingCreditService: BillingCreditService,
+    private readonly billingService: BillingService,
     @InjectDataSource()
     private readonly dataSource: DataSource,
   ) {}
@@ -271,7 +273,12 @@ export class SignInUpService {
     workspace: WorkspaceEntity,
     user: ExistingUserOrPartialUserWithPicture,
   ) {
-    if (workspace.activationStatus === WorkspaceActivationStatus.ACTIVE) return;
+    if (
+      workspace.activationStatus === WorkspaceActivationStatus.ACTIVE ||
+      workspace.activationStatus === WorkspaceActivationStatus.CREATED
+    ) {
+      return;
+    }
 
     if (user.userData.type !== 'existingUser') {
       throw new AuthException(
@@ -324,7 +331,8 @@ export class SignInUpService {
       await this.activateOnboardingForUser({
         user,
         workspace: params.workspace,
-        shouldShowConnectAccountStep: false,
+        shouldShowConnectAccountStep: true,
+        shouldShowInstallAppsStep: false,
       });
 
       await this.userWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace(
@@ -357,10 +365,12 @@ export class SignInUpService {
       user,
       workspace,
       shouldShowConnectAccountStep,
+      shouldShowInstallAppsStep,
     }: {
       user: Pick<UserEntity, 'id' | 'firstName' | 'lastName'>;
       workspace: WorkspaceEntity;
       shouldShowConnectAccountStep: boolean;
+      shouldShowInstallAppsStep: boolean;
     },
     queryRunner?: QueryRunner,
   ) {
@@ -384,14 +394,16 @@ export class SignInUpService {
       queryRunner,
     );
 
-    await this.onboardingService.setOnboardingInstallAppsPending(
-      {
-        userId: user.id,
-        workspaceId: workspace.id,
-        value: true,
-      },
-      queryRunner,
-    );
+    if (shouldShowInstallAppsStep) {
+      await this.onboardingService.setOnboardingInstallAppsPending(
+        {
+          userId: user.id,
+          workspaceId: workspace.id,
+          value: true,
+        },
+        queryRunner,
+      );
+    }
   }
 
   private async saveNewUser(
@@ -663,6 +675,7 @@ export class SignInUpService {
               user,
               workspace,
               shouldShowConnectAccountStep: true,
+              shouldShowInstallAppsStep: true,
             },
             queryRunner,
           );
@@ -707,6 +720,14 @@ export class SignInUpService {
       void this.eventLogEmitterService
         .createContext({ workspaceId })
         .insertWorkspaceEvent(WORKSPACE_CREATED_EVENT, {});
+
+      if (this.billingService.isBillingEnabled()) {
+        await this.billingService.ensureBillingCustomer({
+          userEmail: email,
+          workspaceId: workspace.id,
+          workspaceDisplayName: workspace.displayName,
+        });
+      }
 
       return { user, workspace };
     } catch (error) {

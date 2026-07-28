@@ -34,7 +34,9 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
       case ApplicationExceptionCode.APP_ALREADY_INSTALLED:
       case ApplicationExceptionCode.CANNOT_DOWNGRADE_APPLICATION:
       case ApplicationExceptionCode.SERVER_VERSION_INCOMPATIBLE:
+      case ApplicationExceptionCode.WORKSPACE_VERSION_INCOMPATIBLE:
       case ApplicationExceptionCode.INVALID_APP_ENGINE_REQUIREMENT:
+      case ApplicationExceptionCode.INVALID_WORKSPACE_VERSION:
         throw new UserInputError(exception);
       case ApplicationExceptionCode.PACKAGE_RESOLUTION_FAILED:
       case ApplicationExceptionCode.POST_INSTALL_ERROR:
@@ -42,6 +44,7 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
       case ApplicationExceptionCode.TARBALL_EXTRACTION_FAILED:
       case ApplicationExceptionCode.UPGRADE_FAILED:
       case ApplicationExceptionCode.INVALID_SERVER_VERSION:
+      case ApplicationExceptionCode.KEY_VALUE_PERSISTENCE_FAILED:
         throw new InternalServerError(exception);
       case ApplicationExceptionCode.APPLICATION_INSTALLATION_FAILED: {
         const installationError = new BaseGraphQLError(
