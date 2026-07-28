@@ -8,7 +8,6 @@ import {
   ResolveField,
 } from '@nestjs/graphql';
 
-import { generateId } from 'ai';
 import GraphQLJSON from 'graphql-type-json';
 import { PermissionFlagType } from 'twenty-shared/constants';
 import { isDefined } from 'twenty-shared/utils';
@@ -37,6 +36,7 @@ import { AgentChatStreamingService } from 'src/engine/metadata-modules/ai/ai-cha
 import { AgentChatService } from 'src/engine/metadata-modules/ai/ai-chat/services/agent-chat.service';
 import { SystemPromptBuilderService } from 'src/engine/metadata-modules/ai/ai-chat/services/system-prompt-builder.service';
 import { getCancelChannel } from 'src/engine/metadata-modules/ai/ai-chat/utils/get-cancel-channel.util';
+import { tagAiChatStreamScope } from 'src/engine/metadata-modules/ai/ai-chat/utils/tag-ai-chat-stream-scope.util';
 import { AiModelRegistryService } from 'src/engine/metadata-modules/ai/ai-models/services/ai-model-registry.service';
 import {
   AiException,
@@ -45,6 +45,7 @@ import {
 import { AiGraphqlApiExceptionInterceptor } from 'src/engine/metadata-modules/ai/interceptors/ai-graphql-api-exception.interceptor';
 import { InjectWorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/inject-workspace-scoped-repository.decorator';
 import { WorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/workspace-scoped-repository';
+
 @UseGuards(WorkspaceAuthGuard, SettingsPermissionGuard(PermissionFlagType.AI))
 @UseInterceptors(AiGraphqlApiExceptionInterceptor)
 @MetadataResolver(() => AgentChatThreadDTO)
@@ -255,6 +256,13 @@ export class AgentChatResolver {
       return { messageId: result.messageId, queued: true };
     }
 
+    tagAiChatStreamScope({
+      streamId: result.streamId,
+      turnId: result.turnId,
+      threadId,
+      workspaceId: workspace.id,
+    });
+
     return {
       messageId: result.messageId,
       queued: false,
@@ -289,6 +297,13 @@ export class AgentChatResolver {
       userWorkspaceId,
       workspace,
       modelId,
+    });
+
+    tagAiChatStreamScope({
+      streamId: result.streamId,
+      turnId: result.turnId,
+      threadId,
+      workspaceId: workspace.id,
     });
 
     return {
@@ -336,44 +351,24 @@ export class AgentChatResolver {
       );
     }
 
-    const streamId = generateId();
+    const { streamId, turnId } =
+      await this.agentChatStreamingService.answerPendingQuestionAndResumeStream(
+        {
+          threadId,
+          messageId,
+          answers,
+          userWorkspaceId,
+          workspace,
+          modelId,
+        },
+      );
 
-    const { turnId, rollback } =
-      await this.agentChatService.resolvePendingQuestion({
-        threadId,
-        messageId,
-        answers,
-        streamId,
-        workspaceId: workspace.id,
-      });
-
-    await this.eventPublisherService
-      .publish({
-        threadId,
-        workspaceId: workspace.id,
-        event: { type: 'question-answered' },
-      })
-      .catch(() => {});
-
-    try {
-      await this.agentChatStreamingService.enqueueResumeStream({
-        threadId,
-        userWorkspaceId,
-        workspace,
-        turnId,
-        streamId,
-        modelId,
-      });
-    } catch (error) {
-      await this.agentChatService.restorePendingQuestion({
-        threadId,
-        messageId,
-        streamId,
-        workspaceId: workspace.id,
-        rollback,
-      });
-      throw error;
-    }
+    tagAiChatStreamScope({
+      streamId,
+      turnId,
+      threadId,
+      workspaceId: workspace.id,
+    });
 
     return { messageId, queued: false, streamId };
   }

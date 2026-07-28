@@ -3,6 +3,8 @@ import { useAuth } from '@/auth/hooks/useAuth';
 import { billingCheckoutSessionState } from '@/auth/states/billingCheckoutSessionState';
 import { currentUserState } from '@/auth/states/currentUserState';
 import { calendarBookingPageIdState } from '@/client-config/states/calendarBookingPageIdState';
+import { StyledOnboardingContentBlock } from '@/onboarding/components/StyledOnboardingContentBlock';
+import { StyledOnboardingStepHeading } from '@/onboarding/components/StyledOnboardingStepHeading';
 import { StyledOnboardingStepPage } from '@/onboarding/components/StyledOnboardingStepPage';
 import { StyledOnboardingStepSubtitle } from '@/onboarding/components/StyledOnboardingStepSubtitle';
 import { StyledOnboardingStepTagsRow } from '@/onboarding/components/StyledOnboardingStepTagsRow';
@@ -11,7 +13,7 @@ import { OnboardingStepAnimatedItem } from '@/onboarding/components/OnboardingSt
 import { OnboardingCreditsRewardTag } from '@/onboarding/components/import-contacts/OnboardingCreditsRewardTag';
 import { OnboardingPlanCard } from '@/onboarding/components/upgrade-free-trial/OnboardingPlanCard';
 import { OnboardingTrialExtensionTag } from '@/onboarding/components/upgrade-free-trial/OnboardingTrialExtensionTag';
-import { UPGRADE_STEP_CONTENT_WIDTH } from '@/onboarding/constants/UpgradeStepContentWidth';
+import { isOnboardingCheckoutPendingState } from '@/onboarding/states/isOnboardingCheckoutPendingState';
 import { useBaseLicensedPriceByPlanKeyAndInterval } from '@/settings/billing/hooks/useBaseLicensedPriceByPlanKeyAndInterval';
 import { useHandleCheckoutSession } from '@/settings/billing/hooks/useHandleCheckoutSession';
 import { useStripeAppearance } from '@/settings/billing/hooks/useStripeAppearance';
@@ -19,6 +21,7 @@ import { useStripePromise } from '@/settings/billing/hooks/useStripePromise';
 import { useSubmitSubscriptionPayment } from '@/settings/billing/hooks/useSubmitSubscriptionPayment';
 import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
+import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
 import { styled } from '@linaria/react';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Elements, PaymentElement } from '@stripe/react-stripe-js';
@@ -27,7 +30,7 @@ import { isDefined } from 'twenty-shared/utils';
 import { Info, Loader } from 'twenty-ui/feedback';
 import { MainButton } from 'twenty-ui/input';
 import { CAL_LINK, ClickToActionLink } from 'twenty-ui/navigation';
-import { themeCssVariables } from 'twenty-ui/theme-constants';
+import { MOBILE_VIEWPORT, themeCssVariables } from 'twenty-ui/theme-constants';
 import {
   type Billing,
   type BillingPlanKey,
@@ -37,31 +40,19 @@ import {
 const StyledPage = styled(StyledOnboardingStepPage)`
   gap: ${themeCssVariables.spacing[5]};
   padding: ${themeCssVariables.spacing[6]} ${themeCssVariables.spacing[8]};
+
+  @media (max-width: ${MOBILE_VIEWPORT}px) {
+    padding: ${themeCssVariables.spacing[6]} ${themeCssVariables.spacing[4]};
+  }
 `;
 
-const StyledHeading = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${themeCssVariables.spacing[4]};
-  max-width: 100%;
-  width: ${UPGRADE_STEP_CONTENT_WIDTH}px;
-`;
-
-const StyledCards = styled.div`
-  display: flex;
-  flex-direction: column;
+const StyledCards = styled(StyledOnboardingContentBlock)`
   gap: ${themeCssVariables.spacing['1.5']};
-  max-width: 100%;
-  width: ${UPGRADE_STEP_CONTENT_WIDTH}px;
 `;
 
-const StyledFooter = styled.div`
+const StyledFooter = styled(StyledOnboardingContentBlock)`
   align-items: center;
-  display: flex;
-  flex-direction: column;
   gap: ${themeCssVariables.spacing['1.5']};
-  max-width: 100%;
-  width: ${UPGRADE_STEP_CONTENT_WIDTH}px;
 `;
 
 const StyledLinkGroup = styled.div`
@@ -100,10 +91,19 @@ const UpgradeFreeTrialSubmitButton = ({
     recurringInterval,
   });
 
+  const setIsOnboardingCheckoutPending = useSetAtomState(
+    isOnboardingCheckoutPendingState,
+  );
+
+  const handleSubmit = () => {
+    setIsOnboardingCheckoutPending(true);
+    void submit();
+  };
+
   return (
     <MainButton
       title={t`Continue`}
-      onClick={submit}
+      onClick={handleSubmit}
       fullWidth
       Icon={() => (isSubmitting ? <Loader /> : null)}
       disabled={!isStripeReady || isSubmitting}
@@ -152,6 +152,15 @@ const UpgradeFreeTrialContent = ({
       requirePaymentMethod: billingCheckoutSession.requirePaymentMethod,
       successUrlPath: AppPath.PlanRequiredSuccess,
     });
+
+  const setIsOnboardingCheckoutPending = useSetAtomState(
+    isOnboardingCheckoutPendingState,
+  );
+
+  const handleCheckoutSessionClick = () => {
+    setIsOnboardingCheckoutPending(true);
+    void handleCheckoutSession();
+  };
 
   const selectTrialPeriod = (withCreditCard: boolean) => () => {
     if (
@@ -224,7 +233,7 @@ const UpgradeFreeTrialContent = ({
           ) : (
             <MainButton
               title={t`Continue`}
-              onClick={handleCheckoutSession}
+              onClick={handleCheckoutSessionClick}
               fullWidth
               Icon={() => (isCheckoutSubmitting ? <Loader /> : null)}
               disabled={isCheckoutSubmitting}
@@ -282,7 +291,7 @@ export const UpgradeFreeTrial = ({
 
   return (
     <StyledPage>
-      <StyledHeading>
+      <StyledOnboardingStepHeading>
         <OnboardingStepAnimatedItem index={0}>
           <StyledOnboardingStepTitle>{t`Upgrade your free trial`}</StyledOnboardingStepTitle>
         </OnboardingStepAnimatedItem>
@@ -303,7 +312,7 @@ export const UpgradeFreeTrial = ({
             )}
           </StyledOnboardingStepTagsRow>
         </OnboardingStepAnimatedItem>
-      </StyledHeading>
+      </StyledOnboardingStepHeading>
 
       {isDefined(stripePromise) && isDefined(baseProductPrice) ? (
         <Elements

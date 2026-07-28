@@ -5,28 +5,40 @@ import { requestCallRecordingSummaryGeneration } from 'src/front-components/util
 
 const enqueueSnackbarMock = vi.hoisted(() => vi.fn());
 const postMock = vi.hoisted(() => vi.fn());
+const restApiClientMock = vi.hoisted(() => vi.fn());
 
 vi.mock('twenty-sdk/front-component', () => ({
   enqueueSnackbar: enqueueSnackbarMock,
 }));
 
 vi.mock('twenty-client-sdk/rest', () => ({
-  RestApiClient: vi.fn(function RestApiClient() {
-    return {
-      post: postMock,
-    };
-  }),
+  RestApiClient: restApiClientMock,
 }));
 
 describe('requestCallRecordingSummaryGeneration', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    restApiClientMock.mockImplementation(function RestApiClient() {
+      return { post: postMock };
+    });
     postMock.mockResolvedValue({
       outcome: 'processed',
       generatedCallRecordingIds: ['call-recording-1'],
       failedCallRecordingIds: [],
       erroredCallRecordingIds: [],
     });
+  });
+
+  it('posts the /s-prefixed route path and lets the client resolve the url', async () => {
+    await requestCallRecordingSummaryGeneration({
+      calendarEventIds: ['calendar-event-1'],
+    });
+
+    expect(restApiClientMock).toHaveBeenCalledWith();
+    expect(postMock).toHaveBeenCalledWith(
+      `/s${GENERATE_CALL_RECORDING_SUMMARIES_ROUTE_PATH}`,
+      { calendarEventIds: ['calendar-event-1'] },
+    );
   });
 
   it('does nothing when no calendar events are selected', async () => {
