@@ -9,8 +9,8 @@ import {
   RelationType,
 } from 'twenty-shared/types';
 
-import { STANDARD_RELATION_FIELD_PROPERTIES_BY_RELATION_OBJECT } from 'src/engine/metadata-modules/object-metadata/constants/standard-relation-field-properties.constant';
 import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
+import { STANDARD_RELATION_FIELD_PROPERTIES_BY_RELATION_OBJECT } from 'src/engine/metadata-modules/object-metadata/constants/standard-relation-field-properties.constant';
 import { type AllStandardObjectFieldName } from 'src/engine/workspace-manager/twenty-standard-application/types/all-standard-object-field-name.type';
 import {
   type CreateStandardFieldArgs,
@@ -195,6 +195,12 @@ export const buildPersonStandardFlatFieldMetadatas = ({
       isNullable: true,
       settings: {
         maxNumberOfValues: 1,
+      },
+      defaultValue: {
+        primaryPhoneNumber: "''",
+        primaryPhoneCountryCode: "'VN'",
+        primaryPhoneCallingCode: "'+84'",
+        additionalPhones: null,
       },
     },
     standardObjectMetadataRelatedEntityIds,
