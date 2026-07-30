@@ -140,7 +140,7 @@ export const SettingsLegalDpaNew = () => {
         <Section>
           <H2Title
             title={t`Your details`}
-            description={t`The PDF is pre-signed by Tina CRM and executed with your legal entity and authorized signatory.`}
+            description={t`The PDF is pre-signed by TinaCRM and executed with your legal entity and authorized signatory.`}
           />
           <SettingsTextInput
             instanceId="dpa-legal-entity-name"

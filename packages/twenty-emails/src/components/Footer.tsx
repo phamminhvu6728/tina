@@ -24,7 +24,7 @@ export const Footer = ({ i18n }: FooterProps) => {
             />
           </ShadowText>
         </Column>
-        <Column>
+        {/* <Column>
           <ShadowText>
             <Link
               href="https://github.com/twentyhq/twenty"
@@ -32,18 +32,17 @@ export const Footer = ({ i18n }: FooterProps) => {
               aria-label={i18n._("Visit Twenty's GitHub repository")}
             />
           </ShadowText>
-        </Column>
+        </Column> */}
         <Column>
           <ShadowText>
             <Link
-              // link doc ( tinacrm chưa active)
-              href="https://docs.twenty.com/getting-started/introduction"
+              href="https://tinacrm.com/solution/main-feature"
               value={i18n._('User guide')}
               aria-label={i18n._("Read Twenty's user guide")}
             />
           </ShadowText>
         </Column>
-        <Column>
+        {/* <Column>
           <ShadowText>
             <Link
               // link doc
@@ -52,7 +51,7 @@ export const Footer = ({ i18n }: FooterProps) => {
               aria-label={i18n._("Visit Twenty's developer documentation")}
             />
           </ShadowText>
-        </Column>
+        </Column> */}
       </Row>
       <ShadowText>
         <>

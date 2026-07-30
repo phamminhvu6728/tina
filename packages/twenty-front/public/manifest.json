@@ -1,6 +1,6 @@
 {
-  "short_name": "Tina CRM",
-  "name": "Tina CRM",
+  "short_name": "TinaCRM",
+  "name": "TinaCRM",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

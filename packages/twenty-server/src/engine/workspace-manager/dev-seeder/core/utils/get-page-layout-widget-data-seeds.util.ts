@@ -522,7 +522,7 @@ export const getPageLayoutWidgetDataSeeds = (
         workspaceId,
         PAGE_LAYOUT_TAB_SEEDS.DOCUMENTATION,
       ),
-      title: 'Tina CRM Star History',
+      title: 'TinaCRM Star History',
       type: WidgetType.IFRAME,
       gridPosition: { row: 0, column: 0, rowSpan: 12, columnSpan: 12 },
       position: {
