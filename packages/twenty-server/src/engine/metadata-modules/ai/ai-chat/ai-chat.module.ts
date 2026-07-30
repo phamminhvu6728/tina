@@ -34,7 +34,8 @@ import { AgentChatSubscriptionResolver } from './resolvers/agent-chat-subscripti
 import { AgentChatCancelSubscriberService } from './services/agent-chat-cancel-subscriber.service';
 import { AgentChatEventPublisherService } from './services/agent-chat-event-publisher.service';
 import { AgentChatStreamHeartbeatService } from './services/agent-chat-stream-heartbeat.service';
-import { AgentChatStreamingService } from './services/agent-chat-streaming.service';
+import { ApplicationEntity } from 'src/engine/core-modules/application/application.entity';
+import { AgentChatStreamingService } from 'src/engine/metadata-modules/ai/ai-chat/services/agent-chat-streaming.service';
 import { AgentChatService } from './services/agent-chat.service';
 import { AgentTitleGenerationService } from './services/agent-title-generation.service';
 import { ChatExecutionService } from './services/chat-execution.service';
@@ -48,6 +49,7 @@ import { SystemPromptBuilderService } from './services/system-prompt-builder.ser
       FileEntity,
       UserWorkspaceEntity,
       WorkspaceEntity,
+      ApplicationEntity,
     ]),
     AiAgentExecutionModule,
     BillingModule,

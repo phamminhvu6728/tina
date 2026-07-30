@@ -208,12 +208,21 @@ function isNotEmptyTextOrArray(value: unknown): boolean {
   return isNonEmptyString(value) || isNonEmptyArray(value);
 }
 
+function parseFlexibleBoolean(value: unknown): boolean | unknown {
+  if (typeof value === 'string') {
+    const lower = value.trim().toLowerCase();
+    if (lower === 'true') return true;
+    if (lower === 'false') return false;
+  }
+  return parseBooleanFromStringValue(value);
+}
+
 function evaluateBooleanFilter(filter: ResolvedFilter): boolean {
   switch (filter.operand) {
     case ViewFilterOperand.IS:
       return (
-        parseBooleanFromStringValue(filter.leftOperand) ===
-        parseBooleanFromStringValue(filter.rightOperand)
+        parseFlexibleBoolean(filter.leftOperand) ===
+        parseFlexibleBoolean(filter.rightOperand)
       );
     default:
       throw new Error(

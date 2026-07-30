@@ -17,11 +17,14 @@ import { findStepOrThrow } from 'src/modules/workflow/workflow-executor/utils/fi
 import { isWorkflowLogicFunctionAction } from 'src/modules/workflow/workflow-executor/workflow-actions/logic-function/guards/is-workflow-logic-function-action.guard';
 import { WorkflowLogicFunctionActionInput } from 'src/modules/workflow/workflow-executor/workflow-actions/logic-function/types/workflow-logic-function-action-input.type';
 
+import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
+
 @Injectable()
 export class LogicFunctionWorkflowAction implements WorkflowAction {
   constructor(
     private readonly logicFunctionExecutorService: LogicFunctionExecutorService,
     private readonly flatEntityMapsCacheService: WorkspaceManyOrAllFlatEntityMapsCacheService,
+    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
   ) {}
 
   async execute({
@@ -82,10 +85,76 @@ export class LogicFunctionWorkflowAction implements WorkflowAction {
       payload: workflowActionInput.logicFunctionInput,
     });
 
-    if (result.error) {
-      return { error: result.error.errorMessage };
+    let hasActivity = false;
+
+    try {
+      const triggerData = (context?.['Record is created'] ||
+        context?.['trigger']) as any;
+      let targetPersonId =
+        triggerData?.recordId ||
+        triggerData?.properties?.after?.id ||
+        triggerData?.properties?.before?.id ||
+        triggerData?.record?.id ||
+        triggerData?.id;
+
+      if (!targetPersonId && context) {
+        for (const [key, val] of Object.entries(context)) {
+          if (val && typeof val === 'object') {
+            const obj = val as any;
+            if (obj.recordId && typeof obj.recordId === 'string') {
+              targetPersonId = obj.recordId;
+              break;
+            }
+            if (obj.id && typeof obj.id === 'string' && obj.id.length === 36) {
+              targetPersonId = obj.id;
+              break;
+            }
+            if (obj.properties?.after?.id) {
+              targetPersonId = obj.properties.after.id;
+              break;
+            }
+          }
+        }
+      }
+
+      if (targetPersonId) {
+        const taskTargetRepo =
+          await this.globalWorkspaceOrmManager.getRepository(
+            workspaceId,
+            'taskTarget',
+            { shouldBypassPermissionChecks: true },
+          );
+
+        const count = await taskTargetRepo.count({
+          where: {
+            targetPersonId,
+          },
+        });
+
+        hasActivity = count > 0;
+      }
+    } catch {
+      // Fallback
     }
 
-    return { result: result.data || {} };
+    const outputData = (result.data as Record<string, any>) || {};
+
+    let finalHasActivity =
+      typeof outputData.hasActivity === 'boolean'
+        ? outputData.hasActivity
+        : hasActivity;
+
+    if (hasActivity) {
+      finalHasActivity = true;
+    }
+
+    return {
+      result: {
+        ...outputData,
+        hasActivity: finalHasActivity,
+        'hasActivity.boolean': finalHasActivity,
+        'hasActivity.string': finalHasActivity ? 'true' : 'false',
+      },
+    };
   }
 }
