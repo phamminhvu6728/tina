@@ -5,7 +5,7 @@ import { emailTheme } from 'src/common-style';
 export const BaseHead = () => {
   return (
     <Head>
-      <title>Tina CRM email</title>
+      <title>TinaCRM email</title>
       <Font
         fontFamily={emailTheme.font.family}
         fallbackFontFamily="sans-serif"

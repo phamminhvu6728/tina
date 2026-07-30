@@ -1401,32 +1401,32 @@ msgstr ""
 #. js-lingui-id: FKGcEL
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Add the Twenty MCP server as a remote context server in Zed."
-#~ msgstr "Add the Twenty MCP server as a remote context server in Zed."
+#~ msgstr "Add the TinaCRM MCP server as a remote context server in Zed."
 
 #. js-lingui-id: iA2nHX
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Add the Twenty MCP server from Augment Code settings."
-#~ msgstr "Add the Twenty MCP server from Augment Code settings."
+#~ msgstr "Add the TinaCRM MCP server from Augment Code settings."
 
 #. js-lingui-id: l+NzAk
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Add the Twenty MCP server from Raycast's MCP commands or settings."
-#~ msgstr "Add the Twenty MCP server from Raycast's MCP commands or settings."
+#~ msgstr "Add the TinaCRM MCP server from Raycast's MCP commands or settings."
 
 #. js-lingui-id: j6G/yI
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Add the Twenty MCP server in Gemini CLI settings."
-#~ msgstr "Add the Twenty MCP server in Gemini CLI settings."
+#~ msgstr "Add the TinaCRM MCP server in Gemini CLI settings."
 
 #. js-lingui-id: /OyhlM
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Add the Twenty MCP server to your LibreChat configuration file."
-#~ msgstr "Add the Twenty MCP server to your LibreChat configuration file."
+#~ msgstr "Add the TinaCRM MCP server to your LibreChat configuration file."
 
 #. js-lingui-id: K0DXoj
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Add the Twenty remote server with LM Studio's install link."
-#~ msgstr "Add the Twenty remote server with LM Studio's install link."
+#~ msgstr "Add the TinaCRM remote server with LM Studio's install link."
 
 #. js-lingui-id: 5+ttxv
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistInput.tsx
@@ -1441,7 +1441,7 @@ msgstr ""
 #. js-lingui-id: VbareD
 #: src/modules/settings/playground/components/SettingsMcpSetup.tsx
 #~ msgid "Add Twenty as a Model Context Protocol (MCP) server. Paste this config into Claude Desktop, Cursor, Cline, Continue, Zed, or any other MCP-aware client."
-#~ msgstr "Add Tina CRM as a Model Context Protocol (MCP) server. Paste this config into Claude Desktop, Cursor, Cline, Continue, Zed, or any other MCP-aware client."
+#~ msgstr "Add TinaCRM as a Model Context Protocol (MCP) server. Paste this config into Claude Desktop, Cursor, Cline, Continue, Zed, or any other MCP-aware client."
 
 #. js-lingui-id: XnwceV
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationRedirectURIsInput.tsx
@@ -3032,7 +3032,7 @@ msgstr ""
 #. js-lingui-id: xF/NXI
 #: src/modules/settings/billing/hooks/useBillingPortalSession.ts
 #~ msgid "Billing portal session error. Please retry or contact Twenty team"
-#~ msgstr "Billing portal session error. Please retry or contact Twenty team"
+#~ msgstr "Billing portal session error. Please retry or contact TinaCRM team"
 
 #. js-lingui-id: K1172m
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistSection.tsx
@@ -3159,7 +3159,7 @@ msgstr ""
 #. js-lingui-id: 8Pfllj
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
 #~ msgid "By using Twenty, you agree to the"
-#~ msgstr "By using Tina CRM, you agree to the"
+#~ msgstr "By using TinaCRM, you agree to the"
 
 #. js-lingui-id: Yx41df
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
@@ -3619,7 +3619,7 @@ msgstr ""
 #: src/modules/settings/billing/hooks/useHandleCheckoutSession.ts
 #: src/modules/settings/billing/hooks/useHandleCheckoutSession.ts
 #~ msgid "Checkout session error. Please retry or contact Twenty team"
-#~ msgstr "Checkout session error. Please retry or contact Tina CRM team"
+#~ msgstr "Checkout session error. Please retry or contact TinaCRM team"
 
 #. js-lingui-id: SviKkE
 #: src/pages/settings/profile/appearance/components/LocalePicker.tsx
@@ -4222,12 +4222,12 @@ msgstr ""
 #. js-lingui-id: g1/8jH
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Configure the Twenty MCP server manually in Cascade."
-#~ msgstr "Configure the Twenty MCP server manually in Cascade."
+#~ msgstr "Configure the TinaCRM MCP server manually in Cascade."
 
 #. js-lingui-id: XiyvRh
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Configure the Twenty MCP server manually in Cline."
-#~ msgstr "Configure the Twenty MCP server manually in Cline."
+#~ msgstr "Configure the TinaCRM MCP server manually in Cline."
 
 #. js-lingui-id: qA9AGQ
 #: src/modules/settings/domains/components/SettingsDomainRecords.tsx
@@ -6880,7 +6880,7 @@ msgstr ""
 #. js-lingui-id: qryOF/
 #: src/pages/settings/email/SettingsWorkspaceEmail.tsx
 #~ msgid "Emails are logged, not sent. Sending requires the AWS SES driver with an Enterprise license, or Twenty Cloud."
-#~ msgstr "Emails are logged, not sent. Sending requires the AWS SES driver with an Enterprise license, or Tina CRM Cloud."
+#~ msgstr "Emails are logged, not sent. Sending requires the AWS SES driver with an Enterprise license, or TinaCRM Cloud."
 
 #. js-lingui-id: mHrqHa
 #: src/modules/settings/accounts/components/SettingsAccountsMessageChannelDetails.tsx
@@ -7507,7 +7507,7 @@ msgstr ""
 #. js-lingui-id: QmR+2U
 #: src/modules/settings/billing/hooks/useEndSubscriptionTrialPeriod.ts
 #~ msgid "Error while ending trial period. Please contact Twenty team."
-#~ msgstr "Error while ending trial period. Please contact Tina CRM team."
+#~ msgstr "Error while ending trial period. Please contact TinaCRM team."
 
 #. js-lingui-id: 5g78zo
 #: src/pages/settings/members/SettingsWorkspaceMember.tsx
@@ -9171,7 +9171,7 @@ msgstr ""
 #. js-lingui-id: 1ETc0T
 #: src/pages/settings/community/SettingsCommunity.tsx
 #~ msgid "Hire a partner to help you implement and customize Twenty."
-#~ msgstr "Hire a partner to help you implement and customize Tina CRM."
+#~ msgstr "Hire a partner to help you implement and customize TinaCRM."
 
 #. js-lingui-id: i0qMbr
 #: src/modules/navigation/components/MainNavigationDrawerTabsRow.tsx
@@ -13212,7 +13212,7 @@ msgstr ""
 #. js-lingui-id: 2l4SGU
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 #~ msgid "One subscription provides one enterprise key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install Twenty on a second server, activate it with this same enterprise key, then register that server as a development instance. Development instances unlock enterprise features without extra billing and do not count toward your production seats."
-#~ msgstr "One subscription provides one enterprise key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install Twenty on a second server, activate it with this same enterprise key, then register that server as a development instance. Development instances unlock enterprise features without extra billing and do not count toward your production seats."
+#~ msgstr "One subscription provides one enterprise key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install TinaCRM on a second server, activate it with this same enterprise key, then register that server as a development instance. Development instances unlock enterprise features without extra billing and do not count toward your production seats."
 
 #. js-lingui-id: oFTo3P
 #: src/modules/settings/event-logs/components/SettingsLogs.tsx
@@ -13297,12 +13297,12 @@ msgstr ""
 #. js-lingui-id: n0vVgf
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Open Claude with the Twenty connector name and MCP URL prefilled."
-#~ msgstr "Open Claude with the Twenty connector name and MCP URL prefilled."
+#~ msgstr "Open Claude with the TinaCRM connector name and MCP URL prefilled."
 
 #. js-lingui-id: +n2jpB
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Open Cursor's MCP installer with the Twenty remote server config."
-#~ msgstr "Open Cursor's MCP installer with the Twenty remote server config."
+#~ msgstr "Open Cursor's MCP installer with the TinaCRM remote server config."
 
 #. js-lingui-id: pZZH4Q
 #: src/modules/auth/sign-in-up/components/EmailVerificationSent.tsx
@@ -13338,12 +13338,12 @@ msgstr ""
 #. js-lingui-id: q170S2
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Open Replit with the Twenty remote server config."
-#~ msgstr "Open Replit with the Twenty remote server config."
+#~ msgstr "Open Replit with the TinaCRM remote server config."
 
 #. js-lingui-id: sBd/cl
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 #~ msgid "Open Twenty's official ChatGPT integration for your workspace."
-#~ msgstr "Open Twenty's official ChatGPT integration for your workspace."
+#~ msgstr "Open TinaCRM's official ChatGPT integration for your workspace."
 
 #. js-lingui-id: OV5wZZ
 #: src/modules/navigation-menu-item/display/sections/components/NavigationDrawerOpenedSection.tsx
@@ -13629,7 +13629,7 @@ msgstr ""
 #. js-lingui-id: NRvxzv
 #: src/pages/not-found/NotFound.tsx
 #~ msgid "Page Not Found | Twenty"
-#~ msgstr "Page Not Found | Tina CRM"
+#~ msgstr "Page Not Found | TinaCRM"
 
 #. js-lingui-id: sF+Xp9
 #: src/modules/settings/event-logs/components/EventLogTableSelector.tsx
@@ -17121,7 +17121,7 @@ msgstr ""
 #: src/modules/settings/billing/hooks/useSubmitSubscriptionPayment.ts
 #: src/modules/settings/billing/hooks/useSubmitSubscriptionPayment.ts
 #~ msgid "Subscription error. Please retry or contact Twenty team"
-#~ msgstr "Subscription error. Please retry or contact Twenty team"
+#~ msgstr "Subscription error. Please retry or contact TinaCRM team"
 
 #. js-lingui-id: FooJUj
 #: src/modules/settings/billing/hooks/useSwitchBillingPlan.ts
@@ -17273,7 +17273,7 @@ msgstr ""
 #. js-lingui-id: +9x4tK
 #: src/pages/onboarding/SyncEmails.tsx
 #~ msgid "Sync your Emails and Calendar with Twenty. Choose your privacy settings."
-#~ msgstr "Sync your Emails and Calendar with Tina CRM. Choose your privacy settings."
+#~ msgstr "Sync your Emails and Calendar with TinaCRM. Choose your privacy settings."
 
 #. js-lingui-id: N2FcBE
 #: src/modules/settings/accounts/components/SettingsAccountsConnectedAccountsRowRightContainer.tsx
@@ -17539,11 +17539,11 @@ msgstr ""
 #~ "\n"
 #~ "See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
 #~ msgstr ""
-#~ "The base data model every Twenty workspace runs on.\n"
+#~ "The base data model every TinaCRM workspace runs on.\n"
 #~ "\n"
 #~ "#### What \"foundation\" means\n"
 #~ "\n"
-#~ "Every Twenty workspace starts with this set of objects. They define the shape of your CRM, including relationships, activity, and reporting. Everything else, including marketplace apps, AI agents, and custom objects, plugs into them.\n"
+#~ "Every TinaCRM workspace starts with this set of objects. They define the shape of your CRM, including relationships, activity, and reporting. Everything else, including marketplace apps, AI agents, and custom objects, plugs into them.\n"
 #~ "\n"
 #~ "#### Included objects\n"
 #~ "- **People & Companies**: contact and account records\n"
@@ -17551,11 +17551,11 @@ msgstr ""
 #~ "- **Notes & Tasks**: activity and follow-ups\n"
 #~ "- **Workflows & Dashboards**: automation and reporting\n"
 #~ "\n"
-#~ "Remove this app and the rest of Twenty has nothing to hang off.\n"
+#~ "Remove this app and the rest of TinaCRM has nothing to hang off.\n"
 #~ "\n"
 #~ "#### Build your own app\n"
 #~ "\n"
-#~ "Extend Twenty with your own objects, fields, logic functions, or AI skills. Scaffold a new app in one command:\n"
+#~ "Extend TinaCRM with your own objects, fields, logic functions, or AI skills. Scaffold a new app in one command:\n"
 #~ "\n"
 #~ "```bash\n"
 #~ "npx create-twenty-app@latest my-twenty-app\n"
@@ -17655,7 +17655,7 @@ msgstr ""
 #. js-lingui-id: Ya1wb4
 #: src/pages/settings/legal/SettingsLegalDpaNew.tsx
 #~ msgid "The PDF is pre-signed by Twenty and executed with your legal entity and authorized signatory."
-#~ msgstr "The PDF is pre-signed by Twenty and executed with your legal entity and authorized signatory."
+#~ msgstr "The PDF is pre-signed by TinaCRM and executed with your legal entity and authorized signatory."
 
 #. js-lingui-id: wxyrqd
 #: src/modules/workflow/workflow-steps/workflow-actions/pick-record-action/components/WorkflowEditActionPickRecord.tsx
@@ -18527,7 +18527,7 @@ msgstr ""
 #. js-lingui-id: JnaRPe
 #: src/modules/spreadsheet-import/steps/components/MatchColumnsStep/components/ColumnGrid.tsx
 #~ msgid "Twenty fields"
-#~ msgstr "Tina CRM fields"
+#~ msgstr "TinaCRM fields"
 
 #. js-lingui-id: YIjS4q
 #: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
@@ -20014,7 +20014,7 @@ msgstr ""
 #. js-lingui-id: nTuObL
 #: src/pages/auth/SignInUp.tsx
 #~ msgid "Welcome to Twenty"
-#~ msgstr "Welcome to Tina CRM"
+#~ msgstr "Welcome to TinaCRM"
 
 #. js-lingui-id: t8ZvkC
 #: src/modules/onboarding/constants/WelcomeTitleMessage.ts

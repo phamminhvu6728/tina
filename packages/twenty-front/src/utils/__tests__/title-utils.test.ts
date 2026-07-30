@@ -52,7 +52,7 @@ describe('title-utils', () => {
     expect(getPageTitleFromPath('/settings/general')).toBe(
       'General - Settings',
     );
-    expect(getPageTitleFromPath('/')).toBe('Tina CRM');
-    expect(getPageTitleFromPath('/random')).toBe('Tina CRM');
+    expect(getPageTitleFromPath('/')).toBe('TinaCRM');
+    expect(getPageTitleFromPath('/random')).toBe('TinaCRM');
   });
 });

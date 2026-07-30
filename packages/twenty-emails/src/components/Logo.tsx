@@ -9,9 +9,9 @@ export const Logo = () => {
   return (
     <Img
       src={DEFAULT_WORKSPACE_LOGO}
-      alt="Tina CRM logo"
-      width="40"
-      height="40"
+      alt="TinaCRM logo"
+      width="150"
+      height="61"
       style={logoStyle}
     />
   );

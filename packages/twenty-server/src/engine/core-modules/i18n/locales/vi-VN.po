@@ -146,7 +146,7 @@ msgstr "Một tập khách hàng được chọn thủ công"
 #. js-lingui-id: TF/ZV2
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "A heads up before your Twenty trial ends"
-msgstr "Thông báo trước khi bản dùng thử Twenty của bạn kết thúc"
+msgstr "Thông báo trước khi bản dùng thử TinaCRM của bạn kết thúc"
 
 #. js-lingui-id: 6yZjO1
 #: src/engine/core-modules/application/application.exception.ts
@@ -4321,7 +4321,7 @@ msgstr "Bảng nối liên kết các liên kết tin nhắn của kênh với c
 #. js-lingui-id: PviVyk
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Join your team on Twenty"
-msgstr "Tham gia vào đội ngũ của bạn trên Tina CRM"
+msgstr "Tham gia vào đội ngũ của bạn trên TinaCRM"
 
 #. js-lingui-id: ffWso3
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-call-recording-standard-flat-field-metadata.util.ts
@@ -7275,7 +7275,7 @@ msgstr "Các trường hệ thống không thể được cập nhật"
 #. js-lingui-id: aK2k19
 #: src/engine/metadata-modules/index-metadata/services/index-metadata.service.ts
 msgid "System indexes are required for Twenty to work and cannot be deleted."
-msgstr "Các chỉ mục hệ thống là cần thiết để Tina CRM hoạt động và không thể bị xóa."
+msgstr "Các chỉ mục hệ thống là cần thiết để TinaCRM hoạt động và không thể bị xóa."
 
 #. js-lingui-id: /ojawH
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-object-metadata-validator.service.ts
@@ -7924,7 +7924,7 @@ msgstr "Khóa API này chưa được gán vai trò."
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
-msgstr "Ứng dụng này yêu cầu phiên bản máy chủ Tina CRM mới hơn. Vui lòng nâng cấp máy chủ hoặc sử dụng phiên bản ứng dụng tương thích."
+msgstr "Ứng dụng này yêu cầu phiên bản máy chủ TinaCRM mới hơn. Vui lòng nâng cấp máy chủ hoặc sử dụng phiên bản ứng dụng tương thích."
 
 #. js-lingui-id: 99gsJ/
 #: src/engine/metadata-modules/index-metadata/utils/validate-no-duplicate-unique-index.util.ts
@@ -9128,7 +9128,7 @@ msgstr "Thứ Tư"
 #. js-lingui-id: TVkCrJ
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Welcome to Twenty: Please Confirm Your Email"
-msgstr "Chào mừng đến với Tina CRM: Vui lòng xác nhận email của bạn"
+msgstr "Chào mừng đến với TinaCRM: Vui lòng xác nhận email của bạn"
 
 #. js-lingui-id: nCHI/F
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-campaign-standard-flat-field-metadata.util.ts
@@ -9851,12 +9851,12 @@ msgstr "Thành viên trong nhóm của bạn phụ trách quản lý tài khoả
 #. js-lingui-id: sOfbGC
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty plan renews soon"
-msgstr "Gói Twenty của bạn sẽ gia hạn sớm"
+msgstr "Gói TinaCRM của bạn sẽ gia hạn sớm"
 
 #. js-lingui-id: qW+K5e
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty trial is ending soon"
-msgstr "Bản dùng thử Twenty của bạn sắp kết thúc"
+msgstr "Bản dùng thử TinaCRM của bạn sắp kết thúc"
 
 #. js-lingui-id: ej/tZF
 #: src/engine/core-modules/graphql/hooks/use-graphql-error-handler.hook.ts

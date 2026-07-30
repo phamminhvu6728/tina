@@ -1,1 +1,1 @@
-export const DEFAULT_WORKSPACE_NAME = 'Tina CRM';
+export const DEFAULT_WORKSPACE_NAME = 'TinaCRM';
