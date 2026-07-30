@@ -88,6 +88,36 @@ export class CreateRecordWorkflowAction implements WorkflowAction {
       return { error: toolOutput.error || toolOutput.message };
     }
 
+    const triggerData = (context?.['Record is created'] ||
+      context?.['trigger']) as any;
+    const targetPersonId =
+      triggerData?.recordId ||
+      triggerData?.properties?.after?.id ||
+      triggerData?.properties?.before?.id ||
+      triggerData?.record?.id ||
+      triggerData?.id;
+
+    if (
+      workflowActionInput.objectName === 'task' &&
+      toolOutput.result?.id &&
+      targetPersonId
+    ) {
+      try {
+        await this.createRecordService.execute({
+          objectName: 'taskTarget',
+          objectRecord: {
+            taskId: toolOutput.result.id,
+            targetPersonId: targetPersonId,
+          },
+          authContext: executionContext.authContext,
+          createdBy,
+          rolePermissionConfig: executionContext.rolePermissionConfig,
+        });
+      } catch {
+        // Ignore fallback if trigger object is not a person
+      }
+    }
+
     return {
       result: toolOutput.result,
     };

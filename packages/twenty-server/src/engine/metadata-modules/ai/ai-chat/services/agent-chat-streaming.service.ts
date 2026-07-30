@@ -13,6 +13,7 @@ import { type FindOptionsWhere, In, IsNull, Like, Not } from 'typeorm';
 
 import { FileEntity } from 'src/engine/core-modules/file/entities/file.entity';
 import { FileUrlService } from 'src/engine/core-modules/file/file-url/file-url.service';
+import { FileService } from 'src/engine/core-modules/file/services/file.service';
 import { InjectMessageQueue } from 'src/engine/core-modules/message-queue/decorators/message-queue.decorator';
 import { MessageQueue } from 'src/engine/core-modules/message-queue/message-queue.constants';
 import { MessageQueueService } from 'src/engine/core-modules/message-queue/services/message-queue.service';
@@ -66,6 +67,7 @@ export class AgentChatStreamingService {
     private readonly eventPublisherService: AgentChatEventPublisherService,
     private readonly fileUrlService: FileUrlService,
     private readonly streamHeartbeatService: AgentChatStreamHeartbeatService,
+    private readonly fileService: FileService,
     private readonly metricsService: MetricsService,
   ) {}
 
@@ -752,26 +754,30 @@ export class AgentChatStreamingService {
     const validFiles = await this.fileRepository.find(workspaceId, {
       where: {
         id: In(fileIds),
-        path: Like(`${FileFolder.AgentChat}/%`),
       },
     });
 
-    const validFileIds = new Set(validFiles.map((file) => file.id));
+    return fileAttachments.map((attachment) => {
+      const file = validFiles.find(
+        (validFile) => validFile.id === attachment.id,
+      );
 
-    return fileAttachments
-      .filter((attachment) => validFileIds.has(attachment.id))
-      .map((attachment): ExtendedFileUIPart => {
-        const file = validFiles.find(
-          (validFile) => validFile.id === attachment.id,
-        );
+      return {
+        type: 'file' as const,
+        mediaType: file?.mimeType ?? 'application/octet-stream',
+        filename: attachment.filename,
+        url: '',
+        fileId: attachment.id,
+      };
+    });
+  }
 
-        return {
-          type: 'file' as const,
-          mediaType: file?.mimeType ?? 'application/octet-stream',
-          filename: attachment.filename,
-          url: '',
-          fileId: attachment.id,
-        };
-      });
+  private streamToBuffer(stream: Readable): Promise<Buffer> {
+    return new Promise((resolve, reject) => {
+      const chunks: Buffer[] = [];
+      stream.on('data', (chunk) => chunks.push(Buffer.from(chunk)));
+      stream.on('error', (err) => reject(err));
+      stream.on('end', () => resolve(Buffer.concat(chunks)));
+    });
   }
 }
