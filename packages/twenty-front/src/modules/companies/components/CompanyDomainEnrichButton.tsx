@@ -29,7 +29,7 @@ type CompanyDomainEnrichButtonProps = {
 };
 
 export const CompanyDomainEnrichButton = ({
-  isHovered: _isHovered,
+  isHovered,
 }: CompanyDomainEnrichButtonProps) => {
   const { t } = useLingui();
   const { enqueueSuccessSnackBar, enqueueErrorSnackBar, enqueueInfoSnackBar } =
@@ -69,7 +69,10 @@ export const CompanyDomainEnrichButton = ({
     fieldName === 'domainName' &&
     !isReadOnly;
 
-  const canShow = isCompanyDomainField && isNonEmptyString(domainUrl); // Auto-fill Name when domain is set and name is empty / Untitled
+  const canShow =
+    isCompanyDomainField &&
+    isNonEmptyString(domainUrl) &&
+    (isHovered || isRequestInFlight);
 
   useEffect(() => {
     if (!isCompanyDomainField || !isNonEmptyString(domainUrl)) {

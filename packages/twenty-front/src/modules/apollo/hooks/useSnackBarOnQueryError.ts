@@ -1,4 +1,5 @@
 import { CombinedGraphQLErrors } from '@apollo/client/errors';
+import { isWorkspaceNotFoundGraphQLError } from '@/apollo/utils/isWorkspaceNotFoundGraphQLError';
 import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { useEffect } from 'react';
 
@@ -18,6 +19,14 @@ export const useSnackBarOnQueryError = (
 
   useEffect(() => {
     if (!error) return;
+
+    // Handled by Apollo error link: clear stale session and redirect to /welcome
+    if (
+      CombinedGraphQLErrors.is(error) &&
+      error.errors.some(isWorkspaceNotFoundGraphQLError)
+    ) {
+      return;
+    }
 
     enqueueErrorSnackBar(
       message
