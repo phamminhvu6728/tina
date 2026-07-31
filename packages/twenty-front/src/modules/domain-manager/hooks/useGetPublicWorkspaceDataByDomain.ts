@@ -64,13 +64,33 @@ export const useGetPublicWorkspaceDataByDomain = () => {
 
   useEffect(() => {
     if (error) {
-      // Only redirect to default domain if it's a workspace not found error
       if (CombinedGraphQLErrors.is(error)) {
         const isWorkspaceNotFoundError = error.errors?.some(
           (graphQLError) => graphQLError.extensions?.code === 'NOT_FOUND',
         );
 
         if (isWorkspaceNotFoundError) {
+          // Single-workspace first install: no workspace row yet — keep signup UI
+          if (!isMultiWorkspaceEnabled) {
+            setWorkspacePublicData({
+              id: '00000000-0000-4000-8000-000000000000',
+              logo: '',
+              displayName: 'Default Workspace',
+              workspaceUrls: {
+                subdomainUrl: origin,
+                customUrl: origin,
+              },
+              authProviders: {
+                google: false,
+                magicLink: false,
+                password: true,
+                microsoft: false,
+                sso: [],
+              },
+            });
+            return;
+          }
+
           redirectToDefaultDomain();
           return;
         }
@@ -78,7 +98,13 @@ export const useGetPublicWorkspaceDataByDomain = () => {
       // oxlint-disable-next-line no-console
       console.error(error);
     }
-  }, [error, redirectToDefaultDomain]);
+  }, [
+    error,
+    isMultiWorkspaceEnabled,
+    origin,
+    redirectToDefaultDomain,
+    setWorkspacePublicData,
+  ]);
 
   return {
     loading,

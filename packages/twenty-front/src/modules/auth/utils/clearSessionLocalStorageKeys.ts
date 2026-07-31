@@ -1,6 +1,7 @@
 import { safeRemoveLocalStorageItems } from '@/auth/utils/safeRemoveLocalStorageItems';
 
 const SESSION_KEYS_TO_CLEAR = [
+  'tokenPairState',
   'lastVisitedObjectMetadataItemIdState',
   'lastVisitedViewPerObjectMetadataItemState',
   'ai/agentChatDraftsByThreadIdState',

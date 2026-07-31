@@ -21,6 +21,7 @@ import { retryWithBackoff } from '~/utils/retryWithBackoff';
 import { REST_API_BASE_URL } from '@/apollo/constant/rest-api-base-url';
 import { type ApolloManager } from '@/apollo/types/apolloManager.interface';
 import { getTokenPair } from '@/apollo/utils/getTokenPair';
+import { isWorkspaceNotFoundGraphQLError } from '@/apollo/utils/isWorkspaceNotFoundGraphQLError';
 import { loggerLink } from '@/apollo/utils/loggerLink';
 import { StreamingRestLink } from '@/apollo/utils/streamingRestLink';
 import { i18n } from '@lingui/core';
@@ -311,11 +312,28 @@ export class ApolloFactory implements ApolloManager {
                 return;
               }
               case 'UNAUTHENTICATED': {
+                // Stale token after workspace wipe/delete — renew cannot recover
+                if (isWorkspaceNotFoundGraphQLError(graphQLError)) {
+                  onUnauthenticatedError?.();
+                  return throwError(() => error);
+                }
                 // oxlint-disable-next-line no-console
                 console.log('UNAUTHENTICATED, triggering token renewal');
                 return handleTokenRenewal(operation, forward, error);
               }
-              case 'NOT_FOUND':
+              case 'NOT_FOUND': {
+                // Only clear session when an authenticated request hits a
+                // missing workspace. Public first-install lookup is expected
+                // to fail while the DB has no workspace yet.
+                if (
+                  isWorkspaceNotFoundGraphQLError(graphQLError) &&
+                  isDefined(getTokenPair())
+                ) {
+                  onUnauthenticatedError?.();
+                  return throwError(() => error);
+                }
+                return;
+              }
               case 'BAD_USER_INPUT':
               case 'FORBIDDEN':
               case 'CONFLICT':

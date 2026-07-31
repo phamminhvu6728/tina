@@ -383,26 +383,29 @@ export class WorkspaceResolver {
     @OriginHeader() originHeader: string,
     @Args('origin', { nullable: true }) origin?: string,
   ): Promise<PublicWorkspaceDataDTO | undefined> {
-    try {
-      const systemEnabledProviders: AuthProvidersDTO = {
-        google: this.twentyConfigService.get('AUTH_GOOGLE_ENABLED'),
-        magicLink: false,
-        password: this.twentyConfigService.get('AUTH_PASSWORD_ENABLED'),
-        microsoft: this.twentyConfigService.get('AUTH_MICROSOFT_ENABLED'),
-        sso: [],
-      };
+    const systemEnabledProviders: AuthProvidersDTO = {
+      google: this.twentyConfigService.get('AUTH_GOOGLE_ENABLED'),
+      magicLink: false,
+      password: this.twentyConfigService.get('AUTH_PASSWORD_ENABLED'),
+      microsoft: this.twentyConfigService.get('AUTH_MICROSOFT_ENABLED'),
+      sso: [],
+    };
 
+    // Valid UUID placeholder — GraphQL UUIDScalar rejects non-UUID ids
+    const buildFirstInstallWorkspaceData = (): PublicWorkspaceDataDTO => ({
+      id: '00000000-0000-4000-8000-000000000000',
+      logo: '',
+      displayName: 'Default Workspace',
+      workspaceUrls: {
+        subdomainUrl: originHeader,
+        customUrl: originHeader,
+      },
+      authProviders: systemEnabledProviders,
+    });
+
+    try {
       if (!origin) {
-        return {
-          id: 'default-workspace',
-          logo: '',
-          displayName: 'Default Workspace',
-          workspaceUrls: {
-            subdomainUrl: originHeader,
-            customUrl: originHeader,
-          },
-          authProviders: systemEnabledProviders,
-        };
+        return buildFirstInstallWorkspaceData();
       }
 
       const workspace =
@@ -437,6 +440,15 @@ export class WorkspaceResolver {
         }),
       };
     } catch (err) {
+      // Empty DB on single-workspace self-host: allow /welcome signup UI
+      if (
+        err instanceof WorkspaceException &&
+        err.code === WorkspaceExceptionCode.WORKSPACE_NOT_FOUND &&
+        !this.twentyConfigService.get('IS_MULTIWORKSPACE_ENABLED')
+      ) {
+        return buildFirstInstallWorkspaceData();
+      }
+
       workspaceGraphqlApiExceptionHandler(err);
     }
   }

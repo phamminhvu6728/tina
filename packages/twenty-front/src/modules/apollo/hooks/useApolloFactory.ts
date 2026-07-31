@@ -9,9 +9,11 @@ import { currentUserWorkspaceState } from '@/auth/states/currentUserWorkspaceSta
 import { currentWorkspaceMemberState } from '@/auth/states/currentWorkspaceMemberState';
 import { currentWorkspaceState } from '@/auth/states/currentWorkspaceState';
 import { returnToPathState } from '@/auth/states/returnToPathState';
+import { clearSessionLocalStorageKeys } from '@/auth/utils/clearSessionLocalStorageKeys';
 import { isValidReturnToPath } from '@/auth/utils/isValidReturnToPath';
 import { tokenPairState } from '@/auth/states/tokenPairState';
 import { appVersionState } from '@/client-config/states/appVersionState';
+import { useLastAuthenticatedWorkspaceDomain } from '@/domain-manager/hooks/useLastAuthenticatedWorkspaceDomain';
 import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
@@ -37,6 +39,8 @@ export const useApolloFactory = (options: Partial<Options> = {}) => {
   );
   const setCurrentUser = useSetAtomState(currentUserState);
   const setCurrentUserWorkspace = useSetAtomState(currentUserWorkspaceState);
+  const { setLastAuthenticateWorkspaceDomain } =
+    useLastAuthenticatedWorkspaceDomain();
 
   const setReturnToPath = useSetAtomState(returnToPathState);
   const location = useLocation();
@@ -70,11 +74,13 @@ export const useApolloFactory = (options: Partial<Options> = {}) => {
         setTokenPair(tokenPair);
       },
       onUnauthenticatedError: () => {
+        clearSessionLocalStorageKeys();
         setTokenPair(null);
         setCurrentUser(null);
         setCurrentWorkspaceMember(null);
         setCurrentWorkspace(null);
         setCurrentUserWorkspace(null);
+        setLastAuthenticateWorkspaceDomain(null);
         if (
           ![...ONGOING_USER_CREATION_PATHS, AppPath.ResetPassword].some(
             (path) => isMatchingLocation(locationRef.current, path),
@@ -117,7 +123,10 @@ export const useApolloFactory = (options: Partial<Options> = {}) => {
     setCurrentUser,
     setCurrentWorkspaceMember,
     setCurrentWorkspace,
+    setCurrentUserWorkspace,
+    setLastAuthenticateWorkspaceDomain,
     setReturnToPath,
+    navigate,
     enqueueErrorSnackBar,
   ]);
 
