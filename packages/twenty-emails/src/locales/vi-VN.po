@@ -19,49 +19,9 @@ msgstr ""
 "X-Crowdin-File-ID: 27\n"
 
 #. js-lingui-explicit-id
-#: src/emails/warn-suspended-workspace.email.tsx
-msgid "Suspended Workspace"
-msgstr "Không gian làm việc bị tạm ngưng"
-
-#. js-lingui-explicit-id
-#: src/emails/warn-suspended-workspace.email.tsx
-#: src/emails/password-update-notify.email.tsx
-#: src/emails/clean-suspended-workspace.email.tsx
-msgid "Dear {userName},"
-msgstr "Kính gửi {userName},"
-
-#. js-lingui-explicit-id
-#: src/emails/warn-suspended-workspace.email.tsx
-#: src/emails/password-update-notify.email.tsx
-#: src/emails/clean-suspended-workspace.email.tsx
-msgid "Hello,"
-msgstr "Xin chào,"
-
-#. js-lingui-explicit-id
-#: src/emails/warn-suspended-workspace.email.tsx
-msgid "It appears that your workspace <0>{workspaceDisplayName}</0> has been suspended for {daysSinceInactive} days."
-msgstr "Có vẻ như không gian làm việc của bạn <0>{workspaceDisplayName}</0> đã bị đình chỉ vì {daysSinceInactive} ngày."
-
-#. js-lingui-explicit-id
-#: src/emails/warn-suspended-workspace.email.tsx
-msgid "The workspace will be deactivated in {remainingDays} {dayOrDays}, and all its data will be deleted."
-msgstr "Không gian làm việc sẽ bị ngừng hoạt động trong {remainingDays} ngày tới, và tất cả dữ liệu của nó sẽ bị xóa bỏ."
-
-#. js-lingui-explicit-id
-#: src/emails/warn-suspended-workspace.email.tsx
-msgid "If you wish to continue using Twenty, please update your subscription within the next {remainingDays} {dayOrDays}."
-msgstr "Nếu bạn muốn tiếp tục sử dụng TinaCRM, vui lòng gia hạn đăng ký của bạn trong thời gian tới. {remainingDays} {dayOrDays}."
-
-#. js-lingui-explicit-id
-#: src/emails/warn-suspended-workspace.email.tsx
-msgid "Update your subscription"
-msgstr "Cập nhật gói đăng ký của bạn"
-
-#. js-lingui-explicit-id
-#: src/emails/validate-approved-access-domain.email.tsx
-#: src/emails/validate-approved-access-domain.email.tsx
-msgid "Validate domain"
-msgstr "Xác thực tên miền"
+#: src/emails/send-invite-link.email.tsx
+msgid "{senderName} (<0>{senderEmail}</0>) has invited you to join a workspace called <1>{workspaceName}</1>."
+msgstr "{senderName} (<0>{senderEmail}</0>) đã mời bạn tham gia vào không gian làm việc gọi là <1>{workspaceName}</1>."
 
 #. js-lingui-explicit-id
 #: src/emails/validate-approved-access-domain.email.tsx
@@ -69,19 +29,9 @@ msgid "{senderName} (<0>{senderEmail}</0>): Please validate this domain to allow
 msgstr "{senderName} (<0>{senderEmail}</0>): Vui lòng xác thực tên miền này để cho phép người dùng có địa chỉ email <1>@{domain}</1> tham gia không gian làm việc của bạn mà không cần lời mời."
 
 #. js-lingui-explicit-id
-#: src/emails/test.email.tsx
-msgid "Test email"
-msgstr "Kiểm tra email"
-
-#. js-lingui-explicit-id
-#: src/emails/send-invite-link.email.tsx
-msgid "Join your team on Twenty"
-msgstr "Tham gia vào đội ngũ của bạn trên TinaCRM"
-
-#. js-lingui-explicit-id
-#: src/emails/send-invite-link.email.tsx
-msgid "{senderName} (<0>{senderEmail}</0>) has invited you to join a workspace called <1>{workspaceName}</1>."
-msgstr "{senderName} (<0>{senderEmail}</0>) đã mời bạn tham gia vào không gian làm việc gọi là <1>{workspaceName}</1>."
+#: src/emails/billing-trial-converting.email.tsx
+msgid "A heads up before your trial ends"
+msgstr "Thông báo trước khi thời gian dùng thử của bạn kết thúc"
 
 #. js-lingui-explicit-id
 #: src/emails/send-invite-link.email.tsx
@@ -99,9 +49,14 @@ msgid "After that, the workspace and all of its data will be permanently deleted
 msgstr "Sau thời điểm đó, không gian làm việc và toàn bộ dữ liệu của nó sẽ bị xóa vĩnh viễn — và chúng tôi sẽ không thể khôi phục lại."
 
 #. js-lingui-explicit-id
+#: src/emails/clean-suspended-workspace.email.tsx
+#~ msgid "All data in this workspace has been permanently deleted."
+#~ msgstr "Tất cả dữ liệu trong không gian làm việc này đã bị xóa vĩnh viễn."
+
+#. js-lingui-explicit-id
 #: src/emails/send-email-verification-link.email.tsx
 msgid "Confirm new email"
-msgstr ""
+msgstr "Xác nhận email mới"
 
 #. js-lingui-explicit-id
 #: src/emails/send-email-verification-link.email.tsx
@@ -111,7 +66,7 @@ msgstr "Xác nhận địa chỉ email của bạn"
 #. js-lingui-explicit-id
 #: src/emails/send-email-verification-link.email.tsx
 msgid "Confirm your new email address"
-msgstr ""
+msgstr "Xác nhận địa chỉ email mới của bạn"
 
 #. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
@@ -119,14 +74,24 @@ msgid "Connect to Twenty"
 msgstr "Kết nối với TinaCRM"
 
 #. js-lingui-explicit-id
+#: src/emails/clean-suspended-workspace.email.tsx
+#~ msgid "Create a new workspace"
+#~ msgstr "Tạo không gian làm việc mới"
+
+#. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
 msgid "Dear {userName},"
 msgstr "Kính gửi {userName},"
 
 #. js-lingui-explicit-id
+#: src/emails/clean-suspended-workspace.email.tsx
+#~ msgid "Deleted Workspace"
+#~ msgstr "Không gian làm việc đã bị xóa"
+
+#. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Developers"
-msgstr "Nhà phát triển"
+#~ msgid "Developers"
+#~ msgstr "Nhà phát triển"
 
 #. js-lingui-explicit-id
 #: src/emails/server-admin-access-changed.email.tsx
@@ -140,8 +105,8 @@ msgstr "Đã bật"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Github"
-msgstr "Github"
+#~ msgid "Github"
+#~ msgstr "Github"
 
 #. js-lingui-explicit-id
 #: src/emails/warn-suspended-workspace.email.tsx
@@ -183,14 +148,29 @@ msgid "If you do nothing, we'll pause your workspace and keep your data safe for
 msgstr "Nếu bạn không làm gì, chúng tôi sẽ tạm dừng không gian làm việc của bạn và giữ an toàn dữ liệu của bạn trong {dataRetentionDays} ngày phòng khi bạn đổi ý — thẻ của bạn sẽ không bị tính phí."
 
 #. js-lingui-explicit-id
+#: src/emails/warn-suspended-workspace.email.tsx
+#~ msgid "If you wish to continue using Twenty, please update your subscription within the next {remainingDays} {dayOrDays}."
+#~ msgstr "Nếu bạn muốn tiếp tục sử dụng TinaCRM, vui lòng gia hạn đăng ký của bạn trong thời gian tới. {remainingDays} {dayOrDays}."
+
+#. js-lingui-explicit-id
+#: src/emails/clean-suspended-workspace.email.tsx
+#~ msgid "If you wish to use Twenty again, you can create a new workspace."
+#~ msgstr "Nếu bạn muốn sử dụng TinaCRM lại, bạn có thể tạo một không gian làm việc mới."
+
+#. js-lingui-explicit-id
 #: src/emails/clean-suspended-workspace.email.tsx
 msgid "If you'd ever like to give Twenty another try, you can start a fresh workspace in minutes — we'd love to have you back."
 msgstr "Nếu một ngày nào đó bạn muốn dùng thử TinaCRM lần nữa, bạn có thể bắt đầu một không gian làm việc hoàn toàn mới chỉ trong vài phút — chúng tôi rất mong được chào đón bạn quay lại."
 
 #. js-lingui-explicit-id
+#: src/emails/warn-suspended-workspace.email.tsx
+#~ msgid "It appears that your workspace <0>{workspaceDisplayName}</0> has been suspended for {daysSinceInactive} days."
+#~ msgstr "Có vẻ như không gian làm việc của bạn <0>{workspaceDisplayName}</0> đã bị đình chỉ vì {daysSinceInactive} ngày."
+
+#. js-lingui-explicit-id
 #: src/components/WhatIsTwenty.tsx
 msgid "It's a CRM, a software to help businesses manage their customer data and relationships efficiently."
-msgstr "Đó là một CRM, một phần mềm giúp doanh nghiệp quản lý dữ liệu và mối quan hệ khách hàng một cách hiệu quả."
+msgstr "TinaCRM là một nền tảng quản lý quan hệ khách hàng (Customer Relationship Management – CRM) hiện đại, được thiết kế dành cho các doanh nghiệp Việt Nam muốn tối ưu quy trình vận hành, tăng năng suất làm việc và nâng cao trải nghiệm khách hàng."
 
 #. js-lingui-explicit-id
 #: src/emails/clean-suspended-workspace.email.tsx
@@ -294,9 +274,19 @@ msgid "Start a new workspace"
 msgstr "Bắt đầu không gian làm việc mới"
 
 #. js-lingui-explicit-id
+#: src/emails/warn-suspended-workspace.email.tsx
+#~ msgid "Suspended Workspace"
+#~ msgstr "Không gian làm việc bị tạm ngưng"
+
+#. js-lingui-explicit-id
 #: src/emails/test.email.tsx
 msgid "Test email"
 msgstr "Kiểm tra email"
+
+#. js-lingui-explicit-id
+#: src/emails/warn-suspended-workspace.email.tsx
+#~ msgid "The workspace will be deactivated in {remainingDays} {dayOrDays}, and all its data will be deleted."
+#~ msgstr "Không gian làm việc sẽ bị ngừng hoạt động trong {remainingDays} ngày tới, và tất cả dữ liệu của nó sẽ bị xóa bỏ."
 
 #. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
@@ -309,84 +299,19 @@ msgid "This link is only valid for the next {duration}. If the link does not wor
 msgstr "Liên kết này chỉ có hiệu lực trong thời gian {duration} kế tiếp. Nếu liên kết không hoạt động, bạn có thể sử dụng liên kết xác minh đăng nhập trực tiếp:"
 
 #. js-lingui-explicit-id
-#: src/emails/clean-suspended-workspace.email.tsx
-msgid "Deleted Workspace"
-msgstr "Không gian làm việc đã bị xóa"
-
-#. js-lingui-explicit-id
-#: src/emails/clean-suspended-workspace.email.tsx
-msgid "Your workspace <0>{workspaceDisplayName}</0> has been deleted as your subscription expired {daysSinceInactive} days ago."
-msgstr "Không gian làm việc của bạn <0>{workspaceDisplayName}</0> đã bị xóa bỏ vì gói đăng ký của bạn đã hết hạn từ {daysSinceInactive} ngày trước."
-
-#. js-lingui-explicit-id
-#: src/emails/clean-suspended-workspace.email.tsx
-msgid "All data in this workspace has been permanently deleted."
-msgstr "Tất cả dữ liệu trong không gian làm việc này đã bị xóa vĩnh viễn."
-
-#. js-lingui-explicit-id
-#: src/emails/clean-suspended-workspace.email.tsx
-msgid "If you wish to use Twenty again, you can create a new workspace."
-msgstr "Nếu bạn muốn sử dụng TinaCRM lại, bạn có thể tạo một không gian làm việc mới."
-
-#. js-lingui-explicit-id
-#: src/emails/clean-suspended-workspace.email.tsx
-msgid "Create a new workspace"
-msgstr "Tạo không gian làm việc mới"
-
-#. js-lingui-explicit-id
-#: src/components/WhatIsTwenty.tsx
-msgid "What is Twenty?"
-msgstr "TinaCRM là gì?"
-
-#. js-lingui-explicit-id
-#: src/components/WhatIsTwenty.tsx
-msgid "It's a CRM, a software to help businesses manage their customer data and relationships efficiently."
-msgstr "TinaCRM là một nền tảng quản lý quan hệ khách hàng (Customer Relationship Management – CRM) hiện đại, được thiết kế dành cho các doanh nghiệp Việt Nam muốn tối ưu quy trình vận hành, tăng năng suất làm việc và nâng cao trải nghiệm khách hàng."
-
-#. js-lingui-explicit-id
-#: src/components/Footer.tsx
-msgid "Website"
-msgstr "Trang web"
-
-#. js-lingui-explicit-id
-#: src/components/Footer.tsx
-msgid "Visit Twenty's website"
-msgstr "Thăm trang web của TinaCRM"
-
-#. js-lingui-explicit-id
-#: src/components/Footer.tsx
-msgid "Github"
-msgstr "Github"
-
-#. js-lingui-explicit-id
-#: src/components/Footer.tsx
-msgid "Visit Twenty's GitHub repository"
-msgstr "Thăm kho GitHub của TinaCRM"
-
-#. js-lingui-explicit-id
-#: src/components/Footer.tsx
-msgid "User guide"
-msgstr "Hướng dẫn người dùng"
-
-#. js-lingui-explicit-id
-#: src/components/Footer.tsx
-msgid "Read Twenty's user guide"
-msgstr "Đọc hướng dẫn người dùng của TinaCRM"
-
-#. js-lingui-explicit-id
-#: src/components/Footer.tsx
-msgid "Developers"
-msgstr "Nhà phát triển"
-
-#. js-lingui-explicit-id
-#: src/components/Footer.tsx
-msgid "Visit Twenty's developer documentation"
-msgstr "Thăm tài liệu nhà phát triển của TinaCRM"
+#: src/emails/billing-trial-ending.email.tsx
+msgid "To keep your workspace and everything you've built, add a payment method and pick a plan."
+msgstr "Để giữ không gian làm việc và mọi thứ bạn đã tạo, hãy thêm phương thức thanh toán và chọn một gói."
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Twenty.com, Public Benefit Corporation"
 msgstr "tinacrm.com, Công ty Cổ Phần Tinasoft Việt Nam"
+
+#. js-lingui-explicit-id
+#: src/emails/warn-suspended-workspace.email.tsx
+#~ msgid "Update your subscription"
+#~ msgstr "Cập nhật gói đăng ký của bạn"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -406,13 +331,13 @@ msgstr "Xác minh Email"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Visit Twenty's developer documentation"
-msgstr "Thăm tài liệu nhà phát triển của TinaCRM"
+#~ msgid "Visit Twenty's developer documentation"
+#~ msgstr "Thăm tài liệu nhà phát triển của TinaCRM"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Visit Twenty's GitHub repository"
-msgstr "Thăm kho GitHub của TinaCRM"
+#~ msgid "Visit Twenty's GitHub repository"
+#~ msgstr "Thăm kho GitHub của TinaCRM"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -463,6 +388,11 @@ msgstr "Gói của bạn sẽ sớm gia hạn"
 #: src/emails/billing-trial-ending.email.tsx
 msgid "Your trial is ending soon"
 msgstr "Bản dùng thử của bạn sắp kết thúc"
+
+#. js-lingui-explicit-id
+#: src/emails/clean-suspended-workspace.email.tsx
+#~ msgid "Your workspace <0>{workspaceDisplayName}</0> has been deleted as your subscription expired {daysSinceInactive} days ago."
+#~ msgstr "Không gian làm việc của bạn <0>{workspaceDisplayName}</0> đã bị xóa bỏ vì gói đăng ký của bạn đã hết hạn từ {daysSinceInactive} ngày trước."
 
 #. js-lingui-explicit-id
 #: src/emails/clean-suspended-workspace.email.tsx

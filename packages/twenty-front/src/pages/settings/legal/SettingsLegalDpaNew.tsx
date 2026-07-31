@@ -6,7 +6,12 @@ import { getSettingsPath } from 'twenty-shared/utils';
 import { Section } from 'twenty-ui/layout';
 import { H2Title } from 'twenty-ui/typography';
 
+import { downloadFile } from '@/activities/files/utils/downloadFile';
 import { useApolloCoreClient } from '@/object-metadata/hooks/useApolloCoreClient';
+import { SettingsPageLayout } from '@/settings/components/layout/SettingsPageLayout';
+import { SaveAndCancelButtons } from '@/settings/components/SaveAndCancelButtons/SaveAndCancelButtons';
+import { SettingsPageContainer } from '@/settings/components/SettingsPageContainer';
+import { SettingsSkeletonLoader } from '@/settings/components/SettingsSkeletonLoader';
 import { DpaDocumentPreview } from '@/settings/legal/components/DpaDocumentPreview';
 import { DpaNotice } from '@/settings/legal/components/DpaNotice';
 import { GENERATE_SIGNED_DPA } from '@/settings/legal/graphql/mutations/generateSignedDpa';
@@ -16,13 +21,8 @@ import {
   type DpaDocument,
   type GenerateSignedDpaResult,
 } from '@/settings/legal/types/Dpa';
-import { SaveAndCancelButtons } from '@/settings/components/SaveAndCancelButtons/SaveAndCancelButtons';
-import { SettingsPageContainer } from '@/settings/components/SettingsPageContainer';
-import { SettingsPageLayout } from '@/settings/components/layout/SettingsPageLayout';
-import { SettingsSkeletonLoader } from '@/settings/components/SettingsSkeletonLoader';
-import { SettingsTextInput } from '@/ui/input/components/SettingsTextInput';
 import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
-import { downloadFile } from '@/activities/files/utils/downloadFile';
+import { SettingsTextInput } from '@/ui/input/components/SettingsTextInput';
 import { useNavigateSettings } from '~/hooks/useNavigateSettings';
 
 export const SettingsLegalDpaNew = () => {
@@ -140,7 +140,7 @@ export const SettingsLegalDpaNew = () => {
         <Section>
           <H2Title
             title={t`Your details`}
-            description={t`The PDF is pre-signed by TinaCRM and executed with your legal entity and authorized signatory.`}
+            description={t`The PDF is pre-signed by Twenty and executed with your legal entity and authorized signatory.`}
           />
           <SettingsTextInput
             instanceId="dpa-legal-entity-name"

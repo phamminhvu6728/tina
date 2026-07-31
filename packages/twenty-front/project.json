@@ -280,7 +280,7 @@
       "dependsOn": ["^build"],
       "options": {
         "cwd": "{projectRoot}",
-        "command": "lingui extract --overwrite --clean"
+        "command": "lingui extract"
       }
     },
     "lingui:compile": {
