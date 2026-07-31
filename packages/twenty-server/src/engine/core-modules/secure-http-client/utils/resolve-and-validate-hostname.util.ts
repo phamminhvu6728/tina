@@ -16,6 +16,18 @@ export const resolveAndValidateHostname = async (
     hostname = hostnameOrUrl;
   }
 
+  // Lấy danh sách allowed hostnames từ biến môi trường (ví dụ: SSRF_ALLOWED_HOSTNAMES="inactivity-wf,other-service")
+  const allowedHostnames = (process.env.SSRF_ALLOWED_HOSTNAMES || '')
+    .split(',')
+    .map((h) => h.trim())
+    .filter(Boolean);
+
+  // Nếu hostname trùng với service được phép (ví dụ: 'inactivity-wf'), bỏ qua bước check Private IP
+  if (allowedHostnames.includes(hostname) || hostname === 'inactivity-wf') {
+    const { address: resolvedIp } = await dnsLookup(hostname);
+    return resolvedIp;
+  }
+
   const { address: resolvedIp } = await dnsLookup(hostname);
 
   if (isPrivateIp(resolvedIp)) {

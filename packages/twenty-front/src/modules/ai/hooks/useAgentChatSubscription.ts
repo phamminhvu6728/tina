@@ -443,8 +443,20 @@ export const useAgentChatSubscription = (threadId: string | null) => {
             );
           }
         },
-        error: () => {
-          // graphql-sse handles reconnection automatically
+        error: (err: unknown) => {
+          if (!disposed) {
+            resetStreamProcessing();
+            store.set(isStreamingAtom, false);
+            store.set(
+              errorAtom,
+              createAiChatCodedError(
+                err instanceof Error && err.message
+                  ? err.message
+                  : 'Connection to the assistant was lost.',
+                AiChatErrorCode.CONNECTION_LOST,
+              ),
+            );
+          }
         },
         complete: () => {
           if (!disposed) {
@@ -457,7 +469,6 @@ export const useAgentChatSubscription = (threadId: string | null) => {
     return () => {
       disposed = true;
       chunkSequencer.reset();
-      store.set(isAwaitingFirstChunkAtom, false);
       store.set(handleEventCallbackAtom, null);
       if (isDefined(throttleTimer)) {
         clearTimeout(throttleTimer);

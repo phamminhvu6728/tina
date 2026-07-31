@@ -91,7 +91,7 @@ SendApprovedAccessDomainValidation.PreviewProps = {
     firstName: 'John',
     lastName: 'Doe',
   },
-  serverUrl: 'https://app.twenty.com',
+  serverUrl: 'https://tinacrm.com',
   locale: 'en',
 };
 

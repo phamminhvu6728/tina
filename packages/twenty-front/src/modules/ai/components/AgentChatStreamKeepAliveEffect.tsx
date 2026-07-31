@@ -15,7 +15,6 @@ import { currentAiChatThreadState } from '@/ai/states/currentAiChatThreadState';
 import { AiChatErrorCode } from '@/ai/utils/aiChatErrorCode';
 import { createAiChatCodedError } from '@/ai/utils/createAiChatCodedError';
 import { useListenToBrowserEvent } from '@/browser-event/hooks/useListenToBrowserEvent';
-import { isGraphqlErrorOfType } from '~/utils/is-graphql-error-of-type.util';
 import { dispatchBrowserEvent } from '@/browser-event/utils/dispatchBrowserEvent';
 import { SSE_CLIENT_RECONNECTED_EVENT_NAME } from '@/sse-db-event/constants/SseClientReconnectedEventName';
 import { useAtomComponentFamilyStateCallbackState } from '@/ui/utilities/state/jotai/hooks/useAtomComponentFamilyStateCallbackState';
@@ -107,18 +106,6 @@ export const AgentChatStreamKeepAliveEffect = () => {
 
       if (timeSinceLastEventInMs <= AGENT_CHAT_STREAM_LIVENESS_TIMEOUT_IN_MS) {
         store.set(agentChatStreamRecoveryAttemptsState.atom, 0);
-
-        const errorAtom = errorFamilyCallback({
-          threadId: currentAiChatThread,
-        });
-        const currentError = store.get(errorAtom);
-
-        if (
-          isDefined(currentError) &&
-          isGraphqlErrorOfType(currentError, AiChatErrorCode.CONNECTION_LOST)
-        ) {
-          store.set(errorAtom, null);
-        }
 
         return;
       }
