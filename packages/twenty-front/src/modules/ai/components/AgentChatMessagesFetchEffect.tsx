@@ -118,7 +118,7 @@ export const AgentChatMessagesFetchEffect = () => {
         } as AgentChatSubscriptionEvent);
       }
 
-      if (isDefined(catchup.error) && firstLiveSeq === null) {
+      if (isDefined(catchup.error)) {
         handleEvent({
           type: 'stream-error',
           code: catchup.error.code,

@@ -14,6 +14,12 @@ export const getErrorMessageFromApolloError = (error: ErrorLike): string => {
     ?.userFriendlyMessage as Nullable<MessageDescriptor | string>;
 
   if (!isDefined(userFriendlyMessage)) {
+    const rawMessage = error.errors?.[0]?.message;
+
+    if (isDefined(rawMessage)) {
+      return rawMessage;
+    }
+
     return t`An error occurred.`;
   }
 

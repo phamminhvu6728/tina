@@ -40,7 +40,7 @@ const StyledErrorTitle = styled.div`
 `;
 
 const StyledErrorMessage = styled.div`
-  color: ${themeCssVariables.font.color.secondary};
+  color: ${themeCssVariables.color.red};
   font-size: ${themeCssVariables.font.size.xs};
   word-break: break-word;
 `;

@@ -63,3 +63,4 @@ screenshots/
 
 # local graphify knowledge-graph output (never commit)
 **/graphify-out/
+packages/twenty-inactivity-wf/
