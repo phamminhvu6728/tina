@@ -43,7 +43,10 @@ import {
 } from '@/auth/states/signInUpStepState';
 import { workspacePublicDataState } from '@/auth/states/workspacePublicDataState';
 import { type BillingCheckoutSession } from '@/auth/types/billingCheckoutSession.type';
-import { countAvailableWorkspaces } from '@/auth/utils/availableWorkspacesUtils';
+import {
+  countAvailableWorkspaces,
+  getFirstAvailableWorkspaces,
+} from '@/auth/utils/availableWorkspacesUtils';
 import { isEmailVerificationRequiredState } from '@/client-config/states/isEmailVerificationRequiredState';
 import { isMultiWorkspaceEnabledState } from '@/client-config/states/isMultiWorkspaceEnabledState';
 import { useLastAuthenticatedWorkspaceDomain } from '@/domain-manager/hooks/useLastAuthenticatedWorkspaceDomain';
@@ -152,22 +155,23 @@ export const useAuth = () => {
         return;
       }
 
-      // turn off auto redirect to last workspace
-      // if (availableWorkspacesCount === 1) {
-      //   const targetWorkspace =
-      //     getFirstAvailableWorkspaces(availableWorkspaces);
-
-      //   return await redirectToWorkspaceDomain(
-      //     getWorkspaceUrl(targetWorkspace.workspaceUrls),
-      //     targetWorkspace.loginToken ? AppPath.Verify : AppPath.SignInUp,
-      //     {
-      //       ...(targetWorkspace.loginToken && {
-      //         loginToken: targetWorkspace.loginToken,
-      //       }),
-      //       email,
-      //     },
-      //   );
-      // }
+      if (availableWorkspacesCount === 1) {
+        const targetWorkspace =
+          getFirstAvailableWorkspaces(availableWorkspaces);
+        // if first time setup workspace -> create profile, else go to workspace selection
+        if (!targetWorkspace.loginToken) {
+          return await redirectToWorkspaceDomain(
+            getWorkspaceUrl(targetWorkspace.workspaceUrls),
+            targetWorkspace.loginToken ? AppPath.Verify : AppPath.SignInUp,
+            {
+              ...(targetWorkspace.loginToken && {
+                loginToken: targetWorkspace.loginToken,
+              }),
+              email,
+            },
+          );
+        }
+      }
 
       setSignInUpStep(SignInUpStep.WorkspaceSelection);
     },
