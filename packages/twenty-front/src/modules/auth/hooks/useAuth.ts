@@ -16,8 +16,8 @@ import {
   GetLoginTokenFromCredentialsDocument,
   GetWorkspaceCreationDefaultsDocument,
   SignInDocument,
-  SignUpInWorkspaceDocument,
   SignUpDocument,
+  SignUpInWorkspaceDocument,
   VerifyEmailAndGetLoginTokenDocument,
   VerifyEmailAndGetWorkspaceAgnosticTokenDocument,
 } from '~/generated-metadata/graphql';
@@ -31,9 +31,9 @@ import { tokenPairState } from '@/auth/states/tokenPairState';
 import { clearSessionLocalStorageKeys } from '@/auth/utils/clearSessionLocalStorageKeys';
 import { broadcastSignOutToOtherTabs } from '@/auth/utils/crossTabSignOut';
 import { isValidReturnToPath } from '@/auth/utils/isValidReturnToPath';
-import { isNonEmptyString } from '@sniptt/guards';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
+import { isNonEmptyString } from '@sniptt/guards';
 
 import { isAppEffectRedirectEnabledState } from '@/app/states/isAppEffectRedirectEnabledState';
 import { loginTokenState } from '@/auth/states/loginTokenState';
@@ -43,10 +43,7 @@ import {
 } from '@/auth/states/signInUpStepState';
 import { workspacePublicDataState } from '@/auth/states/workspacePublicDataState';
 import { type BillingCheckoutSession } from '@/auth/types/billingCheckoutSession.type';
-import {
-  countAvailableWorkspaces,
-  getFirstAvailableWorkspaces,
-} from '@/auth/utils/availableWorkspacesUtils';
+import { countAvailableWorkspaces } from '@/auth/utils/availableWorkspacesUtils';
 import { isEmailVerificationRequiredState } from '@/client-config/states/isEmailVerificationRequiredState';
 import { isMultiWorkspaceEnabledState } from '@/client-config/states/isMultiWorkspaceEnabledState';
 import { useLastAuthenticatedWorkspaceDomain } from '@/domain-manager/hooks/useLastAuthenticatedWorkspaceDomain';
@@ -55,12 +52,12 @@ import { useRedirect } from '@/domain-manager/hooks/useRedirect';
 import { useRedirectToWorkspaceDomain } from '@/domain-manager/hooks/useRedirectToWorkspaceDomain';
 import { useLoadCurrentUser } from '@/users/hooks/useLoadCurrentUser';
 import { i18n } from '@lingui/core';
+import { useStore } from 'jotai';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { SOURCE_LOCALE } from 'twenty-shared/translations';
 import { isDefined } from 'twenty-shared/utils';
 import { getWorkspaceUrl } from '~/utils/getWorkspaceUrl';
 import { isGraphqlErrorOfType } from '~/utils/is-graphql-error-of-type.util';
-import { useStore } from 'jotai';
 
 export const useAuth = () => {
   const store = useStore();
@@ -155,21 +152,22 @@ export const useAuth = () => {
         return;
       }
 
-      if (availableWorkspacesCount === 1) {
-        const targetWorkspace =
-          getFirstAvailableWorkspaces(availableWorkspaces);
+      // turn off auto redirect to last workspace
+      // if (availableWorkspacesCount === 1) {
+      //   const targetWorkspace =
+      //     getFirstAvailableWorkspaces(availableWorkspaces);
 
-        return await redirectToWorkspaceDomain(
-          getWorkspaceUrl(targetWorkspace.workspaceUrls),
-          targetWorkspace.loginToken ? AppPath.Verify : AppPath.SignInUp,
-          {
-            ...(targetWorkspace.loginToken && {
-              loginToken: targetWorkspace.loginToken,
-            }),
-            email,
-          },
-        );
-      }
+      //   return await redirectToWorkspaceDomain(
+      //     getWorkspaceUrl(targetWorkspace.workspaceUrls),
+      //     targetWorkspace.loginToken ? AppPath.Verify : AppPath.SignInUp,
+      //     {
+      //       ...(targetWorkspace.loginToken && {
+      //         loginToken: targetWorkspace.loginToken,
+      //       }),
+      //       email,
+      //     },
+      //   );
+      // }
 
       setSignInUpStep(SignInUpStep.WorkspaceSelection);
     },
