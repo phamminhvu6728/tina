@@ -118,7 +118,7 @@ export class SignInUpService {
       firstName: newUserPayload.firstName ?? '',
       lastName: newUserPayload.lastName ?? '',
       picture: newUserPayload.picture ?? '',
-      locale: newUserPayload.locale ?? 'en',
+      locale: newUserPayload.locale ?? 'vi-VN',
       isEmailVerified: newUserPayload.isEmailAlreadyVerified,
     };
 

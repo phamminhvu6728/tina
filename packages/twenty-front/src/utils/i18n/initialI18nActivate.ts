@@ -8,7 +8,7 @@ export const initialI18nActivate = () => {
   const storageLocale = fromStorage('locale');
   const navigatorLocale = fromNavigator();
 
-  let locale: keyof typeof APP_LOCALES = APP_LOCALES.en;
+  let locale: keyof typeof APP_LOCALES = APP_LOCALES['vi-VN'];
 
   const normalizedUrlLocale = isDefined(urlLocale)
     ? normalizeLocale(urlLocale)

@@ -1,7 +1,7 @@
 import { SOURCE_LOCALE } from '@/translations/constants/SourceLocale';
 
 export const APP_LOCALES = {
-  en: SOURCE_LOCALE,
+  en: 'en',
   'pseudo-en': 'pseudo-en',
   'af-ZA': 'af-ZA',
   'ar-SA': 'ar-SA',
