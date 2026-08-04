@@ -69,6 +69,30 @@ export const getWorkflowPrefillIds = (workspaceId: string) => ({
     `createCompanyWorkflowVersionUniversalIdentifier:${workspaceId}`,
     WORKFLOW_PREFILL_ID_NAMESPACE,
   ),
+  wf2FollowUpLeadWorkflowId: v5(
+    `wf2FollowUpLeadWorkflow:${workspaceId}`,
+    WORKFLOW_PREFILL_ID_NAMESPACE,
+  ),
+  wf2FollowUpLeadWorkflowVersionId: v5(
+    `wf2FollowUpLeadWorkflowVersion:${workspaceId}`,
+    WORKFLOW_PREFILL_ID_NAMESPACE,
+  ),
+  coreWf2FollowUpLeadWorkflowId: v5(
+    `coreWf2FollowUpLeadWorkflow:${workspaceId}`,
+    WORKFLOW_PREFILL_ID_NAMESPACE,
+  ),
+  coreWf2FollowUpLeadWorkflowVersionId: v5(
+    `coreWf2FollowUpLeadWorkflowVersion:${workspaceId}`,
+    WORKFLOW_PREFILL_ID_NAMESPACE,
+  ),
+  wf2FollowUpLeadWorkflowUniversalIdentifier: v5(
+    `wf2FollowUpLeadWorkflowUniversalIdentifier:${workspaceId}`,
+    WORKFLOW_PREFILL_ID_NAMESPACE,
+  ),
+  wf2FollowUpLeadWorkflowVersionUniversalIdentifier: v5(
+    `wf2FollowUpLeadWorkflowVersionUniversalIdentifier:${workspaceId}`,
+    WORKFLOW_PREFILL_ID_NAMESPACE,
+  ),
 });
 
 export const prefillWorkflows = async (
@@ -93,6 +117,12 @@ export const prefillWorkflows = async (
     createCompanyWorkflowUniversalIdentifier,
     quickLeadWorkflowVersionUniversalIdentifier,
     createCompanyWorkflowVersionUniversalIdentifier,
+    wf2FollowUpLeadWorkflowId,
+    wf2FollowUpLeadWorkflowVersionId,
+    coreWf2FollowUpLeadWorkflowId,
+    coreWf2FollowUpLeadWorkflowVersionId,
+    wf2FollowUpLeadWorkflowUniversalIdentifier,
+    wf2FollowUpLeadWorkflowVersionUniversalIdentifier,
   } = getWorkflowPrefillIds(workspaceId);
 
   let applicationId = applicationIdParam;
@@ -223,6 +253,21 @@ export const prefillWorkflows = async (
         updatedByWorkspaceMemberId: null,
         updatedByName: 'System',
         coreWorkflowId: coreCreateCompanyWorkflowId,
+      },
+      {
+        id: wf2FollowUpLeadWorkflowId,
+        name: 'WF2: Tạo task follow-up new lead sau 24h',
+        lastPublishedVersionId: wf2FollowUpLeadWorkflowVersionId,
+        statuses: ['ACTIVE'],
+        position: 3,
+        createdBySource: FieldActorSource.SYSTEM,
+        createdByWorkspaceMemberId: null,
+        createdByName: 'System',
+        createdByContext: {},
+        updatedBySource: FieldActorSource.SYSTEM,
+        updatedByWorkspaceMemberId: null,
+        updatedByName: 'System',
+        coreWorkflowId: coreWf2FollowUpLeadWorkflowId,
       },
     ])
     .returning('*')
@@ -835,6 +880,152 @@ export const prefillWorkflows = async (
     },
   ]);
 
+  const wf2Trigger = {
+    name: 'Record is created',
+    type: 'DATABASE_EVENT',
+    position: { x: 0, y: 0 },
+    settings: { eventName: 'person.created', outputSchema: {} },
+    nextStepIds: ['650477fa-b204-4f7d-b260-0fd33da773aa'],
+  };
+
+  const wf2Steps = JSON.stringify([
+    {
+      id: '650477fa-b204-4f7d-b260-0fd33da773aa',
+      name: 'Delay',
+      type: 'DELAY',
+      valid: true,
+      position: { x: 0, y: 150 },
+      settings: {
+        input: {
+          duration: { days: 0, hours: 0, minutes: 0, seconds: 30 },
+          delayType: 'DURATION',
+        },
+        outputSchema: {},
+        errorHandlingOptions: {
+          retryOnFailure: { value: false },
+          continueOnFailure: { value: false },
+        },
+      },
+      nextStepIds: ['78aaf74b-1284-4596-b8e7-4454935c274a'],
+    },
+    {
+      id: '78aaf74b-1284-4596-b8e7-4454935c274a',
+      name: 'Code - Logic Function',
+      type: 'CODE',
+      valid: true,
+      position: { x: 46.787506103515625, y: 249.45001220703125 },
+      settings: {
+        input: {
+          logicFunctionId: '62d918ed-16f9-49d7-9420-41712bedef1c',
+          logicFunctionInput: {},
+        },
+        outputSchema: {
+          link: {
+            tab: 'test',
+            icon: 'IconVariable',
+            label: 'Generate Function Output',
+            isLeaf: true,
+          },
+          _outputSchemaType: 'LINK',
+        },
+        errorHandlingOptions: {
+          retryOnFailure: { value: false },
+          continueOnFailure: { value: false },
+        },
+        expectedOutputSchema: { hasActivity: false },
+      },
+      nextStepIds: ['ae171443-b850-4828-b428-51924f29a167'],
+    },
+    {
+      id: 'ae171443-b850-4828-b428-51924f29a167',
+      name: 'If/Else',
+      type: 'IF_ELSE',
+      valid: true,
+      position: { x: 33, y: 400 },
+      settings: {
+        input: {
+          branches: [
+            {
+              id: '4ebbc609-2e96-4a9e-a14a-4ce554fc6c38',
+              nextStepIds: ['6fb93627-4500-4234-ba50-262f917cd0c8'],
+              filterGroupId: 'c88c7ab7-5d32-4f39-bc01-0e1a074a1e65',
+            },
+            {
+              id: '4a18ac03-2e4f-4ff1-a745-48e2f599a443',
+              nextStepIds: ['aa779bdb-9299-4cb6-88d3-bf91824bf899'],
+            },
+          ],
+          stepFilters: [
+            {
+              id: '9408a49e-ef6b-4623-a588-cd5f55e4bddf',
+              type: 'boolean',
+              value: 'false',
+              operand: 'IS',
+              isFullRecord: false,
+              stepOutputKey:
+                '{{78aaf74b-1284-4596-b8e7-4454935c274a.hasActivity}}',
+              stepFilterGroupId: 'c88c7ab7-5d32-4f39-bc01-0e1a074a1e65',
+              positionInStepFilterGroup: 0,
+            },
+          ],
+          stepFilterGroups: [
+            {
+              id: 'c88c7ab7-5d32-4f39-bc01-0e1a074a1e65',
+              logicalOperator: 'AND',
+            },
+          ],
+        },
+        outputSchema: {},
+        errorHandlingOptions: {
+          retryOnFailure: { value: false },
+          continueOnFailure: { value: false },
+        },
+      },
+    },
+    {
+      id: '6fb93627-4500-4234-ba50-262f917cd0c8',
+      name: 'Create Record',
+      type: 'CREATE_RECORD',
+      valid: true,
+      position: { x: -187, y: 566.1998443603516 },
+      settings: {
+        input: {
+          objectName: 'task',
+          objectRecord: {
+            title: 'Follow-up lead mới tạo sau 24h',
+            bodyV2: {
+              markdown: null,
+              blocknote:
+                '[{"type":"paragraph","content":[{"type":"text","text":"Lead này chưa có hoạt động nào sau 24h kể từ khi tạo. Vui lòng liên hệ lại ngay."}]}]',
+            },
+            status: 'TODO',
+          },
+        },
+        outputSchema: {},
+        errorHandlingOptions: {
+          retryOnFailure: { value: false },
+          continueOnFailure: { value: false },
+        },
+      },
+      nextStepIds: [],
+    },
+    {
+      id: 'aa779bdb-9299-4cb6-88d3-bf91824bf899',
+      name: 'Add an Action',
+      type: 'EMPTY',
+      valid: true,
+      position: { x: 198, y: 550 },
+      settings: {
+        input: {},
+        outputSchema: {},
+        errorHandlingOptions: {
+          retryOnFailure: { value: false },
+          continueOnFailure: { value: false },
+        },
+      },
+    },
+  ]);
+
   await entityManager
     .createQueryBuilder()
     .insert()
@@ -869,6 +1060,16 @@ export const prefillWorkflows = async (
         position: 2,
         workflowId: createCompanyWorkflowId,
         coreWorkflowVersionId: coreCreateCompanyWorkflowVersionId,
+      },
+      {
+        id: wf2FollowUpLeadWorkflowVersionId,
+        name: 'v1',
+        trigger: JSON.stringify(wf2Trigger),
+        steps: wf2Steps,
+        status: 'ACTIVE',
+        position: 3,
+        workflowId: wf2FollowUpLeadWorkflowId,
+        coreWorkflowVersionId: coreWf2FollowUpLeadWorkflowVersionId,
       },
     ])
     .returning('*')
@@ -908,6 +1109,16 @@ export const prefillWorkflows = async (
         steps: JSON.parse(createCompanySteps),
         status: 'ACTIVE',
         workflowId: createCompanyWorkflowId,
+      },
+      {
+        id: coreWf2FollowUpLeadWorkflowVersionId,
+        workspaceId,
+        universalIdentifier: wf2FollowUpLeadWorkflowVersionUniversalIdentifier,
+        applicationId,
+        triggers: [wf2Trigger],
+        steps: JSON.parse(wf2Steps),
+        status: 'ACTIVE',
+        workflowId: wf2FollowUpLeadWorkflowId,
       },
     ])
     .execute();
