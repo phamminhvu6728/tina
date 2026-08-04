@@ -16,7 +16,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/emails/send-invite-link.email.tsx
 msgid "{senderName} (<0>{senderEmail}</0>) has invited you to join a workspace called <1>{workspaceName}</1>."
-msgstr "{senderName} (<0>{senderEmail}</0>) has invited you to join a workspace called <1>{workspaceName}</1>.======="
+msgstr "{senderName} (<0>{senderEmail}</0>) has invited you to join a workspace called <1>{workspaceName}</1>."
 
 #. js-lingui-explicit-id
 #: src/emails/validate-approved-access-domain.email.tsx
@@ -26,7 +26,7 @@ msgstr "{senderName} (<0>{senderEmail}</0>): Please validate this domain to allo
 #. js-lingui-id: 0dB9WD
 #: src/emails/billing-trial-converting.email.tsx
 #~ msgid "A heads up before your trial ends"
-#~ msgstr "A heads up before your trial ends>>>>>>> release/twenty-v2.24.0"
+#~ msgstr "A heads up before your trial end"
 
 #. js-lingui-explicit-id
 #: src/emails/billing-trial-converting.email.tsx
