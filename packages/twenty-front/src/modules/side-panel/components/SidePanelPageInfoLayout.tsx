@@ -30,17 +30,18 @@ export const StyledPageInfoTextContainer = styled.div`
 
 export const StyledPageInfoTitleContainer = styled.div`
   color: ${themeCssVariables.font.color.primary};
-  font-size: ${themeCssVariables.font.size.md};
+  flex: 1;
+  font-size: ${themeCssVariables.font.size.lg};
   font-weight: ${themeCssVariables.font.weight.semiBold};
-  max-width: 150px;
   min-width: 0;
+  overflow: hidden;
   padding-inline: ${themeCssVariables.spacing[1]};
 `;
 
 export const StyledPageInfoLabel = styled.div`
   color: ${themeCssVariables.font.color.tertiary};
   flex-shrink: 0;
-  font-size: ${themeCssVariables.font.size.sm};
+  font-size: ${themeCssVariables.font.size.md};
   white-space: nowrap;
 `;
 
