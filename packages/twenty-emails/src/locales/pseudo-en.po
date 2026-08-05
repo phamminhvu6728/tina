@@ -70,8 +70,8 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Developers"
-msgstr ""
+#~ msgid "Developers"
+#~ msgstr ""
 
 #. js-lingui-explicit-id
 #: src/emails/server-admin-access-changed.email.tsx
@@ -85,8 +85,8 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Github"
-msgstr ""
+#~ msgid "Github"
+#~ msgstr ""
 
 #. js-lingui-explicit-id
 #: src/emails/warn-suspended-workspace.email.tsx
@@ -281,13 +281,13 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Visit Twenty's developer documentation"
-msgstr ""
+#~ msgid "Visit Twenty's developer documentation"
+#~ msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Visit Twenty's GitHub repository"
-msgstr ""
+#~ msgid "Visit Twenty's GitHub repository"
+#~ msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx

@@ -1450,32 +1450,32 @@ msgstr "Ավելացրեք փորձնական մուտք գնահատման հա
 #. js-lingui-id: FKGcEL
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server as a remote context server in Zed."
-msgstr "Ավելացրեք Twenty MCP սպասարկիչը որպես հեռավար context server Zed-ում։"
+msgstr "Ավելացրեք TinaCRM MCP սպասարկիչը որպես հեռավար context server Zed-ում։"
 
 #. js-lingui-id: iA2nHX
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server from Augment Code settings."
-msgstr "Ավելացրեք Twenty MCP սպասարկիչը Augment Code-ի կարգավորումներից։"
+msgstr "Ավելացրեք TinaCRM MCP սպասարկիչը Augment Code-ի կարգավորումներից։"
 
 #. js-lingui-id: l+NzAk
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server from Raycast's MCP commands or settings."
-msgstr "Ավելացրեք Twenty MCP սպասարկիչը Raycast-ի MCP հրամաններից կամ կարգավորումներից։"
+msgstr "Ավելացրեք TinaCRM MCP սպասարկիչը Raycast-ի MCP հրամաններից կամ կարգավորումներից։"
 
 #. js-lingui-id: j6G/yI
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server in Gemini CLI settings."
-msgstr "Ավելացրեք Twenty MCP սպասարկիչը Gemini CLI-ի կարգավորումներում։"
+msgstr "Ավելացրեք TinaCRM MCP սպասարկիչը Gemini CLI-ի կարգավորումներում։"
 
 #. js-lingui-id: /OyhlM
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server to your LibreChat configuration file."
-msgstr "Ավելացրեք Twenty MCP սպասարկիչը ձեր LibreChat-ի կոնֆիգուրացիոն ֆայլում։"
+msgstr "Ավելացրեք TinaCRM MCP սպասարկիչը ձեր LibreChat-ի կոնֆիգուրացիոն ֆայլում։"
 
 #. js-lingui-id: K0DXoj
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty remote server with LM Studio's install link."
-msgstr "Ավելացրեք Twenty հեռավար սպասարկիչը LM Studio-ի install հղումով։"
+msgstr "Ավելացրեք TinaCRM հեռավար սպասարկիչը LM Studio-ի install հղումով։"
 
 #. js-lingui-id: 5+ttxv
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistInput.tsx
@@ -1495,7 +1495,7 @@ msgstr "Ավելացնել թեմա"
 #. js-lingui-id: 4D/zWv
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add Twenty as a Streamable HTTP extension in Goose."
-msgstr "Ավելացրեք Twenty-ին որպես Streamable HTTP ընդլայնում Goose-ում։"
+msgstr "Ավելացրեք TinaCRM-ին որպես Streamable HTTP ընդլայնում Goose-ում։"
 
 #. js-lingui-id: XnwceV
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationRedirectURIsInput.tsx
@@ -3099,7 +3099,7 @@ msgstr "Վճարումների շրջանը"
 #. js-lingui-id: xF/NXI
 #: src/modules/settings/billing/hooks/useBillingPortalSession.ts
 msgid "Billing portal session error. Please retry or contact Twenty team"
-msgstr "Վճարային պորտալի նստաշրջանի սխալ։ Խնդրում ենք կրկին փորձել կամ կապ հաստատել Twenty թիմի հետ"
+msgstr "Վճարային պորտալի նստաշրջանի սխալ։ Խնդրում ենք կրկին փորձել կամ կապ հաստատել TinaCRM թիմի հետ"
 
 #. js-lingui-id: K1172m
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistSection.tsx
@@ -3226,7 +3226,7 @@ msgstr "հեղինակ՝ {author}"
 #. js-lingui-id: 8Pfllj
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
 msgid "By using Twenty, you agree to the"
-msgstr "Օգտագործելով Twenty-ն՝ դուք համաձայնվում եք"
+msgstr "Օգտագործելով TinaCRM-ն՝ դուք համաձայնվում եք"
 
 #. js-lingui-id: Yx41df
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
@@ -3673,7 +3673,7 @@ msgstr "Ստուգեք ձեր մուտքային նամակները՝ նոր է�
 #: src/modules/settings/billing/hooks/useHandleCheckoutSession.ts
 #: src/modules/settings/billing/hooks/useHandleCheckoutSession.ts
 msgid "Checkout session error. Please retry or contact Twenty team"
-msgstr "Վճարման նստաշրջանի սխալ։ Խնդրում ենք կրկին փորձել կամ կապ հաստատել Twenty թիմի հետ"
+msgstr "Վճարման նստաշրջանի սխալ։ Խնդրում ենք կրկին փորձել կամ կապ հաստատել TinaCRM թիմի հետ"
 
 #. js-lingui-id: SviKkE
 #: src/pages/settings/profile/appearance/components/LocalePicker.tsx
@@ -4251,12 +4251,12 @@ msgstr "Կարգավորեք հեռավար սպասարկիչը Amazon Q Develo
 #. js-lingui-id: g1/8jH
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Configure the Twenty MCP server manually in Cascade."
-msgstr "Կարգավորեք Twenty MCP սպասարկիչը Cascade-ում ձեռքով։"
+msgstr "Կարգավորեք TinaCRM MCP սպասարկիչը Cascade-ում ձեռքով։"
 
 #. js-lingui-id: XiyvRh
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Configure the Twenty MCP server manually in Cline."
-msgstr "Կարգավորեք Twenty MCP սպասարկիչը Cline-ում ձեռքով։"
+msgstr "Կարգավորեք TinaCRM MCP սպասարկիչը Cline-ում ձեռքով։"
 
 #. js-lingui-id: qA9AGQ
 #: src/modules/settings/domains/components/SettingsDomainRecords.tsx
@@ -7482,7 +7482,7 @@ msgstr "Սխալ՝ փաթեթի փոփոխությունը չեղարկելիս�
 #. js-lingui-id: QmR+2U
 #: src/modules/settings/billing/hooks/useEndSubscriptionTrialPeriod.ts
 msgid "Error while ending trial period. Please contact Twenty team."
-msgstr "Սխալ փորձաշրջանի ավարտի ընթացքում։ Խնդրում ենք կապվել Twenty թիմի հետ։"
+msgstr "Սխալ փորձաշրջանի ավարտի ընթացքում։ Խնդրում ենք կապվել TinaCRM թիմի հետ։"
 
 #. js-lingui-id: 5g78zo
 #: src/pages/settings/members/SettingsWorkspaceMember.tsx
@@ -9124,7 +9124,7 @@ msgstr "Թաքցնել համակարգային ինդեքսները"
 #. js-lingui-id: 1ETc0T
 #: src/pages/settings/community/SettingsCommunity.tsx
 msgid "Hire a partner to help you implement and customize Twenty."
-msgstr "Վարձեք գործընկեր, որը կօգնի ձեզ իրականացնել և հարմարեցնել Twenty-ը։"
+msgstr "Վարձեք գործընկեր, որը կօգնի ձեզ իրականացնել և հարմարեցնել TinaCRM-ը։"
 
 #. js-lingui-id: i0qMbr
 #: src/modules/navigation/components/MainNavigationDrawerTabsRow.tsx
@@ -13074,7 +13074,7 @@ msgstr "Մեկ կամ մի քանի ֆիլտր հղվում են անջատվա�
 #. js-lingui-id: 2l4SGU
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 msgid "One subscription provides one enterprise key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install Twenty on a second server, activate it with this same enterprise key, then register that server as a development instance. Development instances unlock enterprise features without extra billing and do not count toward your production seats."
-msgstr "Մեկ բաժանորդագրությունը ապահովում է մեկ enterprise բանալի, որը սպասարկում է մեկ production instance և ևս մեկ հնարավոր staging կամ test instance։ Staging կամ test միջավայր աշխատեցնելու համար տեղադրեք Twenty-ն երկրորդ սերվերի վրա, ակտիվացրեք այն նույն enterprise բանալով, ապա գրանցեք այդ սերվերը որպես development instance։ Development instance-ները բացում են enterprise հնարավորությունները առանց լրացուցիչ վճարման և չեն հաշվում ձեր production տեղերը (seats)։"
+msgstr "Մեկ բաժանորդագրությունը ապահովում է մեկ enterprise բանալի, որը սպասարկում է մեկ production instance և ևս մեկ հնարավոր staging կամ test instance։ Staging կամ test միջավայր աշխատեցնելու համար տեղադրեք TinaCRM-ն երկրորդ սերվերի վրա, ակտիվացրեք այն նույն enterprise բանալով, ապա գրանցեք այդ սերվերը որպես development instance։ Development instance-ները բացում են enterprise հնարավորությունները առանց լրացուցիչ վճարման և չեն հաշվում ձեր production տեղերը (seats)։"
 
 #. js-lingui-id: oFTo3P
 #: src/modules/settings/event-logs/components/SettingsLogs.tsx
@@ -13156,12 +13156,12 @@ msgstr "Բացել որպես հղում"
 #. js-lingui-id: n0vVgf
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Claude with the Twenty connector name and MCP URL prefilled."
-msgstr "Բացեք Claude-ը՝ Twenty միացուցիչի անունը և MCP URL-ը նախալրացված վիճակում։"
+msgstr "Բացեք Claude-ը՝ TinaCRM միացուցիչի անունը և MCP URL-ը նախալրացված վիճակում։"
 
 #. js-lingui-id: +n2jpB
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Cursor's MCP installer with the Twenty remote server config."
-msgstr "Բացեք Cursor-ի MCP installer-ը՝ Twenty հեռավար սպասարկչի կազմաձևով։"
+msgstr "Բացեք Cursor-ի MCP installer-ը՝ TinaCRM հեռավար սպասարկչի կազմաձևով։"
 
 #. js-lingui-id: pZZH4Q
 #: src/modules/auth/sign-in-up/components/EmailVerificationSent.tsx
@@ -13197,12 +13197,12 @@ msgstr "Բացել գրառումները՝"
 #. js-lingui-id: q170S2
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Replit with the Twenty remote server config."
-msgstr "Բացեք Replit-ը՝ Twenty հեռավար սպասարկչի կազմաձևով։"
+msgstr "Բացեք Replit-ը՝ TinaCRM հեռավար սպասարկչի կազմաձևով։"
 
 #. js-lingui-id: sBd/cl
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Twenty's official ChatGPT integration for your workspace."
-msgstr "Բացեք Twenty-ի պաշտոնական ChatGPT ինտեգրումը ձեր աշխատանքային տարածքի համար։"
+msgstr "Բացեք TinaCRM-ի պաշտոնական ChatGPT ինտեգրումը ձեր աշխատանքային տարածքի համար։"
 
 #. js-lingui-id: OV5wZZ
 #: src/modules/navigation-menu-item/display/sections/components/NavigationDrawerOpenedSection.tsx
@@ -13471,7 +13471,7 @@ msgstr "Էջի անուն"
 #. js-lingui-id: NRvxzv
 #: src/pages/not-found/NotFound.tsx
 msgid "Page Not Found | Twenty"
-msgstr "Էջը չի գտնվել | Twenty"
+msgstr "Էջը չի գտնվել | TinaCRM"
 
 #. js-lingui-id: sF+Xp9
 #: src/modules/settings/event-logs/components/EventLogTableSelector.tsx
@@ -16949,7 +16949,7 @@ msgstr "Բաժանորդագրությունը ակտիվացված է։"
 #: src/modules/settings/billing/hooks/useSubmitSubscriptionPayment.ts
 #: src/modules/settings/billing/hooks/useSubmitSubscriptionPayment.ts
 msgid "Subscription error. Please retry or contact Twenty team"
-msgstr "Բաժանորդագրության սխալ։ Խնդրում ենք կրկին փորձել կամ կապ հաստատել Twenty թիմի հետ"
+msgstr "Բաժանորդագրության սխալ։ Խնդրում ենք կրկին փորձել կամ կապ հաստատել TinaCRM թիմի հետ"
 
 #. js-lingui-id: FooJUj
 #. placeholder {0}: getTargetPlanLabel(targetPlanKey)
@@ -17334,7 +17334,7 @@ msgid "The base data model every Twenty workspace runs on.\n\n"
 "yarn twenty dev\n"
 "```\n\n"
 "See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
-msgstr "Հիմնական տվյալների մոդելը, որի վրա աշխատում է յուրաքանչյուր Twenty աշխատանքային տարածք։\n\n"
+msgstr "Հիմնական տվյալների մոդելը, որի վրա աշխատում է յուրաքանչյուր TinaCRM աշխատանքային տարածք։\n\n"
 "#### Ի՞նչ է նշանակում \"հիմք\"\n\n"
 "Յուրաքանչյուր Twenty աշխատանքային տարածք սկսում է այս օբյեկտների հավաքածուից։ Դրանք սահմանում են ձեր CRM-ի կառուցվածքը՝ ներառյալ փոխկապակցությունները, ակտիվությունը և հաշվետվությունը։ Մնացած ամեն ինչ՝ շուկայական հավելվածները, AI գործակալները և հարմարեցված օբյեկտները, միանում են դրանց։\n\n"
 "#### Ներառված օբյեկտներ\n"
@@ -17440,7 +17440,7 @@ msgstr "Էջ, ուր ձեր օգտագործողները կվերաողղվեն�
 #. js-lingui-id: Ya1wb4
 #: src/pages/settings/legal/SettingsLegalDpaNew.tsx
 msgid "The PDF is pre-signed by Twenty and executed with your legal entity and authorized signatory."
-msgstr "PDF-ն նախապես ստորագրված է Twenty-ի կողմից և լրացվում է ձեր իրավաբանական անձի և լիազորված ստորագրողի տվյալներով։"
+msgstr "PDF-ն նախապես ստորագրված է TinaCRM-ի կողմից և լրացվում է ձեր իրավաբանական անձի և լիազորված ստորագրողի տվյալներով։"
 
 #. js-lingui-id: wxyrqd
 #: src/modules/workflow/workflow-steps/workflow-actions/pick-record-action/components/WorkflowEditActionPickRecord.tsx
@@ -18284,7 +18284,7 @@ msgstr "Փիրուզագույն"
 #. js-lingui-id: JnaRPe
 #: src/modules/spreadsheet-import/steps/components/MatchColumnsStep/components/ColumnGrid.tsx
 msgid "Twenty fields"
-msgstr "Twenty դաշտեր"
+msgstr "TinaCRM դաշտեր"
 
 #. js-lingui-id: YIjS4q
 #: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
@@ -19750,7 +19750,7 @@ msgstr "Քաշ"
 #. js-lingui-id: nTuObL
 #: src/pages/auth/SignInUp.tsx
 msgid "Welcome to Twenty"
-msgstr "Բարի գալուստ Twenty"
+msgstr "Բարի գալուստ TinaCRM"
 
 #. js-lingui-id: t8ZvkC
 #: src/pages/auth/SignInUp.tsx

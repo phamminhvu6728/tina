@@ -146,7 +146,7 @@ msgstr "Ένα προσεκτικά επιλεγμένο κοινό ανθρώπ
 #. js-lingui-id: TF/ZV2
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "A heads up before your Twenty trial ends"
-msgstr "Μια ενημέρωση πριν λήξει η δοκιμαστική περίοδος του Twenty σας"
+msgstr "Μια ενημέρωση πριν λήξει η δοκιμαστική περίοδος του TinaCRM σας"
 
 #. js-lingui-id: 6yZjO1
 #: src/engine/core-modules/application/application.exception.ts
@@ -4316,7 +4316,7 @@ msgstr "Πίνακας σύζευξης που συνδέει τις συσχε�
 #. js-lingui-id: PviVyk
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Join your team on Twenty"
-msgstr "Συμμετέχετε στην ομάδα σας στο Twenty"
+msgstr "Συμμετέχετε στην ομάδα σας στο TinaCRM"
 
 #. js-lingui-id: ffWso3
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-call-recording-standard-flat-field-metadata.util.ts
@@ -7271,7 +7271,7 @@ msgstr "Δεν είναι δυνατή η ενημέρωση πεδίων συσ
 #. js-lingui-id: aK2k19
 #: src/engine/metadata-modules/index-metadata/services/index-metadata.service.ts
 msgid "System indexes are required for Twenty to work and cannot be deleted."
-msgstr "Τα ευρετήρια συστήματος είναι απαραίτητα για να λειτουργεί το Twenty και δεν μπορούν να διαγραφούν."
+msgstr "Τα ευρετήρια συστήματος είναι απαραίτητα για να λειτουργεί το TinaCRM και δεν μπορούν να διαγραφούν."
 
 #. js-lingui-id: /ojawH
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-object-metadata-validator.service.ts
@@ -7920,7 +7920,7 @@ msgstr "Σε αυτό το κλειδί API δεν έχει ανατεθεί ρ�
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
-msgstr "Αυτή η εφαρμογή απαιτεί νεότερη έκδοση του διακομιστή Twenty. Αναβαθμίστε τον διακομιστή σας ή χρησιμοποιήστε μια συμβατή έκδοση της εφαρμογής."
+msgstr "Αυτή η εφαρμογή απαιτεί νεότερη έκδοση του διακομιστή TinaCRM. Αναβαθμίστε τον διακομιστή σας ή χρησιμοποιήστε μια συμβατή έκδοση της εφαρμογής."
 
 #. js-lingui-id: y2nks/
 #: src/engine/core-modules/application/application.exception.ts
@@ -9140,7 +9140,7 @@ msgstr "Τετάρτη"
 #. js-lingui-id: TVkCrJ
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Welcome to Twenty: Please Confirm Your Email"
-msgstr "Καλώς ήρθατε στο Twenty: Παρακαλώ επιβεβαιώστε το email σας"
+msgstr "Καλώς ήρθατε στο TinaCRM: Παρακαλώ επιβεβαιώστε το email σας"
 
 #. js-lingui-id: nCHI/F
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-campaign-standard-flat-field-metadata.util.ts
@@ -9863,12 +9863,12 @@ msgstr "Το μέλος της ομάδας σας υπεύθυνο για τη 
 #. js-lingui-id: sOfbGC
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty plan renews soon"
-msgstr "Το πρόγραμμα Twenty σας θα ανανεωθεί σύντομα"
+msgstr "Το πρόγραμμα TinaCRM σας θα ανανεωθεί σύντομα"
 
 #. js-lingui-id: qW+K5e
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty trial is ending soon"
-msgstr "Η δοκιμαστική περίοδός σας στο Twenty λήγει σύντομα"
+msgstr "Η δοκιμαστική περίοδός σας στο TinaCRM λήγει σύντομα"
 
 #. js-lingui-id: ej/tZF
 #: src/engine/core-modules/graphql/hooks/use-graphql-error-handler.hook.ts

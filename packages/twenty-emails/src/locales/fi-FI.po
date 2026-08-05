@@ -66,7 +66,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
 msgid "Connect to Twenty"
-msgstr "Yhdistä Twenty"
+msgstr "Yhdistä TinaCRM"
 
 #. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
@@ -75,8 +75,8 @@ msgstr "Hyvä {userName},"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Developers"
-msgstr "Kehittäjät"
+#~ msgid "Developers"
+#~ msgstr "Kehittäjät"
 
 #. js-lingui-explicit-id
 #: src/emails/server-admin-access-changed.email.tsx
@@ -90,8 +90,8 @@ msgstr "Käytössä"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Github"
-msgstr "Github"
+#~ msgid "Github"
+#~ msgstr "Github"
 
 #. js-lingui-explicit-id
 #: src/emails/warn-suspended-workspace.email.tsx
@@ -120,7 +120,7 @@ msgstr "Hei {userName},"
 #. js-lingui-explicit-id
 #: src/emails/billing-trial-converting.email.tsx
 msgid "If Twenty is working for you, you're all set — there's nothing to do. If it's not the right fit, you can cancel in one click before then and you won't be charged."
-msgstr "Jos Twenty toimii sinulle, kaikki on kunnossa — mitään ei tarvitse tehdä. Jos se ei ole sinulle sopiva, voit peruuttaa tilauksen yhdellä napsautuksella ennen sitä, eikä sinua veloiteta."
+msgstr "Jos TinaCRM toimii sinulle, kaikki on kunnossa — mitään ei tarvitse tehdä. Jos se ei ole sinulle sopiva, voit peruuttaa tilauksen yhdellä napsautuksella ennen sitä, eikä sinua veloiteta."
 
 #. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
@@ -135,7 +135,7 @@ msgstr "Jos et tee mitään, keskeytämme työtilasi ja säilytämme tietosi tur
 #. js-lingui-explicit-id
 #: src/emails/clean-suspended-workspace.email.tsx
 msgid "If you'd ever like to give Twenty another try, you can start a fresh workspace in minutes — we'd love to have you back."
-msgstr "Jos haluat joskus kokeilla Twentyä uudelleen, voit aloittaa uuden työtilan muutamassa minuutissa — toivotamme sinut mielellämme takaisin."
+msgstr "Jos haluat joskus kokeilla TinaCRMä uudelleen, voit aloittaa uuden työtilan muutamassa minuutissa — toivotamme sinut mielellämme takaisin."
 
 #. js-lingui-explicit-id
 #: src/components/WhatIsTwenty.tsx
@@ -150,7 +150,7 @@ msgstr "Sen tiedot on poistettu eikä niitä voida enää palauttaa."
 #. js-lingui-explicit-id
 #: src/emails/send-invite-link.email.tsx
 msgid "Join your team on Twenty"
-msgstr "Liity tiimiisi Twentyssä"
+msgstr "Liity tiimiisi TinaCRMssä"
 
 #. js-lingui-explicit-id
 #: src/emails/billing-subscription-renewing.email.tsx
@@ -186,7 +186,7 @@ msgstr "Aktivoi työtila uudelleen"
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Read Twenty's user guide"
-msgstr "Lue Twentyn käyttäjäopas"
+msgstr "Lue TinaCRMn käyttäjäopas"
 
 #. js-lingui-explicit-id
 #: src/emails/password-reset-link.email.tsx
@@ -266,7 +266,7 @@ msgstr "Jos haluat säilyttää työtilasi ja kaiken tekemäsi, lisää maksutap
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Twenty.com, Public Benefit Corporation"
-msgstr "Twenty.com, yleishyödyllinen yhtiö"
+msgstr "tinacrm.com, yleishyödyllinen yhtiö"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -286,18 +286,18 @@ msgstr "Vahvista sähköposti"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Visit Twenty's developer documentation"
-msgstr "Tutustu Twentyn kehittäjädokumentaatioon"
+#~ msgid "Visit Twenty's developer documentation"
+#~ msgstr "Tutustu TinaCRMn kehittäjädokumentaatioon"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Visit Twenty's GitHub repository"
-msgstr "Vieraile Twentyn GitHub-repositoriossa"
+#~ msgid "Visit Twenty's GitHub repository"
+#~ msgstr "Vieraile TinaCRMn GitHub-repositoriossa"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Visit Twenty's website"
-msgstr "Vieraile Twentyn verkkosivustolla"
+msgstr "Vieraile TinaCRMn verkkosivustolla"
 
 #. js-lingui-explicit-id
 #: src/emails/billing-trial-converting.email.tsx
@@ -312,7 +312,7 @@ msgstr "Verkkosivusto"
 #. js-lingui-explicit-id
 #: src/components/WhatIsTwenty.tsx
 msgid "What is Twenty?"
-msgstr "Mikä on Twenty?"
+msgstr "Mikä on TinaCRM?"
 
 #. js-lingui-explicit-id
 #: src/emails/billing-subscription-renewing.email.tsx

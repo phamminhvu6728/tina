@@ -2985,8 +2985,8 @@ msgstr "Cơ bản"
 
 #. js-lingui-id: WChKbE
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationGeneralStats.tsx
-msgid "Batch size"
-msgstr "Kích thước lô"
+#~ msgid "Batch size"
+#~ msgstr "Kích thước lô"
 
 #. js-lingui-id: /xLNEx
 #: src/modules/activities/emails/components/EmailComposerFields.tsx
@@ -8130,13 +8130,13 @@ msgstr "Không thể thiết lập chế độ bảo trì."
 
 #. js-lingui-id: 7PuzkN
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
-msgid "Failed to start backfill"
-msgstr "Không thể bắt đầu quá trình backfill"
+#~ msgid "Failed to start backfill"
+#~ msgstr "Không thể bắt đầu quá trình backfill"
 
 #. js-lingui-id: SwXGP6
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationGeneralStats.tsx
-msgid "Failed to start upgrade"
-msgstr "Không thể bắt đầu nâng cấp"
+#~ msgid "Failed to start upgrade"
+#~ msgstr "Không thể bắt đầu nâng cấp"
 
 #. js-lingui-id: OX7bKt
 #: src/modules/settings/admin-panel/apps/components/SettingsAdminApps.tsx
@@ -9849,8 +9849,8 @@ msgstr "Liên kết cài đặt"
 #. js-lingui-id: xif494
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
-msgid "Install on all workspaces"
-msgstr "Cài đặt trên tất cả không gian làm việc"
+#~ msgid "Install on all workspaces"
+#~ msgstr "Cài đặt trên tất cả không gian làm việc"
 
 #. js-lingui-id: K8iwJx
 #: src/modules/settings/billing/constants/SettingsBillingPlanComparisonRows.ts
@@ -18214,10 +18214,9 @@ msgid "This will grant {0} to {userLabel}."
 msgstr "Thao tác này sẽ cấp {0} cho {userLabel}."
 
 #. js-lingui-id: rr0iQF
-#. placeholder {0}: registration.name
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
-msgid "This will install the latest version of \"{0}\" on all existing active and suspended workspaces, including the ones that don't have it yet. It runs as a background job and may take a while. Continue?"
-msgstr "Thao tác này sẽ cài đặt phiên bản mới nhất của \"{0}\" trên tất cả không gian làm việc đang hoạt động và đang bị tạm ngưng, bao gồm cả những không gian làm việc chưa có ứng dụng này. Thao tác chạy dưới nền và có thể mất một lúc. Tiếp tục?"
+#~ msgid "This will install the latest version of \"{0}\" on all existing active and suspended workspaces, including the ones that don't have it yet. It runs as a background job and may take a while. Continue?"
+#~ msgstr "Thao tác này sẽ cài đặt phiên bản mới nhất của \"{0}\" trên tất cả không gian làm việc đang hoạt động và đang bị tạm ngưng, bao gồm cả những không gian làm việc chưa có ứng dụng này. Thao tác chạy dưới nền và có thể mất một lúc. Tiếp tục?"
 
 #. js-lingui-id: y8xx3L
 #: src/modules/object-record/record-update-multiple/components/UpdateMultipleRecordsContainer.tsx
@@ -18246,10 +18245,9 @@ msgid "This will revoke {0} for {userLabel}."
 msgstr "Thao tác này sẽ thu hồi {0} của {userLabel}."
 
 #. js-lingui-id: DXNxPk
-#. placeholder {0}: registration.name
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationGeneralStats.tsx
-msgid "This will upgrade \"{0}\" to its latest available version on every workspace that already has it installed. Workspaces without the app are not affected. It runs as a background job and may take a while. Continue?"
-msgstr "Thao tác này sẽ nâng cấp \"{0}\" lên phiên bản mới nhất có sẵn trên mọi không gian làm việc đã cài đặt nó. Các không gian làm việc không có ứng dụng sẽ không bị ảnh hưởng. Thao tác này chạy nền và có thể mất một lúc. Tiếp tục?"
+#~ msgid "This will upgrade \"{0}\" to its latest available version on every workspace that already has it installed. Workspaces without the app are not affected. It runs as a background job and may take a while. Continue?"
+#~ msgstr "Thao tác này sẽ nâng cấp \"{0}\" lên phiên bản mới nhất có sẵn trên mọi không gian làm việc đã cài đặt nó. Các không gian làm việc không có ứng dụng sẽ không bị ảnh hưởng. Thao tác này chạy nền và có thể mất một lúc. Tiếp tục?"
 
 #. js-lingui-id: f8HOUp
 #: src/modules/ai/components/ThinkingStepsDisplay.tsx
@@ -19202,8 +19200,8 @@ msgstr "Nâng cấp"
 #. js-lingui-id: 8guwMM
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationGeneralStats.tsx
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationGeneralStats.tsx
-msgid "Upgrade existing installations"
-msgstr "Nâng cấp các cài đặt hiện có"
+#~ msgid "Upgrade existing installations"
+#~ msgstr "Nâng cấp các cài đặt hiện có"
 
 #. js-lingui-id: IEtN5Y
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminWorkspacesStatusSummaryCard.tsx
@@ -19222,8 +19220,8 @@ msgstr "Tình trạng nâng cấp trên bản cài đặt và các không gian l
 
 #. js-lingui-id: Ngj5VX
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationGeneralStats.tsx
-msgid "Upgrade started. Existing installations will be upgraded to the latest version in the background."
-msgstr "Đã bắt đầu nâng cấp. Các bản cài đặt hiện tại sẽ được nâng cấp lên phiên bản mới nhất dưới nền."
+#~ msgid "Upgrade started. Existing installations will be upgraded to the latest version in the background."
+#~ msgstr "Đã bắt đầu nâng cấp. Các bản cài đặt hiện tại sẽ được nâng cấp lên phiên bản mới nhất dưới nền."
 
 #. js-lingui-id: 5UfQvA
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx

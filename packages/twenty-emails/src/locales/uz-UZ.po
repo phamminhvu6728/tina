@@ -96,7 +96,7 @@ msgstr "Server administratori huquqlari oʻzgartirildi"
 #. js-lingui-explicit-id
 #: src/emails/send-invite-link.email.tsx
 msgid "Join your team on Twenty"
-msgstr "Jamoangizga Twenty da qoʻshiling"
+msgstr "Jamoangizga TinaCRM da qoʻshiling"
 
 #. js-lingui-explicit-id
 #: src/emails/send-invite-link.email.tsx
@@ -151,7 +151,7 @@ msgstr "Agar siz bu oʻzgarishni boshlamagan boʻlsangiz, darhol ish maydoni ega
 #. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
 msgid "Connect to Twenty"
-msgstr "Twenty ga ulaning"
+msgstr "TinaCRM ga ulaning"
 
 #. js-lingui-explicit-id
 #: src/emails/clean-suspended-workspace.email.tsx
@@ -171,7 +171,7 @@ msgstr "Uning maʼlumotlari olib tashlangan va endi qayta tiklab boʻlmaydi."
 #. js-lingui-explicit-id
 #: src/emails/clean-suspended-workspace.email.tsx
 msgid "If you'd ever like to give Twenty another try, you can start a fresh workspace in minutes — we'd love to have you back."
-msgstr "Agar qachondir Twentyʼga yana bir bor imkon berishni istasangiz, bir necha daqiqada yangi ish maydonini boshlashingiz mumkin — sizni yana koʻrishdan mamnun boʻlamiz."
+msgstr "Agar qachondir TinaCRMʼga yana bir bor imkon berishni istasangiz, bir necha daqiqada yangi ish maydonini boshlashingiz mumkin — sizni yana koʻrishdan mamnun boʻlamiz."
 
 #. js-lingui-explicit-id
 #: src/emails/clean-suspended-workspace.email.tsx
@@ -226,7 +226,7 @@ msgstr "<0>{workspaceDisplayName}</0> uchun bepul sinov muddati {formattedDate} 
 #. js-lingui-explicit-id
 #: src/emails/billing-trial-converting.email.tsx
 msgid "If Twenty is working for you, you're all set — there's nothing to do. If it's not the right fit, you can cancel in one click before then and you won't be charged."
-msgstr "Agar Twenty siz uchun mos boʻlsa, hammasi tayyor — siz hech narsa qilishingiz shart emas. Agar u sizga toʻgʻri kelmasa, shu muddatgacha bir marta bosish bilan bekor qilishingiz mumkin va sizdan toʻlov olinmaydi."
+msgstr "Agar TinaCRM siz uchun mos boʻlsa, hammasi tayyor — siz hech narsa qilishingiz shart emas. Agar u sizga toʻgʻri kelmasa, shu muddatgacha bir marta bosish bilan bekor qilishingiz mumkin va sizdan toʻlov olinmaydi."
 
 #. js-lingui-explicit-id
 #: src/emails/billing-subscription-renewing.email.tsx
@@ -282,7 +282,7 @@ msgstr "Davom ettirmoqchi boʻlsangiz, hech qanday harakat zarur emas. Agar yang
 #. js-lingui-explicit-id
 #: src/components/WhatIsTwenty.tsx
 msgid "What is Twenty?"
-msgstr "Twenty nima?"
+msgstr "TinaCRM nima?"
 
 #. js-lingui-explicit-id
 #: src/components/WhatIsTwenty.tsx
@@ -297,7 +297,7 @@ msgstr "Veb-sayt"
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Visit Twenty's website"
-msgstr "Twenty veb-saytiga tashrif buyuring"
+msgstr "TinaCRM veb-saytiga tashrif buyuring"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -307,7 +307,7 @@ msgstr "Github"
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Visit Twenty's GitHub repository"
-msgstr "Twenty’ning GitHub repozitoriyasiga tashrif buyuring"
+msgstr "TinaCRM’ning GitHub repozitoriyasiga tashrif buyuring"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -317,7 +317,7 @@ msgstr "Foydalanuvchi qoʻllanmasi"
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Read Twenty's user guide"
-msgstr "Twenty foydalanuvchi qoʻllanmasini oʻqing"
+msgstr "TinaCRM foydalanuvchi qoʻllanmasini oʻqing"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -327,12 +327,12 @@ msgstr "Dasturchilar"
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Visit Twenty's developer documentation"
-msgstr "Twenty’ning dasturchilar uchun hujjatlariga tashrif buyuring"
+msgstr "TinaCRM’ning dasturchilar uchun hujjatlariga tashrif buyuring"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Twenty.com, Public Benefit Corporation"
-msgstr "Twenty.com, Public Benefit Corporation"
+msgstr "tinacrm.com, Public Benefit Corporation"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx

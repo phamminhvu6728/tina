@@ -146,7 +146,7 @@ msgstr "Пажљиво одабрана публика људи"
 #. js-lingui-id: TF/ZV2
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "A heads up before your Twenty trial ends"
-msgstr "Обавештење пре истека вашег Twenty пробног периода"
+msgstr "Обавештење пре истека вашег TinaCRM пробног периода"
 
 #. js-lingui-id: 6yZjO1
 #: src/engine/core-modules/application/application.exception.ts
@@ -4316,7 +4316,7 @@ msgstr "Спојна табела која повезује асоцијациј
 #. js-lingui-id: PviVyk
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Join your team on Twenty"
-msgstr "Придружите се свом тиму на Twenty"
+msgstr "Придружите се свом тиму на TinaCRM"
 
 #. js-lingui-id: ffWso3
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-call-recording-standard-flat-field-metadata.util.ts
@@ -7271,7 +7271,7 @@ msgstr "Системска поља не могу бити ажурирана"
 #. js-lingui-id: aK2k19
 #: src/engine/metadata-modules/index-metadata/services/index-metadata.service.ts
 msgid "System indexes are required for Twenty to work and cannot be deleted."
-msgstr "Системски индекси су неопходни да би Twenty радио и не могу се избрисати."
+msgstr "Системски индекси су неопходни да би TinaCRM радио и не могу се избрисати."
 
 #. js-lingui-id: /ojawH
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-object-metadata-validator.service.ts
@@ -7920,7 +7920,7 @@ msgstr "Овом API кључу није додељена улога."
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
-msgstr "Ова апликација захтева новију верзију Twenty сервера. Молимо, надоградите свој сервер или користите компатибилну верзију апликације."
+msgstr "Ова апликација захтева новију верзију TinaCRM сервера. Молимо, надоградите свој сервер или користите компатибилну верзију апликације."
 
 #. js-lingui-id: y2nks/
 #: src/engine/core-modules/application/application.exception.ts
@@ -9140,7 +9140,7 @@ msgstr "Среда"
 #. js-lingui-id: TVkCrJ
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Welcome to Twenty: Please Confirm Your Email"
-msgstr "Добродошли у Twenty: Молимо потврдите ваш имејл"
+msgstr "Добродошли у TinaCRM: Молимо потврдите ваш имејл"
 
 #. js-lingui-id: nCHI/F
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-campaign-standard-flat-field-metadata.util.ts
@@ -9863,12 +9863,12 @@ msgstr "Ваш тимски члан задужен за управљање на
 #. js-lingui-id: sOfbGC
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty plan renews soon"
-msgstr "Ваш Twenty план ће ускоро бити обновљен"
+msgstr "Ваш TinaCRM план ће ускоро бити обновљен"
 
 #. js-lingui-id: qW+K5e
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty trial is ending soon"
-msgstr "Ваш Twenty пробни период ускоро истиче"
+msgstr "Ваш TinaCRM пробни период ускоро истиче"
 
 #. js-lingui-id: ej/tZF
 #: src/engine/core-modules/graphql/hooks/use-graphql-error-handler.hook.ts

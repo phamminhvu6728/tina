@@ -146,7 +146,7 @@ msgstr "Qo‘l bilan tanlab olingan odamlar auditoriyasi"
 #. js-lingui-id: TF/ZV2
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "A heads up before your Twenty trial ends"
-msgstr "Twenty sinovingiz yakunlanishidan oldin ogohlantirish"
+msgstr "TinaCRM sinovingiz yakunlanishidan oldin ogohlantirish"
 
 #. js-lingui-id: 6yZjO1
 #: src/engine/core-modules/application/application.exception.ts
@@ -4220,7 +4220,7 @@ msgstr "Xabar kanali xabar assotsiatsiyalarini xabar jildlariga bog‘lovchi qo�
 #. js-lingui-id: PviVyk
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Join your team on Twenty"
-msgstr "Twenty’da jamoangizga qoʻshiling"
+msgstr "TinaCRM’da jamoangizga qoʻshiling"
 
 #. js-lingui-id: ffWso3
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-call-recording-standard-flat-field-metadata.util.ts
@@ -7144,7 +7144,7 @@ msgstr "Tizim maydonlarini yangilab bo‘lmaydi"
 #. js-lingui-id: aK2k19
 #: src/engine/metadata-modules/index-metadata/services/index-metadata.service.ts
 msgid "System indexes are required for Twenty to work and cannot be deleted."
-msgstr "Twenty ishlashi uchun tizim indekslari zarur va ularni o‘chirib bo‘lmaydi."
+msgstr "TinaCRM ishlashi uchun tizim indekslari zarur va ularni o‘chirib bo‘lmaydi."
 
 #. js-lingui-id: /ojawH
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-object-metadata-validator.service.ts
@@ -7794,7 +7794,7 @@ msgstr "Ushbu API kalitiga hech qanday rol biriktirilmagan."
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
-msgstr "Bu ilova Twenty serverining yangiroq versiyasini talab qiladi. Iltimos, serveringizni yangilang yoki mos keluvchi ilova versiyasidan foydalaning."
+msgstr "Bu ilova TinaCRM serverining yangiroq versiyasini talab qiladi. Iltimos, serveringizni yangilang yoki mos keluvchi ilova versiyasidan foydalaning."
 
 #. js-lingui-id: y2nks/
 #: src/engine/core-modules/application/application.exception.ts
@@ -8992,7 +8992,7 @@ msgstr "Chorshanba"
 #. js-lingui-id: TVkCrJ
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Welcome to Twenty: Please Confirm Your Email"
-msgstr "Twenty’ga xush kelibsiz: Iltimos, elektron pochtangizni tasdiqlang"
+msgstr "TinaCRM’ga xush kelibsiz: Iltimos, elektron pochtangizni tasdiqlang"
 
 #. js-lingui-id: nCHI/F
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-campaign-standard-flat-field-metadata.util.ts
@@ -9692,12 +9692,12 @@ msgstr "Kompaniya akkauntini boshqarishga mas'ul bo‘lgan jamoangiz a'zosi"
 #. js-lingui-id: sOfbGC
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty plan renews soon"
-msgstr "Sizning Twenty tarif rejangiz tez orada yangilanadi"
+msgstr "Sizning TinaCRM tarif rejangiz tez orada yangilanadi"
 
 #. js-lingui-id: qW+K5e
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty trial is ending soon"
-msgstr "Sizning Twenty sinov davringiz tez orada tugaydi"
+msgstr "Sizning TinaCRM sinov davringiz tez orada tugaydi"
 
 #. js-lingui-id: ej/tZF
 #: src/engine/core-modules/graphql/hooks/use-graphql-error-handler.hook.ts
