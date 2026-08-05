@@ -66,7 +66,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
 msgid "Connect to Twenty"
-msgstr "Accedi a Twenty"
+msgstr "Accedi a TinaCRM"
 
 #. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
@@ -75,8 +75,8 @@ msgstr "Gentile {userName},"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Developers"
-msgstr "Sviluppatori"
+#~ msgid "Developers"
+#~ msgstr "Sviluppatori"
 
 #. js-lingui-explicit-id
 #: src/emails/server-admin-access-changed.email.tsx
@@ -90,8 +90,8 @@ msgstr "Abilitato"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Github"
-msgstr "Github"
+#~ msgid "Github"
+#~ msgstr "Github"
 
 #. js-lingui-explicit-id
 #: src/emails/warn-suspended-workspace.email.tsx
@@ -120,7 +120,7 @@ msgstr "Ciao {userName},"
 #. js-lingui-explicit-id
 #: src/emails/billing-trial-converting.email.tsx
 msgid "If Twenty is working for you, you're all set — there's nothing to do. If it's not the right fit, you can cancel in one click before then and you won't be charged."
-msgstr "Se Twenty funziona per te, sei a posto — non devi fare nulla. Se invece non fa al caso tuo, puoi annullare con un clic prima di quella data e non ti verrà addebitato nulla."
+msgstr "Se TinaCRM funziona per te, sei a posto — non devi fare nulla. Se invece non fa al caso tuo, puoi annullare con un clic prima di quella data e non ti verrà addebitato nulla."
 
 #. js-lingui-explicit-id
 #: src/emails/password-update-notify.email.tsx
@@ -135,7 +135,7 @@ msgstr "Se non fai nulla, metteremo in pausa il tuo workspace e manterremo i tuo
 #. js-lingui-explicit-id
 #: src/emails/clean-suspended-workspace.email.tsx
 msgid "If you'd ever like to give Twenty another try, you can start a fresh workspace in minutes — we'd love to have you back."
-msgstr "Se vorrai mai dare un’altra possibilità a Twenty, potrai creare un nuovo workspace in pochi minuti — ci farebbe piacere riaverti con noi."
+msgstr "Se vorrai mai dare un’altra possibilità a TinaCRM, potrai creare un nuovo workspace in pochi minuti — ci farebbe piacere riaverti con noi."
 
 #. js-lingui-explicit-id
 #: src/components/WhatIsTwenty.tsx
@@ -150,7 +150,7 @@ msgstr "I suoi dati sono stati rimossi e non possono più essere recuperati."
 #. js-lingui-explicit-id
 #: src/emails/send-invite-link.email.tsx
 msgid "Join your team on Twenty"
-msgstr "Unisciti al tuo team su Twenty"
+msgstr "Unisciti al tuo team su TinaCRM"
 
 #. js-lingui-explicit-id
 #: src/emails/billing-subscription-renewing.email.tsx
@@ -186,7 +186,7 @@ msgstr "Riattiva workspace"
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Read Twenty's user guide"
-msgstr "Leggi la guida utente di Twenty"
+msgstr "Leggi la guida utente di TinaCRM"
 
 #. js-lingui-explicit-id
 #: src/emails/password-reset-link.email.tsx
@@ -266,7 +266,7 @@ msgstr "Per mantenere il tuo workspace e tutto ciò che hai costruito, aggiungi 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Twenty.com, Public Benefit Corporation"
-msgstr "Twenty.com, Società di Pubblica Utilità"
+msgstr "tinacrm.com, Società di Pubblica Utilità"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
@@ -286,18 +286,18 @@ msgstr "Verifica e-mail"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Visit Twenty's developer documentation"
-msgstr "Visita la documentazione per sviluppatori di Twenty"
+#~ msgid "Visit Twenty's developer documentation"
+#~ msgstr "Visita la documentazione per sviluppatori di TinaCRM"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
-msgid "Visit Twenty's GitHub repository"
-msgstr "Visita il repository GitHub di Twenty"
+#~ msgid "Visit Twenty's GitHub repository"
+#~ msgstr "Visita il repository GitHub di TinaCRM"
 
 #. js-lingui-explicit-id
 #: src/components/Footer.tsx
 msgid "Visit Twenty's website"
-msgstr "Visita il sito web di Twenty"
+msgstr "Visita il sito web di TinaCRM"
 
 #. js-lingui-explicit-id
 #: src/emails/billing-trial-converting.email.tsx
@@ -312,7 +312,7 @@ msgstr "Sito web"
 #. js-lingui-explicit-id
 #: src/components/WhatIsTwenty.tsx
 msgid "What is Twenty?"
-msgstr "Che cos'è Twenty?"
+msgstr "Che cos'è TinaCRM?"
 
 #. js-lingui-explicit-id
 #: src/emails/billing-subscription-renewing.email.tsx

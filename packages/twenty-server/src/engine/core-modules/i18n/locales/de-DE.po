@@ -146,7 +146,7 @@ msgstr "Eine handverlesene Zielgruppe von Personen"
 #. js-lingui-id: TF/ZV2
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "A heads up before your Twenty trial ends"
-msgstr "Ein Hinweis, bevor Ihre Twenty-Testphase endet"
+msgstr "Ein Hinweis, bevor Ihre TinaCRM-Testphase endet"
 
 #. js-lingui-id: 6yZjO1
 #: src/engine/core-modules/application/application.exception.ts
@@ -4316,7 +4316,7 @@ msgstr "Join-Tabelle, die Nachrichtenkanal-Nachrichtenassoziationen mit Nachrich
 #. js-lingui-id: PviVyk
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Join your team on Twenty"
-msgstr "Treten Sie Ihrem Team auf Twenty bei"
+msgstr "Treten Sie Ihrem Team auf TinaCRM bei"
 
 #. js-lingui-id: ffWso3
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-call-recording-standard-flat-field-metadata.util.ts
@@ -7271,7 +7271,7 @@ msgstr "Systemfelder können nicht aktualisiert werden"
 #. js-lingui-id: aK2k19
 #: src/engine/metadata-modules/index-metadata/services/index-metadata.service.ts
 msgid "System indexes are required for Twenty to work and cannot be deleted."
-msgstr "Systemindizes sind erforderlich, damit Twenty funktioniert, und können nicht gelöscht werden."
+msgstr "Systemindizes sind erforderlich, damit TinaCRM funktioniert, und können nicht gelöscht werden."
 
 #. js-lingui-id: /ojawH
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-object-metadata-validator.service.ts
@@ -7920,7 +7920,7 @@ msgstr "Diesem API-Schlüssel ist keine Rolle zugewiesen."
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
-msgstr "Diese App erfordert eine neuere Version des Twenty-Servers. Bitte aktualisieren Sie Ihren Server oder verwenden Sie eine kompatible App-Version."
+msgstr "Diese App erfordert eine neuere Version des TinaCRM-Servers. Bitte aktualisieren Sie Ihren Server oder verwenden Sie eine kompatible App-Version."
 
 #. js-lingui-id: y2nks/
 #: src/engine/core-modules/application/application.exception.ts
@@ -9140,7 +9140,7 @@ msgstr "Mittwoch"
 #. js-lingui-id: TVkCrJ
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Welcome to Twenty: Please Confirm Your Email"
-msgstr "Willkommen bei Twenty: Bitte bestätigen Sie Ihre E-Mail-Adresse"
+msgstr "Willkommen bei TinaCRM: Bitte bestätigen Sie Ihre E-Mail-Adresse"
 
 #. js-lingui-id: nCHI/F
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-campaign-standard-flat-field-metadata.util.ts
@@ -9863,12 +9863,12 @@ msgstr "Ihr Teammitglied, das für die Verwaltung des Unternehmenskontos verantw
 #. js-lingui-id: sOfbGC
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty plan renews soon"
-msgstr "Ihr Twenty-Tarif wird bald verlängert"
+msgstr "Ihr TinaCRM-Tarif wird bald verlängert"
 
 #. js-lingui-id: qW+K5e
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty trial is ending soon"
-msgstr "Ihre Twenty-Testphase endet bald"
+msgstr "Ihre TinaCRM-Testphase endet bald"
 
 #. js-lingui-id: ej/tZF
 #: src/engine/core-modules/graphql/hooks/use-graphql-error-handler.hook.ts

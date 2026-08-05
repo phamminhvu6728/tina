@@ -6694,8 +6694,14 @@ msgstr "Mục tiêu vai trò thiếu định danh."
 #. js-lingui-id: vYrPc5
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-role-target-targets-only-one-entity.util.ts
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-role-target-targets-only-one-entity.util.ts
-msgid "Role target must have exactly one of: apiKeyId, userWorkspaceId, or agentId"
-msgstr "Đối tượng được gán vai trò phải có chính xác một trong các giá trị sau: apiKeyId, userWorkspaceId hoặc agentId."
+#~ msgid "Role target must have exactly one of: apiKeyId, userWorkspaceId, or agentId"
+#~ msgstr "Đối tượng được gán vai trò phải có chính xác một trong các giá trị sau: apiKeyId, userWorkspaceId hoặc agentId."
+
+#. js-lingui-id: vYrPc5
+#: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-role-target-targets-only-one-entity.util.ts
+#: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-role-target-targets-only-one-entity.util.ts
+msgid "Role target must have exactly one of: apiKeyId, userWorkspaceId, or agentUniversalIdentifier"
+msgstr ""
 
 #. js-lingui-id: oNYUjk
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-role-target-validator.service.ts
@@ -8969,8 +8975,8 @@ msgstr "Không tìm thấy chế độ xem cho widget"
 
 #. js-lingui-id: wIcQxd
 #: src/engine/metadata-modules/view/services/view-widget-upsert.service.ts
-msgid "View settings can only be updated on record table widgets"
-msgstr "Chỉ có thể cập nhật cài đặt chế độ xem trên các tiện ích bảng bản ghi."
+#~ msgid "View settings can only be updated on record table widgets"
+#~ msgstr "Chỉ có thể cập nhật cài đặt chế độ xem trên các tiện ích bảng bản ghi."
 
 #. js-lingui-id: ipFNcM
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-view-sort-validator.service.ts

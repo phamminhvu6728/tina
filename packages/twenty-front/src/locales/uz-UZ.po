@@ -1450,32 +1450,32 @@ msgstr "Baholash uchun test kiritmasini qo‘shing (masalan, \"NYdagi barcha mij
 #. js-lingui-id: FKGcEL
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server as a remote context server in Zed."
-msgstr "Twenty MCP serverini Zed ichida masofaviy kontekst serveri sifatida qo‘shing."
+msgstr "TinaCRM MCP serverini Zed ichida masofaviy kontekst serveri sifatida qo‘shing."
 
 #. js-lingui-id: iA2nHX
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server from Augment Code settings."
-msgstr "Twenty MCP serverini Augment Code sozlamalaridan qo‘shing."
+msgstr "TinaCRM MCP serverini Augment Code sozlamalaridan qo‘shing."
 
 #. js-lingui-id: l+NzAk
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server from Raycast's MCP commands or settings."
-msgstr "Twenty MCP serverini Raycast ning MCP buyruqlari yoki sozlamalaridan qo‘shing."
+msgstr "TinaCRM MCP serverini Raycast ning MCP buyruqlari yoki sozlamalaridan qo‘shing."
 
 #. js-lingui-id: j6G/yI
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server in Gemini CLI settings."
-msgstr "Twenty MCP serverini Gemini CLI sozlamalarida qo‘shing."
+msgstr "TinaCRM MCP serverini Gemini CLI sozlamalarida qo‘shing."
 
 #. js-lingui-id: /OyhlM
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server to your LibreChat configuration file."
-msgstr "Twenty MCP serverini LibreChat konfiguratsiya faylingizga qo‘shing."
+msgstr "TinaCRM MCP serverini LibreChat konfiguratsiya faylingizga qo‘shing."
 
 #. js-lingui-id: K0DXoj
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty remote server with LM Studio's install link."
-msgstr "Twenty masofaviy serverini LM Studio ning o‘rnatish havolasi bilan qo‘shing."
+msgstr "TinaCRM masofaviy serverini LM Studio ning o‘rnatish havolasi bilan qo‘shing."
 
 #. js-lingui-id: 5+ttxv
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistInput.tsx
@@ -1495,7 +1495,7 @@ msgstr "Mavzu qo‘shish"
 #. js-lingui-id: 4D/zWv
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add Twenty as a Streamable HTTP extension in Goose."
-msgstr "Twenty ni Goose ichida Streamable HTTP kengaytmasi sifatida qo‘shing."
+msgstr "TinaCRM ni Goose ichida Streamable HTTP kengaytmasi sifatida qo‘shing."
 
 #. js-lingui-id: XnwceV
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationRedirectURIsInput.tsx
@@ -3099,7 +3099,7 @@ msgstr "Hisob-kitob davri"
 #. js-lingui-id: xF/NXI
 #: src/modules/settings/billing/hooks/useBillingPortalSession.ts
 msgid "Billing portal session error. Please retry or contact Twenty team"
-msgstr "Hisob-kitob portali seansi xatosi. Iltimos, qayta urinib ko‘ring yoki Twenty jamoasiga murojaat qiling"
+msgstr "Hisob-kitob portali seansi xatosi. Iltimos, qayta urinib ko‘ring yoki TinaCRM jamoasiga murojaat qiling"
 
 #. js-lingui-id: K1172m
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistSection.tsx
@@ -3226,7 +3226,7 @@ msgstr "muallif: {author}"
 #. js-lingui-id: 8Pfllj
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
 msgid "By using Twenty, you agree to the"
-msgstr "Twentyʼdan foydalanish orqali siz"
+msgstr "TinaCRMʼdan foydalanish orqali siz"
 
 #. js-lingui-id: Yx41df
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
@@ -3673,7 +3673,7 @@ msgstr "Yangi email manzilingizni tasdiqlash uchun pochta qutingizni tekshiring.
 #: src/modules/settings/billing/hooks/useHandleCheckoutSession.ts
 #: src/modules/settings/billing/hooks/useHandleCheckoutSession.ts
 msgid "Checkout session error. Please retry or contact Twenty team"
-msgstr "To‘lov seansi xatosi. Iltimos, qayta urinib ko‘ring yoki Twenty jamoasiga murojaat qiling"
+msgstr "To‘lov seansi xatosi. Iltimos, qayta urinib ko‘ring yoki TinaCRM jamoasiga murojaat qiling"
 
 #. js-lingui-id: SviKkE
 #: src/pages/settings/profile/appearance/components/LocalePicker.tsx
@@ -4251,12 +4251,12 @@ msgstr "Uzoqdagi serverni Amazon Q Developer MCP sozlamalarida moslang."
 #. js-lingui-id: g1/8jH
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Configure the Twenty MCP server manually in Cascade."
-msgstr "Twenty MCP serverini Cascade’da qo‘lda moslang."
+msgstr "TinaCRM MCP serverini Cascade’da qo‘lda moslang."
 
 #. js-lingui-id: XiyvRh
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Configure the Twenty MCP server manually in Cline."
-msgstr "Twenty MCP serverini Cline’da qo‘lda moslang."
+msgstr "TinaCRM MCP serverini Cline’da qo‘lda moslang."
 
 #. js-lingui-id: qA9AGQ
 #: src/modules/settings/domains/components/SettingsDomainRecords.tsx
@@ -7482,7 +7482,7 @@ msgstr "Tarifni o‘zgartirishni bekor qilishda xatolik yuz berdi."
 #. js-lingui-id: QmR+2U
 #: src/modules/settings/billing/hooks/useEndSubscriptionTrialPeriod.ts
 msgid "Error while ending trial period. Please contact Twenty team."
-msgstr "Sinov davrini yakunlashda xatolik yuz berdi. Iltimos, Twenty jamoasiga murojaat qiling."
+msgstr "Sinov davrini yakunlashda xatolik yuz berdi. Iltimos, TinaCRM jamoasiga murojaat qiling."
 
 #. js-lingui-id: 5g78zo
 #: src/pages/settings/members/SettingsWorkspaceMember.tsx
@@ -9124,7 +9124,7 @@ msgstr "Tizim indekslarini yashirish"
 #. js-lingui-id: 1ETc0T
 #: src/pages/settings/community/SettingsCommunity.tsx
 msgid "Hire a partner to help you implement and customize Twenty."
-msgstr "Twenty ni joriy qilish va moslashtirishda yordam berishi uchun hamkor yollang."
+msgstr "TinaCRM ni joriy qilish va moslashtirishda yordam berishi uchun hamkor yollang."
 
 #. js-lingui-id: i0qMbr
 #: src/modules/navigation/components/MainNavigationDrawerTabsRow.tsx
@@ -13074,7 +13074,7 @@ msgstr "Bir yoki bir nechta filtr faoliyati o‘chirilgan yoki o‘chirilgan may
 #. js-lingui-id: 2l4SGU
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 msgid "One subscription provides one enterprise key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install Twenty on a second server, activate it with this same enterprise key, then register that server as a development instance. Development instances unlock enterprise features without extra billing and do not count toward your production seats."
-msgstr "Bitta obuna bitta korporativ kalitni taqdim etadi, u bitta ishlab chiqarish instansiyasini va bitta ehtimoliy stajirovka yoki test instansiyasini ishga tushiradi. Stajirovka yoki test muhitini ishga tushirish uchun Twenty ni ikkinchi serverga o‘rnating, uni shu korporativ kalit bilan faollashtiring, so‘ng ushbu serverni ishlab chiqish instansiyasi sifatida ro‘yxatdan o‘tkazing. Ishlab chiqish instansiyalari qo‘shimcha hisob-kitoblarsiz korporativ funksiyalarni ochadi va ishlab chiqarish o‘rinlaringiz soniga kiritilmaydi."
+msgstr "Bitta obuna bitta korporativ kalitni taqdim etadi, u bitta ishlab chiqarish instansiyasini va bitta ehtimoliy stajirovka yoki test instansiyasini ishga tushiradi. Stajirovka yoki test muhitini ishga tushirish uchun TinaCRM ni ikkinchi serverga o‘rnating, uni shu korporativ kalit bilan faollashtiring, so‘ng ushbu serverni ishlab chiqish instansiyasi sifatida ro‘yxatdan o‘tkazing. Ishlab chiqish instansiyalari qo‘shimcha hisob-kitoblarsiz korporativ funksiyalarni ochadi va ishlab chiqarish o‘rinlaringiz soniga kiritilmaydi."
 
 #. js-lingui-id: oFTo3P
 #: src/modules/settings/event-logs/components/SettingsLogs.tsx
@@ -13156,12 +13156,12 @@ msgstr "Havola sifatida ochish"
 #. js-lingui-id: n0vVgf
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Claude with the Twenty connector name and MCP URL prefilled."
-msgstr "Claude ni Twenty konnektori nomi va oldindan to‘ldirilgan MCP URL bilan oching."
+msgstr "Claude ni TinaCRM konnektori nomi va oldindan to‘ldirilgan MCP URL bilan oching."
 
 #. js-lingui-id: +n2jpB
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Cursor's MCP installer with the Twenty remote server config."
-msgstr "Cursor ning MCP o‘rnatish dasturini Twenty masofaviy server konfiguratsiyasi bilan oching."
+msgstr "Cursor ning MCP o‘rnatish dasturini TinaCRM masofaviy server konfiguratsiyasi bilan oching."
 
 #. js-lingui-id: pZZH4Q
 #: src/modules/auth/sign-in-up/components/EmailVerificationSent.tsx
@@ -13197,12 +13197,12 @@ msgstr "Yozuvlarni quyidagida ochish"
 #. js-lingui-id: q170S2
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Replit with the Twenty remote server config."
-msgstr "Replit ni Twenty masofaviy server konfiguratsiyasi bilan oching."
+msgstr "Replit ni TinaCRM masofaviy server konfiguratsiyasi bilan oching."
 
 #. js-lingui-id: sBd/cl
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Twenty's official ChatGPT integration for your workspace."
-msgstr "Ish maydoningiz uchun Twenty ning rasmiy ChatGPT integratsiyasini oching."
+msgstr "Ish maydoningiz uchun TinaCRM ning rasmiy ChatGPT integratsiyasini oching."
 
 #. js-lingui-id: OV5wZZ
 #: src/modules/navigation-menu-item/display/sections/components/NavigationDrawerOpenedSection.tsx
@@ -13471,7 +13471,7 @@ msgstr "Sahifa nomi"
 #. js-lingui-id: NRvxzv
 #: src/pages/not-found/NotFound.tsx
 msgid "Page Not Found | Twenty"
-msgstr "Sahifa topilmadi | Twenty"
+msgstr "Sahifa topilmadi | TinaCRM"
 
 #. js-lingui-id: sF+Xp9
 #: src/modules/settings/event-logs/components/EventLogTableSelector.tsx
@@ -16949,7 +16949,7 @@ msgstr "Obuna faollashtirildi."
 #: src/modules/settings/billing/hooks/useSubmitSubscriptionPayment.ts
 #: src/modules/settings/billing/hooks/useSubmitSubscriptionPayment.ts
 msgid "Subscription error. Please retry or contact Twenty team"
-msgstr "Obuna xatosi. Iltimos, qayta urinib ko‘ring yoki Twenty jamoasiga murojaat qiling"
+msgstr "Obuna xatosi. Iltimos, qayta urinib ko‘ring yoki TinaCRM jamoasiga murojaat qiling"
 
 #. js-lingui-id: FooJUj
 #. placeholder {0}: getTargetPlanLabel(targetPlanKey)
@@ -17334,7 +17334,7 @@ msgid "The base data model every Twenty workspace runs on.\n\n"
 "yarn twenty dev\n"
 "```\n\n"
 "See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
-msgstr "Har bir Twenty ish maydoni ishlaydigan asosiy ma’lumotlar modeli.\n\n"
+msgstr "Har bir TinaCRM ish maydoni ishlaydigan asosiy ma’lumotlar modeli.\n\n"
 "#### \"Poydevor\" nimani anglatadi\n\n"
 "Har bir Twenty ish maydoni obyektlarning ushbu to‘plami bilan boshlanadi. Ular sizning CRM tuzilishingizni, shu jumladan munosabatlar, faollik va hisobotlarni belgilaydi. Qolgan hamma narsa, jumladan bozor ilovalari, AI agentlari va maxsus obyektlar ularga ulanadi.\n\n"
 "#### Kiritilgan obyektlar\n"
@@ -17440,7 +17440,7 @@ msgstr "Foydalanuvchilaringiz elektron xatlaringizdan obunani bekor qilish uchun
 #. js-lingui-id: Ya1wb4
 #: src/pages/settings/legal/SettingsLegalDpaNew.tsx
 msgid "The PDF is pre-signed by Twenty and executed with your legal entity and authorized signatory."
-msgstr "PDF hujjati oldindan Twenty tomonidan imzolangan va sizning yuridik shaxsingiz hamda vakolatli imzolovchingiz bilan rasmiylashtiriladi."
+msgstr "PDF hujjati oldindan TinaCRM tomonidan imzolangan va sizning yuridik shaxsingiz hamda vakolatli imzolovchingiz bilan rasmiylashtiriladi."
 
 #. js-lingui-id: wxyrqd
 #: src/modules/workflow/workflow-steps/workflow-actions/pick-record-action/components/WorkflowEditActionPickRecord.tsx
@@ -18284,7 +18284,7 @@ msgstr "Firuzarang"
 #. js-lingui-id: JnaRPe
 #: src/modules/spreadsheet-import/steps/components/MatchColumnsStep/components/ColumnGrid.tsx
 msgid "Twenty fields"
-msgstr "Twenty maydonlari"
+msgstr "TinaCRM maydonlari"
 
 #. js-lingui-id: YIjS4q
 #: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
@@ -19750,7 +19750,7 @@ msgstr "Vazn"
 #. js-lingui-id: nTuObL
 #: src/pages/auth/SignInUp.tsx
 msgid "Welcome to Twenty"
-msgstr "Twenty ga xush kelibsiz"
+msgstr "TinaCRM ga xush kelibsiz"
 
 #. js-lingui-id: t8ZvkC
 #: src/pages/auth/SignInUp.tsx

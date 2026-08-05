@@ -146,7 +146,7 @@ msgstr "’n Handgekose gehoor van mense"
 #. js-lingui-id: TF/ZV2
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "A heads up before your Twenty trial ends"
-msgstr "’n Vroeë waarskuwing voordat jou Twenty-proeftydperk eindig"
+msgstr "’n Vroeë waarskuwing voordat jou TinaCRM-proeftydperk eindig"
 
 #. js-lingui-id: 6yZjO1
 #: src/engine/core-modules/application/application.exception.ts
@@ -4316,7 +4316,7 @@ msgstr "Skakeltabel wat boodskapkanaalboodskapassosiasies aan boodskapvouers kop
 #. js-lingui-id: PviVyk
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Join your team on Twenty"
-msgstr "Sluit by jou span aan op Twenty"
+msgstr "Sluit by jou span aan op TinaCRM"
 
 #. js-lingui-id: ffWso3
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-call-recording-standard-flat-field-metadata.util.ts
@@ -7271,7 +7271,7 @@ msgstr "Stelselvelde kan nie bygewerk word nie"
 #. js-lingui-id: aK2k19
 #: src/engine/metadata-modules/index-metadata/services/index-metadata.service.ts
 msgid "System indexes are required for Twenty to work and cannot be deleted."
-msgstr "Stelselindekse is nodig vir Twenty om te werk en kan nie uitgevee word nie."
+msgstr "Stelselindekse is nodig vir TinaCRM om te werk en kan nie uitgevee word nie."
 
 #. js-lingui-id: /ojawH
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-object-metadata-validator.service.ts
@@ -7920,7 +7920,7 @@ msgstr "Hierdie API-sleutel het geen rol toegeken nie."
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
-msgstr "Hierdie app vereis 'n nuwer weergawe van die Twenty-bediener. Gradeer asseblief jou bediener op of gebruik 'n versoenbare app-weergawe."
+msgstr "Hierdie app vereis 'n nuwer weergawe van die TinaCRM-bediener. Gradeer asseblief jou bediener op of gebruik 'n versoenbare app-weergawe."
 
 #. js-lingui-id: y2nks/
 #: src/engine/core-modules/application/application.exception.ts
@@ -9140,7 +9140,7 @@ msgstr "Woensdag"
 #. js-lingui-id: TVkCrJ
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Welcome to Twenty: Please Confirm Your Email"
-msgstr "Welkom by Twenty: Bevestig Asseblief Jou E-pos"
+msgstr "Welkom by TinaCRM: Bevestig Asseblief Jou E-pos"
 
 #. js-lingui-id: nCHI/F
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-campaign-standard-flat-field-metadata.util.ts
@@ -9863,12 +9863,12 @@ msgstr "Jou spanlid verantwoordelik vir die bestuur van die maatskappy rekening"
 #. js-lingui-id: sOfbGC
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty plan renews soon"
-msgstr "Jou Twenty-plan word binnekort hernu"
+msgstr "Jou TinaCRM-plan word binnekort hernu"
 
 #. js-lingui-id: qW+K5e
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty trial is ending soon"
-msgstr "Jou Twenty-proeftydperk eindig binnekort"
+msgstr "Jou TinaCRM-proeftydperk eindig binnekort"
 
 #. js-lingui-id: ej/tZF
 #: src/engine/core-modules/graphql/hooks/use-graphql-error-handler.hook.ts
