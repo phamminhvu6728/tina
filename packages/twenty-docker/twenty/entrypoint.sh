@@ -31,6 +31,21 @@ setup_and_migrate_db() {
     echo "Successfully migrated DB!"
 }
 
+sync_billing_plans_data() {
+    # The worker shares this entrypoint but must not mutate billing data.
+    if [ "${DISABLE_DB_MIGRATIONS}" = "true" ]; then
+        return
+    fi
+
+    if [ "${IS_BILLING_ENABLED}" != "true" ]; then
+        return
+    fi
+
+    echo "Synchronizing billing plans data from Stripe..."
+    yarn command:prod billing:sync-plans-data
+    echo "Successfully synchronized billing plans data!"
+}
+
 register_background_jobs() {
     if [ "${DISABLE_CRON_JOBS_REGISTRATION}" = "true" ]; then
         echo "Cron job registration is disabled, skipping..."
@@ -46,6 +61,7 @@ register_background_jobs() {
 }
 
 setup_and_migrate_db
+sync_billing_plans_data
 register_background_jobs
 
 # Continue with the original Docker command
