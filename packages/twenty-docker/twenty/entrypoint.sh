@@ -41,6 +41,9 @@ sync_billing_plans_data() {
         return
     fi
 
+    echo "Running pending billing schema migrations..."
+    yarn database:migrate:prod --force --include-slow
+
     echo "Synchronizing billing plans data from Stripe..."
     yarn command:prod billing:sync-plans-data
     echo "Successfully synchronized billing plans data!"
