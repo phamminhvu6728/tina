@@ -1,2 +1,0 @@
-export const ADD_DEFAULT_PHONE_COUNTRY_CODE_TO_WORKSPACE_UPGRADE_COMMAND_NAME =
-  '2.25.0_AddDefaultPhoneCountryCodeToWorkspaceFastInstanceCommand_1787220000000';

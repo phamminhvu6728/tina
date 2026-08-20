@@ -51,7 +51,7 @@ import { UserWorkspaceEntity } from 'src/engine/core-modules/user-workspace/user
 import { UserWorkspaceService } from 'src/engine/core-modules/user-workspace/user-workspace.service';
 import { UserEntity } from 'src/engine/core-modules/user/user.entity';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
-import { WorkspacePhoneRegionService } from 'src/engine/core-modules/workspace/services/workspace-phone-region.service';
+import { WorkspaceCountryCodeService } from 'src/engine/core-modules/workspace/services/workspace-country-code.service';
 import {
   WorkspaceException,
   WorkspaceExceptionCode,
@@ -121,7 +121,7 @@ export class WorkspaceService {
     enabledAiModelIds: PermissionFlagType.AI_SETTINGS,
     useRecommendedModels: PermissionFlagType.AI_SETTINGS,
     isInternalMessagesImportEnabled: PermissionFlagType.WORKSPACE,
-    defaultPhoneCountryCode: PermissionFlagType.WORKSPACE,
+    workspaceCountryCode: PermissionFlagType.WORKSPACE,
   };
 
   constructor(
@@ -159,7 +159,7 @@ export class WorkspaceService {
     private readonly upgradeMigrationService: UpgradeMigrationService,
     private readonly upgradeSequenceReaderService: UpgradeSequenceReaderService,
     private readonly sdkClientGenerationService: SdkClientGenerationService,
-    private readonly workspacePhoneRegionService: WorkspacePhoneRegionService,
+    private readonly workspaceCountryCodeService: WorkspaceCountryCodeService,
   ) {}
 
   async updateWorkspaceById({
@@ -307,9 +307,9 @@ export class WorkspaceService {
 
     let updatedWorkspace: WorkspaceEntity;
 
-    const isChangingPhoneRegion =
-      isDefined(payload.defaultPhoneCountryCode) &&
-      payload.defaultPhoneCountryCode !== workspace.defaultPhoneCountryCode;
+    const isChangingWorkspaceCountryCode =
+      isDefined(payload.workspaceCountryCode) &&
+      payload.workspaceCountryCode !== workspace.workspaceCountryCode;
 
     try {
       updatedWorkspace = await this.workspaceRepository.save({
@@ -317,16 +317,16 @@ export class WorkspaceService {
         ...payload,
       });
 
-      if (isChangingPhoneRegion) {
-        await this.workspacePhoneRegionService.applyCountryCode({
+      if (isChangingWorkspaceCountryCode) {
+        await this.workspaceCountryCodeService.applyCountryCode({
           workspaceId: workspace.id,
-          countryCode: payload.defaultPhoneCountryCode as CountryCode,
+          countryCode: payload.workspaceCountryCode as CountryCode,
         });
       }
     } catch (error) {
-      if (isChangingPhoneRegion) {
+      if (isChangingWorkspaceCountryCode) {
         await this.workspaceRepository.update(workspace.id, {
-          defaultPhoneCountryCode: workspace.defaultPhoneCountryCode,
+          workspaceCountryCode: workspace.workspaceCountryCode,
         });
       }
       // revert custom domain registration on error
@@ -340,7 +340,7 @@ export class WorkspaceService {
       throw error;
     }
 
-    if (isChangingPhoneRegion) {
+    if (isChangingWorkspaceCountryCode) {
       await this.flatEntityMapsCacheService.invalidateFlatEntityMaps({
         workspaceId: workspace.id,
         flatMapsKeys: ['flatFieldMetadataMaps'],

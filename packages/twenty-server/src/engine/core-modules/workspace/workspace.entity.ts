@@ -19,7 +19,6 @@ import {
 } from 'typeorm';
 
 import { ADD_WORKSPACE_DISCOVERABILITY_TO_WORKSPACE_UPGRADE_COMMAND_NAME } from 'src/database/commands/upgrade-version-command/2-19/add-workspace-discoverability-to-workspace-upgrade-command-name.constant';
-import { ADD_DEFAULT_PHONE_COUNTRY_CODE_TO_WORKSPACE_UPGRADE_COMMAND_NAME } from 'src/database/commands/upgrade-version-command/2-25/add-default-phone-country-code-to-workspace-upgrade-command-name.constant';
 import { UUIDScalarType } from 'src/engine/api/graphql/workspace-schema-builder/graphql-types/scalars';
 import { ApiKeyEntity } from 'src/engine/core-modules/api-key/api-key.entity';
 import { AppTokenEntity } from 'src/engine/core-modules/app-token/app-token.entity';
@@ -146,12 +145,8 @@ export class WorkspaceEntity {
   eventLogRetentionDays: number;
 
   @Field(() => String)
-  @WasIntroducedInUpgrade({
-    upgradeCommandName:
-      ADD_DEFAULT_PHONE_COUNTRY_CODE_TO_WORKSPACE_UPGRADE_COMMAND_NAME,
-  })
   @Column({ type: 'varchar', length: 2, default: 'US' })
-  defaultPhoneCountryCode: string;
+  workspaceCountryCode: string;
 
   // Relations
   @OneToMany(() => AppTokenEntity, (appToken) => appToken.workspace, {

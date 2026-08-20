@@ -124,7 +124,6 @@ import { AddStatusesToBillingSubscriptionIndexSlowInstanceCommand } from './2-23
 import { AddOnConnectLogicFunctionToConnectionProviderFastInstanceCommand } from './2-24/2-24-instance-command-fast-1784712843602-add-on-connect-logic-function-to-connection-provider';
 import { RepairKeyValuePairApplicationIdFastInstanceCommand } from './2-24/2-24-instance-command-fast-1784897347051-repair-key-value-pair-application-id';
 import { AddAgentForeignKeyToRoleTargetFastInstanceCommand } from './2-25/2-25-instance-command-fast-1784820332810-add-agent-foreign-key-to-role-target';
-import { AddDefaultPhoneCountryCodeToWorkspaceFastInstanceCommand } from './2-25/2-25-instance-command-fast-1787220000000-add-default-phone-country-code-to-workspace';
 
 export const INSTANCE_COMMANDS = [
   AddViewFieldGroupIdIndexOnViewFieldFastInstanceCommand,
@@ -251,5 +250,4 @@ export const INSTANCE_COMMANDS = [
   AddOnConnectLogicFunctionToConnectionProviderFastInstanceCommand,
   RepairKeyValuePairApplicationIdFastInstanceCommand,
   AddAgentForeignKeyToRoleTargetFastInstanceCommand,
-  AddDefaultPhoneCountryCodeToWorkspaceFastInstanceCommand,
 ];

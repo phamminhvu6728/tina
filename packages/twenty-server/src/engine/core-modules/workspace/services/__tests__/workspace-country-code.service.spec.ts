@@ -1,10 +1,10 @@
 import { FieldMetadataType } from 'twenty-shared/types';
 import { type EntityManager, type Repository } from 'typeorm';
 
-import { WorkspacePhoneRegionService } from 'src/engine/core-modules/workspace/services/workspace-phone-region.service';
+import { WorkspaceCountryCodeService } from 'src/engine/core-modules/workspace/services/workspace-country-code.service';
 import { FieldMetadataEntity } from 'src/engine/metadata-modules/field-metadata/field-metadata.entity';
 
-describe('WorkspacePhoneRegionService', () => {
+describe('WorkspaceCountryCodeService', () => {
   const workspaceId = '20202020-0000-0000-0000-000000000000';
 
   it('updates only the phone field metadata defaults', async () => {
@@ -39,7 +39,7 @@ describe('WorkspacePhoneRegionService', () => {
           ),
       },
     } as unknown as Repository<FieldMetadataEntity>;
-    const service = new WorkspacePhoneRegionService(fieldMetadataRepository);
+    const service = new WorkspaceCountryCodeService(fieldMetadataRepository);
 
     await service.applyCountryCode({ workspaceId, countryCode: 'VN' });
 

@@ -11,7 +11,7 @@ import { H2Title } from 'twenty-ui/typography';
 import { ColorSchemePicker } from 'twenty-ui/input';
 import { Section } from 'twenty-ui/layout';
 import { LocalePicker } from '~/pages/settings/profile/appearance/components/LocalePicker';
-import { RegionPicker } from '~/pages/settings/profile/appearance/components/RegionPicker';
+import { WorkspaceCountryCodePicker } from '~/pages/settings/profile/appearance/components/WorkspaceCountryCodePicker';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 const StyledLanguageAndRegionContainer = styled.div`
@@ -54,7 +54,7 @@ export const SettingsExperience = () => {
           />
           <StyledLanguageAndRegionContainer>
             <LocalePicker />
-            <RegionPicker />
+            <WorkspaceCountryCodePicker />
           </StyledLanguageAndRegionContainer>
         </Section>
 

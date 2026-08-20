@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 import { FieldMetadataEntity } from 'src/engine/metadata-modules/field-metadata/field-metadata.entity';
 
 @Injectable()
-export class WorkspacePhoneRegionService {
+export class WorkspaceCountryCodeService {
   constructor(
     @InjectRepository(FieldMetadataEntity)
     private readonly fieldMetadataRepository: Repository<FieldMetadataEntity>,

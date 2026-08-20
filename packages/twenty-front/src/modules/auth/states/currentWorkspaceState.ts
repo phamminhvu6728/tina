@@ -44,7 +44,7 @@ export type CurrentWorkspace = Pick<
   | 'useRecommendedModels'
   | 'isInternalMessagesImportEnabled'
 > & {
-  defaultPhoneCountryCode?: string;
+  workspaceCountryCode?: string;
   defaultRole?: Omit<Role, 'workspaceMembers' | 'agents' | 'apiKeys'> | null;
   workspaceCustomApplication: Pick<Application, 'id'> | null;
   installedApplications: Pick<

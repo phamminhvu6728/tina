@@ -136,7 +136,7 @@ export class UpdateWorkspaceInput {
   @IsOptional()
   @Matches(/^[A-Z]{2}$/)
   @IsIn(getCountries())
-  defaultPhoneCountryCode?: string;
+  workspaceCountryCode?: string;
 
   @Field(() => [String], { nullable: true })
   @IsArray()

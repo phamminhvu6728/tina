@@ -12,55 +12,55 @@ import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomState
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
 import { logError } from '~/utils/logError';
 
-const GET_WORKSPACE_PHONE_REGION = gql`
-  query GetWorkspacePhoneRegion {
+const GET_WORKSPACE_COUNTRY_CODE = gql`
+  query GetWorkspaceCountryCode {
     currentWorkspace {
       id
-      defaultPhoneCountryCode
+      workspaceCountryCode
     }
   }
 `;
 
-const UPDATE_WORKSPACE_PHONE_REGION = gql`
-  mutation UpdateWorkspacePhoneRegion($countryCode: String!) {
-    updateWorkspace(data: { defaultPhoneCountryCode: $countryCode }) {
+const UPDATE_WORKSPACE_COUNTRY_CODE = gql`
+  mutation UpdateWorkspaceCountryCode($countryCode: String!) {
+    updateWorkspace(data: { workspaceCountryCode: $countryCode }) {
       id
-      defaultPhoneCountryCode
+      workspaceCountryCode
     }
   }
 `;
 
-type WorkspacePhoneRegionQuery = {
+type WorkspaceCountryCodeQuery = {
   currentWorkspace: {
     id: string;
-    defaultPhoneCountryCode: string;
+    workspaceCountryCode: string;
   };
 };
 
-type UpdateWorkspacePhoneRegionMutation = {
+type UpdateWorkspaceCountryCodeMutation = {
   updateWorkspace: {
     id: string;
-    defaultPhoneCountryCode: string;
+    workspaceCountryCode: string;
   };
 };
 
-export const RegionPicker = () => {
+export const WorkspaceCountryCodePicker = () => {
   const { t } = useLingui();
   const countries = useCountries();
   const currentWorkspace = useAtomStateValue(currentWorkspaceState);
   const setCurrentWorkspace = useSetAtomState(currentWorkspaceState);
   const { enqueueErrorSnackBar } = useSnackBar();
   const { invalidateMetadataStore } = useInvalidateMetadataStore();
-  const { data, loading, error } = useQuery<WorkspacePhoneRegionQuery>(
-    GET_WORKSPACE_PHONE_REGION,
+  const { data, loading, error } = useQuery<WorkspaceCountryCodeQuery>(
+    GET_WORKSPACE_COUNTRY_CODE,
     { fetchPolicy: 'network-only' },
   );
-  const [updateRegion, { loading: isUpdating }] =
-    useMutation<UpdateWorkspacePhoneRegionMutation>(
-      UPDATE_WORKSPACE_PHONE_REGION,
+  const [updateWorkspaceCountryCode, { loading: isUpdating }] =
+    useMutation<UpdateWorkspaceCountryCodeMutation>(
+      UPDATE_WORKSPACE_COUNTRY_CODE,
     );
 
-  const persistedCountryCode = data?.currentWorkspace.defaultPhoneCountryCode;
+  const persistedCountryCode = data?.currentWorkspace.workspaceCountryCode;
 
   useEffect(() => {
     if (!persistedCountryCode) {
@@ -70,7 +70,7 @@ export const RegionPicker = () => {
     setCurrentWorkspace((workspace) =>
       workspace === null
         ? null
-        : { ...workspace, defaultPhoneCountryCode: persistedCountryCode },
+        : { ...workspace, workspaceCountryCode: persistedCountryCode },
     );
   }, [persistedCountryCode, setCurrentWorkspace]);
 
@@ -96,22 +96,22 @@ export const RegionPicker = () => {
 
   const handleChange = async (countryCode: string) => {
     try {
-      const result = await updateRegion({
+      const result = await updateWorkspaceCountryCode({
         variables: { countryCode },
         update: (cache, { data: mutationData }) => {
           if (!mutationData) {
             return;
           }
 
-          cache.writeQuery<WorkspacePhoneRegionQuery>({
-            query: GET_WORKSPACE_PHONE_REGION,
+          cache.writeQuery<WorkspaceCountryCodeQuery>({
+            query: GET_WORKSPACE_COUNTRY_CODE,
             data: { currentWorkspace: mutationData.updateWorkspace },
           });
         },
       });
 
       const savedCountryCode =
-        result.data?.updateWorkspace.defaultPhoneCountryCode;
+        result.data?.updateWorkspace.workspaceCountryCode;
 
       if (!savedCountryCode) {
         throw new Error('Workspace region was not saved');
@@ -120,7 +120,7 @@ export const RegionPicker = () => {
       setCurrentWorkspace((workspace) =>
         workspace === null
           ? null
-          : { ...workspace, defaultPhoneCountryCode: savedCountryCode },
+          : { ...workspace, workspaceCountryCode: savedCountryCode },
       );
       invalidateMetadataStore();
     } catch (error) {
@@ -132,7 +132,7 @@ export const RegionPicker = () => {
   };
 
   const selectedCountryCode =
-    persistedCountryCode ?? currentWorkspace?.defaultPhoneCountryCode ?? '';
+    persistedCountryCode ?? currentWorkspace?.workspaceCountryCode ?? '';
 
   return (
     <Select<string>
