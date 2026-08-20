@@ -25,7 +25,6 @@ import { CheckCustomDomainValidRecordsCronJob } from 'src/engine/core-modules/wo
 import { UpgradeModule } from 'src/engine/core-modules/upgrade/upgrade.module';
 import { CoreEntityCacheModule } from 'src/engine/core-entity-cache/core-entity-cache.module';
 import { WorkspaceEntityCacheProviderService } from 'src/engine/core-modules/workspace/services/workspace-entity-cache-provider.service';
-import { WorkspaceCountryCodeService } from 'src/engine/core-modules/workspace/services/workspace-country-code.service';
 import { WorkspaceService } from 'src/engine/core-modules/workspace/services/workspace.service';
 import { WorkspaceGaugeService } from 'src/engine/core-modules/workspace/workspace-gauge.service';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
@@ -89,7 +88,6 @@ import { StandardObjectsPrefillModule } from 'src/engine/workspace-manager/stand
     WorkspaceService,
     WorkspaceGaugeService,
     WorkspaceEntityCacheProviderService,
-    WorkspaceCountryCodeService,
     BillingDisabledGuard,
     CheckCustomDomainValidRecordsCronCommand,
     CheckCustomDomainValidRecordsCronJob,

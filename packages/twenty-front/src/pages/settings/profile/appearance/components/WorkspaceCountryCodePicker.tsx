@@ -5,11 +5,13 @@ import { useEffect, useMemo } from 'react';
 
 import { currentWorkspaceState } from '@/auth/states/currentWorkspaceState';
 import { useInvalidateMetadataStore } from '@/metadata-store/hooks/useInvalidateMetadataStore';
+import { useHasPermissionFlag } from '@/settings/roles/hooks/useHasPermissionFlag';
 import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { Select } from '@/ui/input/components/Select';
 import { useCountries } from '@/ui/input/components/internal/hooks/useCountries';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
+import { PermissionFlagType } from '~/generated-metadata/graphql';
 import { logError } from '~/utils/logError';
 
 const GET_WORKSPACE_COUNTRY_CODE = gql`
@@ -51,6 +53,9 @@ export const WorkspaceCountryCodePicker = () => {
   const setCurrentWorkspace = useSetAtomState(currentWorkspaceState);
   const { enqueueErrorSnackBar } = useSnackBar();
   const { invalidateMetadataStore } = useInvalidateMetadataStore();
+  const hasWorkspacePermission = useHasPermissionFlag(
+    PermissionFlagType.WORKSPACE,
+  );
   const { data, loading, error } = useQuery<WorkspaceCountryCodeQuery>(
     GET_WORKSPACE_COUNTRY_CODE,
     { fetchPolicy: 'network-only' },
@@ -148,7 +153,7 @@ export const WorkspaceCountryCodePicker = () => {
       value={selectedCountryCode}
       options={options}
       onChange={handleChange}
-      disabled={loading || isUpdating}
+      disabled={loading || isUpdating || !hasWorkspacePermission}
     />
   );
 };

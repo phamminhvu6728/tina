@@ -4,8 +4,9 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import assert from 'assert';
 
 import { msg } from '@lingui/core/macro';
-import { type CountryCode } from 'libphonenumber-js';
+import { type CountryCode, getCountryCallingCode } from 'libphonenumber-js';
 import { PermissionFlagType } from 'twenty-shared/constants';
+import { FieldMetadataType } from 'twenty-shared/types';
 import { assertIsDefinedOrThrow, isDefined } from 'twenty-shared/utils';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
 import {
@@ -51,7 +52,6 @@ import { UserWorkspaceEntity } from 'src/engine/core-modules/user-workspace/user
 import { UserWorkspaceService } from 'src/engine/core-modules/user-workspace/user-workspace.service';
 import { UserEntity } from 'src/engine/core-modules/user/user.entity';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
-import { WorkspaceCountryCodeService } from 'src/engine/core-modules/workspace/services/workspace-country-code.service';
 import {
   WorkspaceException,
   WorkspaceExceptionCode,
@@ -131,6 +131,8 @@ export class WorkspaceService {
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(UserWorkspaceEntity)
     private readonly userWorkspaceRepository: Repository<UserWorkspaceEntity>,
+    @InjectRepository(FieldMetadataEntity)
+    private readonly fieldMetadataRepository: Repository<FieldMetadataEntity>,
     private readonly workspaceManagerService: WorkspaceManagerService,
     private readonly featureFlagService: FeatureFlagService,
     private readonly billingSubscriptionService: BillingSubscriptionService,
@@ -159,7 +161,6 @@ export class WorkspaceService {
     private readonly upgradeMigrationService: UpgradeMigrationService,
     private readonly upgradeSequenceReaderService: UpgradeSequenceReaderService,
     private readonly sdkClientGenerationService: SdkClientGenerationService,
-    private readonly workspaceCountryCodeService: WorkspaceCountryCodeService,
   ) {}
 
   async updateWorkspaceById({
@@ -318,7 +319,7 @@ export class WorkspaceService {
       });
 
       if (isChangingWorkspaceCountryCode) {
-        await this.workspaceCountryCodeService.applyCountryCode({
+        await this.updatePhoneFieldMetadataCountryCode({
           workspaceId: workspace.id,
           countryCode: payload.workspaceCountryCode as CountryCode,
         });
@@ -360,6 +361,43 @@ export class WorkspaceService {
     }
 
     return updatedWorkspace;
+  }
+
+  private async updatePhoneFieldMetadataCountryCode({
+    workspaceId,
+    countryCode,
+  }: {
+    workspaceId: string;
+    countryCode: CountryCode;
+  }): Promise<void> {
+    await this.fieldMetadataRepository.manager.transaction(async (manager) => {
+      const fieldMetadataRepository =
+        manager.getRepository(FieldMetadataEntity);
+      const phoneFields = await fieldMetadataRepository.find({
+        where: {
+          workspaceId,
+          type: FieldMetadataType.PHONES,
+          isActive: true,
+        },
+      });
+      const callingCode = `+${getCountryCallingCode(countryCode)}`;
+
+      for (const field of phoneFields) {
+        const phoneField =
+          field as FieldMetadataEntity<FieldMetadataType.PHONES>;
+
+        await fieldMetadataRepository.update(
+          { id: phoneField.id, workspaceId },
+          {
+            defaultValue: {
+              ...(phoneField.defaultValue ?? {}),
+              primaryPhoneCountryCode: `'${countryCode}'`,
+              primaryPhoneCallingCode: `'${callingCode}'`,
+            },
+          },
+        );
+      }
+    });
   }
 
   async activateWorkspace(user: AuthContextUser, workspace: WorkspaceEntity) {

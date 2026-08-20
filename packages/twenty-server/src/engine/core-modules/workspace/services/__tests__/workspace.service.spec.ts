@@ -1,8 +1,9 @@
 import { Test, type TestingModule } from '@nestjs/testing';
 import { getDataSourceToken, getRepositoryToken } from '@nestjs/typeorm';
 
+import { FieldMetadataType } from 'twenty-shared/types';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
-import { IsNull, Not, type Repository } from 'typeorm';
+import { type EntityManager, IsNull, Not, type Repository } from 'typeorm';
 
 import { BillingSubscriptionService } from 'src/engine/core-modules/billing/services/billing-subscription.service';
 import { BillingService } from 'src/engine/core-modules/billing/services/billing.service';
@@ -26,6 +27,7 @@ import { WorkspaceManyOrAllFlatEntityMapsCacheService } from 'src/engine/metadat
 import { UpgradeMigrationService } from 'src/engine/core-modules/upgrade/services/upgrade-migration.service';
 import { UpgradeSequenceReaderService } from 'src/engine/core-modules/upgrade/services/upgrade-sequence-reader.service';
 import { AiModelRegistryService } from 'src/engine/metadata-modules/ai/ai-models/services/ai-model-registry.service';
+import { FieldMetadataEntity } from 'src/engine/metadata-modules/field-metadata/field-metadata.entity';
 import { PermissionsService } from 'src/engine/metadata-modules/permissions/permissions.service';
 import { CoreEntityCacheService } from 'src/engine/core-entity-cache/services/core-entity-cache.service';
 import { WorkspaceCacheStorageService } from 'src/engine/workspace-cache-storage/workspace-cache-storage.service';
@@ -42,6 +44,7 @@ describe('WorkspaceService', () => {
   let userWorkspaceRepository: Repository<UserWorkspaceEntity>;
   let userRepository: Repository<UserEntity>;
   let workspaceRepository: Repository<WorkspaceEntity>;
+  let fieldMetadataRepository: Repository<FieldMetadataEntity>;
   let workspaceCacheStorageService: WorkspaceCacheStorageService;
   let messageQueueService: MessageQueueService;
   let dnsManagerService: DnsManagerService;
@@ -77,6 +80,14 @@ describe('WorkspaceService', () => {
           provide: getRepositoryToken(UserEntity),
           useValue: {
             softDelete: jest.fn(),
+          },
+        },
+        {
+          provide: getRepositoryToken(FieldMetadataEntity),
+          useValue: {
+            manager: {
+              transaction: jest.fn(),
+            },
           },
         },
         {
@@ -184,6 +195,9 @@ describe('WorkspaceService', () => {
     workspaceRepository = module.get<Repository<WorkspaceEntity>>(
       getRepositoryToken(WorkspaceEntity),
     );
+    fieldMetadataRepository = module.get<Repository<FieldMetadataEntity>>(
+      getRepositoryToken(FieldMetadataEntity),
+    );
     workspaceCacheStorageService = module.get<WorkspaceCacheStorageService>(
       WorkspaceCacheStorageService,
     );
@@ -205,6 +219,62 @@ describe('WorkspaceService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('updatePhoneFieldMetadataCountryCode', () => {
+    it('updates only the phone field metadata defaults', async () => {
+      const workspaceId = '20202020-0000-0000-0000-000000000000';
+      const phoneFields = [
+        {
+          id: '20202020-0000-0000-0000-000000000001',
+          workspaceId,
+          type: FieldMetadataType.PHONES,
+          isActive: true,
+          defaultValue: {
+            primaryPhoneNumber: "''",
+            primaryPhoneCountryCode: "'US'",
+            primaryPhoneCallingCode: "'+1'",
+            additionalPhones: null,
+          },
+        },
+      ] as FieldMetadataEntity<FieldMetadataType.PHONES>[];
+      const transactionalRepository = {
+        find: jest.fn().mockResolvedValue(phoneFields),
+        update: jest.fn().mockResolvedValue(undefined),
+      };
+      const entityManager = {
+        getRepository: jest.fn().mockReturnValue(transactionalRepository),
+      } as unknown as EntityManager;
+
+      jest
+        .spyOn(fieldMetadataRepository.manager, 'transaction')
+        .mockImplementation(async (callback) => callback(entityManager));
+
+      await service['updatePhoneFieldMetadataCountryCode']({
+        workspaceId,
+        countryCode: 'VN',
+      });
+
+      expect(transactionalRepository.find).toHaveBeenCalledWith({
+        where: {
+          workspaceId,
+          type: FieldMetadataType.PHONES,
+          isActive: true,
+        },
+      });
+      expect(transactionalRepository.update).toHaveBeenCalledTimes(1);
+      expect(transactionalRepository.update).toHaveBeenCalledWith(
+        { id: phoneFields[0].id, workspaceId },
+        {
+          defaultValue: {
+            primaryPhoneNumber: "''",
+            primaryPhoneCountryCode: "'VN'",
+            primaryPhoneCallingCode: "'+84'",
+            additionalPhones: null,
+          },
+        },
+      );
+    });
   });
 
   describe('handleRemoveWorkspaceMember', () => {
