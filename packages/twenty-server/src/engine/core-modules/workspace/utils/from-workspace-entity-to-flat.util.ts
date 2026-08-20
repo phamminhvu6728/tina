@@ -14,6 +14,7 @@ export const fromWorkspaceEntityToFlat = (
   workspaceDiscoverability: entity.workspaceDiscoverability,
   trashRetentionDays: entity.trashRetentionDays,
   eventLogRetentionDays: entity.eventLogRetentionDays,
+  defaultPhoneCountryCode: entity.defaultPhoneCountryCode,
   activationStatus: entity.activationStatus,
   metadataVersion: entity.metadataVersion,
   databaseSchema: entity.databaseSchema,

@@ -4,6 +4,7 @@ import {
   IsArray,
   IsBoolean,
   IsEnum,
+  IsIn,
   IsInt,
   IsOptional,
   IsString,
@@ -12,6 +13,7 @@ import {
   Max,
   Min,
 } from 'class-validator';
+import { getCountries } from 'libphonenumber-js';
 
 import { UUIDScalarType } from 'src/engine/api/graphql/workspace-schema-builder/graphql-types/scalars';
 import { WorkspaceDiscoverability } from 'src/engine/core-modules/workspace/types/workspace-discoverability.type';
@@ -128,6 +130,13 @@ export class UpdateWorkspaceInput {
   @IsString()
   @IsOptional()
   aiAdditionalInstructions?: string;
+
+  @Field({ nullable: true })
+  @IsString()
+  @IsOptional()
+  @Matches(/^[A-Z]{2}$/)
+  @IsIn(getCountries())
+  defaultPhoneCountryCode?: string;
 
   @Field(() => [String], { nullable: true })
   @IsArray()

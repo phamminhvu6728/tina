@@ -4,6 +4,7 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import assert from 'assert';
 
 import { msg } from '@lingui/core/macro';
+import { type CountryCode } from 'libphonenumber-js';
 import { PermissionFlagType } from 'twenty-shared/constants';
 import { assertIsDefinedOrThrow, isDefined } from 'twenty-shared/utils';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
@@ -50,6 +51,7 @@ import { UserWorkspaceEntity } from 'src/engine/core-modules/user-workspace/user
 import { UserWorkspaceService } from 'src/engine/core-modules/user-workspace/user-workspace.service';
 import { UserEntity } from 'src/engine/core-modules/user/user.entity';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
+import { WorkspacePhoneRegionService } from 'src/engine/core-modules/workspace/services/workspace-phone-region.service';
 import {
   WorkspaceException,
   WorkspaceExceptionCode,
@@ -119,6 +121,7 @@ export class WorkspaceService {
     enabledAiModelIds: PermissionFlagType.AI_SETTINGS,
     useRecommendedModels: PermissionFlagType.AI_SETTINGS,
     isInternalMessagesImportEnabled: PermissionFlagType.WORKSPACE,
+    defaultPhoneCountryCode: PermissionFlagType.WORKSPACE,
   };
 
   constructor(
@@ -156,6 +159,7 @@ export class WorkspaceService {
     private readonly upgradeMigrationService: UpgradeMigrationService,
     private readonly upgradeSequenceReaderService: UpgradeSequenceReaderService,
     private readonly sdkClientGenerationService: SdkClientGenerationService,
+    private readonly workspacePhoneRegionService: WorkspacePhoneRegionService,
   ) {}
 
   async updateWorkspaceById({
@@ -303,12 +307,28 @@ export class WorkspaceService {
 
     let updatedWorkspace: WorkspaceEntity;
 
+    const isChangingPhoneRegion =
+      isDefined(payload.defaultPhoneCountryCode) &&
+      payload.defaultPhoneCountryCode !== workspace.defaultPhoneCountryCode;
+
     try {
       updatedWorkspace = await this.workspaceRepository.save({
         ...workspace,
         ...payload,
       });
+
+      if (isChangingPhoneRegion) {
+        await this.workspacePhoneRegionService.applyCountryCode({
+          workspaceId: workspace.id,
+          countryCode: payload.defaultPhoneCountryCode as CountryCode,
+        });
+      }
     } catch (error) {
+      if (isChangingPhoneRegion) {
+        await this.workspaceRepository.update(workspace.id, {
+          defaultPhoneCountryCode: workspace.defaultPhoneCountryCode,
+        });
+      }
       // revert custom domain registration on error
       if (payload.customDomain && customDomainRegistered) {
         this.dnsManagerService
@@ -318,6 +338,13 @@ export class WorkspaceService {
           });
       }
       throw error;
+    }
+
+    if (isChangingPhoneRegion) {
+      await this.flatEntityMapsCacheService.invalidateFlatEntityMaps({
+        workspaceId: workspace.id,
+        flatMapsKeys: ['flatFieldMetadataMaps'],
+      });
     }
 
     await this.coreEntityCacheService.invalidate(
