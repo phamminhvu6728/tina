@@ -47,70 +47,11 @@ export class IfElseWorkflowAction implements WorkflowAction {
       );
     }
 
-    const resolvedFilters = stepFilters.map((filter) => {
-      let leftOperand = resolveInput(filter.stepOutputKey, context);
-      let rightOperand = resolveInput(filter.value, context);
-
-      if (filter.stepOutputKey) {
-        const keyWithoutMustaches = filter.stepOutputKey.replace(
-          /^\{\{|\}\}$/g,
-          '',
-        );
-        const parts = keyWithoutMustaches.split('.');
-        const lastPart = parts[parts.length - 1];
-
-        if (leftOperand === undefined || leftOperand === filter.stepOutputKey) {
-          for (const [key, val] of Object.entries(context || {})) {
-            if (val && typeof val === 'object') {
-              const obj = val as Record<string, any>;
-              if (
-                key.includes('Code - Logic Function') ||
-                key.includes('Logic Function')
-              ) {
-                if (obj[lastPart] !== undefined) {
-                  leftOperand = obj[lastPart];
-                  break;
-                }
-                if (
-                  obj.result &&
-                  typeof obj.result === 'object' &&
-                  obj.result[lastPart] !== undefined
-                ) {
-                  leftOperand = obj.result[lastPart];
-                  break;
-                }
-              }
-            }
-          }
-        }
-
-        if (leftOperand === undefined || leftOperand === filter.stepOutputKey) {
-          for (const [key, val] of Object.entries(context || {})) {
-            if (val && typeof val === 'object') {
-              const obj = val as Record<string, any>;
-              if (obj[lastPart] !== undefined) {
-                leftOperand = obj[lastPart];
-                break;
-              }
-              if (
-                obj.result &&
-                typeof obj.result === 'object' &&
-                obj.result[lastPart] !== undefined
-              ) {
-                leftOperand = obj.result[lastPart];
-                break;
-              }
-            }
-          }
-        }
-      }
-
-      return {
-        ...filter,
-        rightOperand,
-        leftOperand,
-      };
-    });
+    const resolvedFilters = stepFilters.map((filter) => ({
+      ...filter,
+      rightOperand: resolveInput(filter.value, context),
+      leftOperand: resolveInput(filter.stepOutputKey, context),
+    }));
 
     const matchingBranch = findMatchingBranch({
       branches,
