@@ -242,13 +242,11 @@ export class ChatExecutionService {
 
     const isCodeInterpreterEnabled = this.codeInterpreterService.isEnabled();
 
-    let processedMessages: ExtendedUIMessage[] =
-      await replaceUnsupportedFileParts(
-        messages,
-        modelConfig.modalities,
-        isCodeInterpreterEnabled,
-        workspace.id,
-      );
+    let processedMessages: ExtendedUIMessage[] = replaceUnsupportedFileParts(
+      messages,
+      modelConfig.modalities,
+      isCodeInterpreterEnabled,
+    );
 
     let storedFiles: Array<{
       filename: string;

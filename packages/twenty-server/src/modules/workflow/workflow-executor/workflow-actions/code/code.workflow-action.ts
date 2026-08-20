@@ -17,7 +17,6 @@ import { isWorkflowCodeAction } from 'src/modules/workflow/workflow-executor/wor
 import { type WorkflowCodeActionInput } from 'src/modules/workflow/workflow-executor/workflow-actions/code/types/workflow-code-action-input.type';
 import { buildCodeStepLog } from 'src/modules/workflow/workflow-executor/workflow-actions/code/utils/build-code-step-log.util';
 import { WorkflowRunStepLogWorkspaceService } from 'src/modules/workflow/workflow-runner/workflow-run/workflow-run-step-log.workspace-service';
-import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 
 @Injectable()
 export class CodeWorkflowAction implements WorkflowAction {
@@ -26,7 +25,6 @@ export class CodeWorkflowAction implements WorkflowAction {
   constructor(
     private readonly logicFunctionExecutorService: LogicFunctionExecutorService,
     private readonly workflowRunStepLogService: WorkflowRunStepLogWorkspaceService,
-    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
   ) {}
 
   async execute({
@@ -71,67 +69,7 @@ export class CodeWorkflowAction implements WorkflowAction {
       return { error: result.error.errorMessage };
     }
 
-    // Check if person has any task activity (for WF2 workflow)
-    let hasActivity = false;
-
-    try {
-      const triggerData = (context?.['Record is created'] ||
-        context?.['trigger']) as any;
-      let targetPersonId =
-        triggerData?.recordId ||
-        triggerData?.properties?.after?.id ||
-        triggerData?.properties?.before?.id ||
-        triggerData?.record?.id ||
-        triggerData?.id;
-
-      if (!targetPersonId && context) {
-        for (const val of Object.values(context)) {
-          if (val && typeof val === 'object') {
-            const obj = val as any;
-            if (obj.recordId && typeof obj.recordId === 'string') {
-              targetPersonId = obj.recordId;
-              break;
-            }
-            if (obj.properties?.after?.id) {
-              targetPersonId = obj.properties.after.id;
-              break;
-            }
-          }
-        }
-      }
-
-      if (targetPersonId) {
-        const taskTargetRepo =
-          await this.globalWorkspaceOrmManager.getRepository(
-            workspaceId,
-            'taskTarget',
-            { shouldBypassPermissionChecks: true },
-          );
-
-        const count = await taskTargetRepo.count({
-          where: {
-            targetPersonId,
-          },
-        });
-
-        hasActivity = count > 0;
-      }
-    } catch (err) {
-      this.logger.warn(`[CodeWorkflowAction] hasActivity check error: ${err}`);
-    }
-
-    const outputData = (result.data as Record<string, any>) || {};
-
-    const finalHasActivity = hasActivity || Boolean(outputData.hasActivity);
-
-    return {
-      result: {
-        ...outputData,
-        hasActivity: finalHasActivity,
-        'hasActivity.boolean': finalHasActivity,
-        'hasActivity.string': finalHasActivity ? 'true' : 'false',
-      },
-    };
+    return { result: result.data || {} };
   }
 
   private async persistStepLog({
