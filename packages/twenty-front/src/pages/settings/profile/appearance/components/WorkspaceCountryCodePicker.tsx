@@ -1,7 +1,6 @@
-import { gql } from '@apollo/client';
-import { useMutation, useQuery } from '@apollo/client/react';
+import { useMutation } from '@apollo/client/react';
 import { useLingui } from '@lingui/react/macro';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { currentWorkspaceState } from '@/auth/states/currentWorkspaceState';
 import { useInvalidateMetadataStore } from '@/metadata-store/hooks/useInvalidateMetadataStore';
@@ -11,40 +10,11 @@ import { Select } from '@/ui/input/components/Select';
 import { useCountries } from '@/ui/input/components/internal/hooks/useCountries';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
-import { PermissionFlagType } from '~/generated-metadata/graphql';
+import {
+  PermissionFlagType,
+  UpdateWorkspaceDocument,
+} from '~/generated-metadata/graphql';
 import { logError } from '~/utils/logError';
-
-const GET_WORKSPACE_COUNTRY_CODE = gql`
-  query GetWorkspaceCountryCode {
-    currentWorkspace {
-      id
-      workspaceCountryCode
-    }
-  }
-`;
-
-const UPDATE_WORKSPACE_COUNTRY_CODE = gql`
-  mutation UpdateWorkspaceCountryCode($countryCode: String!) {
-    updateWorkspace(data: { workspaceCountryCode: $countryCode }) {
-      id
-      workspaceCountryCode
-    }
-  }
-`;
-
-type WorkspaceCountryCodeQuery = {
-  currentWorkspace: {
-    id: string;
-    workspaceCountryCode: string;
-  };
-};
-
-type UpdateWorkspaceCountryCodeMutation = {
-  updateWorkspace: {
-    id: string;
-    workspaceCountryCode: string;
-  };
-};
 
 export const WorkspaceCountryCodePicker = () => {
   const { t } = useLingui();
@@ -56,34 +26,9 @@ export const WorkspaceCountryCodePicker = () => {
   const hasWorkspacePermission = useHasPermissionFlag(
     PermissionFlagType.WORKSPACE,
   );
-  const { data, loading, error } = useQuery<WorkspaceCountryCodeQuery>(
-    GET_WORKSPACE_COUNTRY_CODE,
-    { fetchPolicy: 'network-only' },
+  const [updateWorkspaceCountryCode, { loading: isUpdating }] = useMutation(
+    UpdateWorkspaceDocument,
   );
-  const [updateWorkspaceCountryCode, { loading: isUpdating }] =
-    useMutation<UpdateWorkspaceCountryCodeMutation>(
-      UPDATE_WORKSPACE_COUNTRY_CODE,
-    );
-
-  const persistedCountryCode = data?.currentWorkspace.workspaceCountryCode;
-
-  useEffect(() => {
-    if (!persistedCountryCode) {
-      return;
-    }
-
-    setCurrentWorkspace((workspace) =>
-      workspace === null
-        ? null
-        : { ...workspace, workspaceCountryCode: persistedCountryCode },
-    );
-  }, [persistedCountryCode, setCurrentWorkspace]);
-
-  useEffect(() => {
-    if (error) {
-      enqueueErrorSnackBar({ apolloError: error });
-    }
-  }, [enqueueErrorSnackBar, error]);
 
   const options = useMemo(
     () =>
@@ -102,17 +47,7 @@ export const WorkspaceCountryCodePicker = () => {
   const handleChange = async (countryCode: string) => {
     try {
       const result = await updateWorkspaceCountryCode({
-        variables: { countryCode },
-        update: (cache, { data: mutationData }) => {
-          if (!mutationData) {
-            return;
-          }
-
-          cache.writeQuery<WorkspaceCountryCodeQuery>({
-            query: GET_WORKSPACE_COUNTRY_CODE,
-            data: { currentWorkspace: mutationData.updateWorkspace },
-          });
-        },
+        variables: { input: { workspaceCountryCode: countryCode } },
       });
 
       const savedCountryCode =
@@ -136,8 +71,7 @@ export const WorkspaceCountryCodePicker = () => {
     }
   };
 
-  const selectedCountryCode =
-    persistedCountryCode ?? currentWorkspace?.workspaceCountryCode ?? '';
+  const selectedCountryCode = currentWorkspace?.workspaceCountryCode ?? '';
 
   return (
     <Select<string>
@@ -147,7 +81,7 @@ export const WorkspaceCountryCodePicker = () => {
       fullWidth
       withSearchInput
       emptyOption={{
-        label: loading ? t`Loading...` : t`Select a region`,
+        label: t`Select a region`,
         value: '',
       }}
       value={selectedCountryCode}
