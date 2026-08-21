@@ -153,7 +153,7 @@ export const WorkspaceCountryCodePicker = () => {
       value={selectedCountryCode}
       options={options}
       onChange={handleChange}
-      disabled={loading || isUpdating || !hasWorkspacePermission}
+      disabled={isUpdating || !hasWorkspacePermission}
     />
   );
 };

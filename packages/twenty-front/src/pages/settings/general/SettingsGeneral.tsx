@@ -17,6 +17,7 @@ import { IconHistory, IconKey, IconSettings } from 'twenty-ui/icon';
 import { H2Title } from 'twenty-ui/typography';
 import { Section } from 'twenty-ui/layout';
 import { PermissionFlagType } from '~/generated-metadata/graphql';
+import { WorkspaceCountryCodePicker } from '~/pages/settings/profile/appearance/components/WorkspaceCountryCodePicker';
 
 const SETTINGS_GENERAL_TABS_INSTANCE_ID = 'settings-general-tabs';
 
@@ -64,6 +65,13 @@ export const SettingsGeneral = () => {
         <Section>
           <H2Title title={t`Name`} description={t`Name of your workspace`} />
           <NameField />
+        </Section>
+        <Section>
+          <H2Title
+            title={t`Region`}
+            description={t`Select the default region for your workspace`}
+          />
+          <WorkspaceCountryCodePicker />
         </Section>
         {isMultiWorkspaceEnabled && (
           <Section>

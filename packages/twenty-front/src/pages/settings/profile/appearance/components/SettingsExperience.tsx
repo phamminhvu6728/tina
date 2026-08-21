@@ -1,5 +1,3 @@
-import { styled } from '@linaria/react';
-
 import { SettingsPageContainer } from '@/settings/components/SettingsPageContainer';
 import { FormatPreferencesSettings } from '@/settings/experience/components/FormatPreferencesSettings';
 import { SettingsPageLayout } from '@/settings/components/layout/SettingsPageLayout';
@@ -11,14 +9,6 @@ import { H2Title } from 'twenty-ui/typography';
 import { ColorSchemePicker } from 'twenty-ui/input';
 import { Section } from 'twenty-ui/layout';
 import { LocalePicker } from '~/pages/settings/profile/appearance/components/LocalePicker';
-import { WorkspaceCountryCodePicker } from '~/pages/settings/profile/appearance/components/WorkspaceCountryCodePicker';
-import { themeCssVariables } from 'twenty-ui/theme-constants';
-
-const StyledLanguageAndRegionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${themeCssVariables.spacing[4]};
-`;
 
 export const SettingsExperience = () => {
   const { colorScheme, setColorScheme } = useColorScheme();
@@ -48,14 +38,8 @@ export const SettingsExperience = () => {
         </Section>
 
         <Section>
-          <H2Title
-            title={t`Language & Region`}
-            description={t`Select your language and region`}
-          />
-          <StyledLanguageAndRegionContainer>
-            <LocalePicker />
-            <WorkspaceCountryCodePicker />
-          </StyledLanguageAndRegionContainer>
+          <H2Title title={t`Language`} description={t`Select your language`} />
+          <LocalePicker />
         </Section>
 
         <Section>
