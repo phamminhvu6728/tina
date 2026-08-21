@@ -3,7 +3,7 @@ import { getDataSourceToken, getRepositoryToken } from '@nestjs/typeorm';
 
 import { FieldMetadataType } from 'twenty-shared/types';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
-import { type EntityManager, IsNull, Not, type Repository } from 'typeorm';
+import { IsNull, Not, type Repository } from 'typeorm';
 
 import { BillingSubscriptionService } from 'src/engine/core-modules/billing/services/billing-subscription.service';
 import { BillingService } from 'src/engine/core-modules/billing/services/billing.service';
@@ -85,9 +85,7 @@ describe('WorkspaceService', () => {
         {
           provide: getRepositoryToken(FieldMetadataEntity),
           useValue: {
-            manager: {
-              transaction: jest.fn(),
-            },
+            createQueryBuilder: jest.fn(),
           },
         },
         {
@@ -222,58 +220,46 @@ describe('WorkspaceService', () => {
   });
 
   describe('updatePhoneFieldMetadataCountryCode', () => {
-    it('updates only the phone field metadata defaults', async () => {
+    it('updates all phone field metadata defaults with one query', async () => {
       const workspaceId = '20202020-0000-0000-0000-000000000000';
-      const phoneFields = [
-        {
-          id: '20202020-0000-0000-0000-000000000001',
-          workspaceId,
-          type: FieldMetadataType.PHONES,
-          isActive: true,
-          defaultValue: {
-            primaryPhoneNumber: "''",
-            primaryPhoneCountryCode: "'US'",
-            primaryPhoneCallingCode: "'+1'",
-            additionalPhones: null,
-          },
-        },
-      ] as FieldMetadataEntity<FieldMetadataType.PHONES>[];
-      const transactionalRepository = {
-        find: jest.fn().mockResolvedValue(phoneFields),
-        update: jest.fn().mockResolvedValue(undefined),
+      const queryBuilder = {
+        update: jest.fn().mockReturnThis(),
+        set: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        setParameter: jest.fn().mockReturnThis(),
+        execute: jest.fn().mockResolvedValue(undefined),
       };
-      const entityManager = {
-        getRepository: jest.fn().mockReturnValue(transactionalRepository),
-      } as unknown as EntityManager;
 
       jest
-        .spyOn(fieldMetadataRepository.manager, 'transaction')
-        .mockImplementation(async (callback) => callback(entityManager));
+        .spyOn(fieldMetadataRepository, 'createQueryBuilder')
+        .mockReturnValue(queryBuilder as never);
 
       await service['updatePhoneFieldMetadataCountryCode']({
         workspaceId,
         countryCode: 'VN',
       });
 
-      expect(transactionalRepository.find).toHaveBeenCalledWith({
-        where: {
-          workspaceId,
-          type: FieldMetadataType.PHONES,
-          isActive: true,
-        },
+      expect(queryBuilder.update).toHaveBeenCalledWith(FieldMetadataEntity);
+      expect(queryBuilder.set).toHaveBeenCalledWith({
+        defaultValue: expect.any(Function),
       });
-      expect(transactionalRepository.update).toHaveBeenCalledTimes(1);
-      expect(transactionalRepository.update).toHaveBeenCalledWith(
-        { id: phoneFields[0].id, workspaceId },
-        {
-          defaultValue: {
-            primaryPhoneNumber: "''",
-            primaryPhoneCountryCode: "'VN'",
-            primaryPhoneCallingCode: "'+84'",
-            additionalPhones: null,
-          },
-        },
+      expect(queryBuilder.where).toHaveBeenCalledWith(
+        '"workspaceId" = :workspaceId',
+        { workspaceId },
       );
+      expect(queryBuilder.andWhere).toHaveBeenCalledWith(
+        '"type" = :fieldType',
+        { fieldType: FieldMetadataType.PHONES },
+      );
+      expect(queryBuilder.setParameter).toHaveBeenCalledWith(
+        'phoneDefaultValues',
+        JSON.stringify({
+          primaryPhoneCountryCode: "'VN'",
+          primaryPhoneCallingCode: "'+84'",
+        }),
+      );
+      expect(queryBuilder.execute).toHaveBeenCalledTimes(1);
     });
   });
 

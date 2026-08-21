@@ -7,7 +7,11 @@ import { msg } from '@lingui/core/macro';
 import { type CountryCode, getCountryCallingCode } from 'libphonenumber-js';
 import { PermissionFlagType } from 'twenty-shared/constants';
 import { FieldMetadataType } from 'twenty-shared/types';
-import { assertIsDefinedOrThrow, isDefined } from 'twenty-shared/utils';
+import {
+  assertIsDefinedOrThrow,
+  isDefined,
+  isValidCountryCode,
+} from 'twenty-shared/utils';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
 import {
   DataSource,
@@ -308,26 +312,38 @@ export class WorkspaceService {
 
     let updatedWorkspace: WorkspaceEntity;
 
+    const workspaceCountryCode = payload.workspaceCountryCode;
     const isChangingWorkspaceCountryCode =
-      isDefined(payload.workspaceCountryCode) &&
-      payload.workspaceCountryCode !== workspace.workspaceCountryCode;
+      isDefined(workspaceCountryCode) &&
+      workspaceCountryCode !== workspace.workspaceCountryCode;
+    let hasUpdatedPhoneFieldMetadata = false;
 
     try {
+      if (isChangingWorkspaceCountryCode) {
+        assert(
+          isValidCountryCode(workspaceCountryCode),
+          'Invalid workspace country code',
+        );
+        await this.updatePhoneFieldMetadataCountryCode({
+          workspaceId: workspace.id,
+          countryCode: workspaceCountryCode,
+        });
+        hasUpdatedPhoneFieldMetadata = true;
+      }
+
       updatedWorkspace = await this.workspaceRepository.save({
         ...workspace,
         ...payload,
       });
-
-      if (isChangingWorkspaceCountryCode) {
+    } catch (error) {
+      if (hasUpdatedPhoneFieldMetadata) {
+        assert(
+          isValidCountryCode(workspace.workspaceCountryCode),
+          'Invalid previous workspace country code',
+        );
         await this.updatePhoneFieldMetadataCountryCode({
           workspaceId: workspace.id,
-          countryCode: payload.workspaceCountryCode as CountryCode,
-        });
-      }
-    } catch (error) {
-      if (isChangingWorkspaceCountryCode) {
-        await this.workspaceRepository.update(workspace.id, {
-          workspaceCountryCode: workspace.workspaceCountryCode,
+          countryCode: workspace.workspaceCountryCode,
         });
       }
       // revert custom domain registration on error
@@ -370,34 +386,25 @@ export class WorkspaceService {
     workspaceId: string;
     countryCode: CountryCode;
   }): Promise<void> {
-    await this.fieldMetadataRepository.manager.transaction(async (manager) => {
-      const fieldMetadataRepository =
-        manager.getRepository(FieldMetadataEntity);
-      const phoneFields = await fieldMetadataRepository.find({
-        where: {
-          workspaceId,
-          type: FieldMetadataType.PHONES,
-          isActive: true,
-        },
-      });
-      const callingCode = `+${getCountryCallingCode(countryCode)}`;
-
-      for (const field of phoneFields) {
-        const phoneField =
-          field as FieldMetadataEntity<FieldMetadataType.PHONES>;
-
-        await fieldMetadataRepository.update(
-          { id: phoneField.id, workspaceId },
-          {
-            defaultValue: {
-              ...(phoneField.defaultValue ?? {}),
-              primaryPhoneCountryCode: `'${countryCode}'`,
-              primaryPhoneCallingCode: `'${callingCode}'`,
-            },
-          },
-        );
-      }
+    const callingCode = `+${getCountryCallingCode(countryCode)}`;
+    const phoneDefaultValues = JSON.stringify({
+      primaryPhoneCountryCode: `'${countryCode}'`,
+      primaryPhoneCallingCode: `'${callingCode}'`,
     });
+
+    await this.fieldMetadataRepository
+      .createQueryBuilder()
+      .update(FieldMetadataEntity)
+      .set({
+        defaultValue: () =>
+          `COALESCE("defaultValue", '{}'::jsonb) || CAST(:phoneDefaultValues AS jsonb)`,
+      })
+      .where('"workspaceId" = :workspaceId', { workspaceId })
+      .andWhere('"type" = :fieldType', {
+        fieldType: FieldMetadataType.PHONES,
+      })
+      .setParameter('phoneDefaultValues', phoneDefaultValues)
+      .execute();
   }
 
   async activateWorkspace(user: AuthContextUser, workspace: WorkspaceEntity) {
