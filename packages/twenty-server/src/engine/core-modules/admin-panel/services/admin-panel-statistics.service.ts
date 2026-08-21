@@ -2,9 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { isNonEmptyString } from '@sniptt/guards';
-import { Brackets, ILike, IsNull, Repository } from 'typeorm';
+import {
+  Brackets,
+  ILike,
+  IsNull,
+  Repository,
+  type SelectQueryBuilder,
+} from 'typeorm';
 
 import { type AdminPanelRecentUserDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-recent-user.dto';
+import { type AdminPanelRecentUsersPageDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-recent-users-page.dto';
+import { type AdminPanelTopWorkspacesPageDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-top-workspaces-page.dto';
 import { type AdminPanelTopWorkspaceDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-top-workspace.dto';
 import { FileUrlService } from 'src/engine/core-modules/file/file-url/file-url.service';
 import { UserEntity } from 'src/engine/core-modules/user/user.entity';
@@ -27,11 +35,10 @@ export class AdminPanelStatisticsService {
 
   async getRecentUsers(
     searchTerm?: string,
-  ): Promise<AdminPanelRecentUserDTO[]> {
-    const trimmedSearch = searchTerm?.trim();
-
-    const queryBuilder = this.userRepository
-      .createQueryBuilder('user')
+    page = 1,
+    pageSize = RECENT_USERS_LIMIT,
+  ): Promise<AdminPanelRecentUsersPageDTO> {
+    const queryBuilder = this.createRecentUsersQueryBuilder(searchTerm)
       .leftJoinAndSelect(
         'user.userWorkspaces',
         'userWorkspace',
@@ -42,32 +49,20 @@ export class AdminPanelStatisticsService {
         'workspace',
         '"workspace"."deletedAt" IS NULL',
       )
-      .where({ deletedAt: IsNull() })
       .orderBy('user.createdAt', 'DESC')
       .addOrderBy('userWorkspace.createdAt', 'DESC')
-      .take(RECENT_USERS_LIMIT);
+      .skip((page - 1) * pageSize)
+      .take(pageSize);
 
-    if (trimmedSearch && trimmedSearch.length > 0) {
-      const like = `%${trimmedSearch}%`;
-
-      queryBuilder.andWhere(
-        new Brackets((qb) => {
-          qb.where({ email: ILike(like) })
-            .orWhere(
-              `CONCAT("user"."firstName", ' ', "user"."lastName") ILIKE :like`,
-              { like },
-            )
-            .orWhere('"user"."id"::text ILIKE :like', { like });
-        }),
-      );
-    }
-
-    const users = await queryBuilder.getMany();
+    const [users, totalCount] = await Promise.all([
+      queryBuilder.getMany(),
+      this.getRecentUsersCount(searchTerm),
+    ]);
 
     const signedAvatarUrlByUserId =
       await this.buildSignedAvatarUrlByUserId(users);
 
-    return Promise.all(
+    const items: AdminPanelRecentUserDTO[] = await Promise.all(
       users.map(async (user) => {
         const displayWorkspace = user.userWorkspaces[0]?.workspace;
 
@@ -86,15 +81,52 @@ export class AdminPanelStatisticsService {
         };
       }),
     );
+
+    return {
+      items,
+      totalCount,
+      currentPage: page,
+      totalPages: Math.ceil(totalCount / pageSize),
+    };
+  }
+
+  private async getRecentUsersCount(searchTerm?: string): Promise<number> {
+    return this.createRecentUsersQueryBuilder(searchTerm).getCount();
+  }
+
+  private createRecentUsersQueryBuilder(
+    searchTerm?: string,
+  ): SelectQueryBuilder<UserEntity> {
+    const trimmedSearch = searchTerm?.trim();
+
+    const queryBuilder = this.userRepository
+      .createQueryBuilder('user')
+      .where({ deletedAt: IsNull() });
+
+    if (trimmedSearch && trimmedSearch.length > 0) {
+      const like = `%${trimmedSearch}%`;
+
+      queryBuilder.andWhere(
+        new Brackets((qb) => {
+          qb.where({ email: ILike(like) })
+            .orWhere(
+              `CONCAT("user"."firstName", ' ', "user"."lastName") ILIKE :like`,
+              { like },
+            )
+            .orWhere('"user"."id"::text ILIKE :like', { like });
+        }),
+      );
+    }
+
+    return queryBuilder;
   }
 
   async getTopWorkspaces(
     searchTerm?: string,
-  ): Promise<AdminPanelTopWorkspaceDTO[]> {
-    const trimmedSearch = searchTerm?.trim();
-
-    const queryBuilder = this.workspaceRepository
-      .createQueryBuilder('workspace')
+    page = 1,
+    pageSize = TOP_WORKSPACES_LIMIT,
+  ): Promise<AdminPanelTopWorkspacesPageDTO> {
+    const queryBuilder = this.createTopWorkspacesQueryBuilder(searchTerm)
       .leftJoin(
         'workspace.workspaceUsers',
         'userWorkspace',
@@ -105,10 +137,55 @@ export class AdminPanelStatisticsService {
       .addSelect('workspace.subdomain', 'subdomain')
       .addSelect('workspace.logoFileId', 'logoFileId')
       .addSelect('COUNT("userWorkspace"."id")::int', 'totalUsers')
-      .where({ deletedAt: IsNull() })
       .groupBy('workspace.id')
       .orderBy('"totalUsers"', 'DESC')
-      .limit(TOP_WORKSPACES_LIMIT);
+      .offset((page - 1) * pageSize)
+      .limit(pageSize);
+
+    const [rows, totalCount] = await Promise.all([
+      queryBuilder.getRawMany<{
+        id: string;
+        name: string | null;
+        subdomain: string | null;
+        logoFileId: string | null;
+        totalUsers: number;
+      }>(),
+      this.getTopWorkspacesCount(searchTerm),
+    ]);
+
+    const items: AdminPanelTopWorkspaceDTO[] = await Promise.all(
+      rows.map(async (row) => ({
+        id: row.id,
+        logoUrl: await this.fileUrlService.signWorkspaceLogoUrl({
+          id: row.id,
+          logoFileId: row.logoFileId,
+        }),
+        name: row.name ?? '',
+        subdomain: row.subdomain ?? '',
+        totalUsers: row.totalUsers,
+      })),
+    );
+
+    return {
+      items,
+      totalCount,
+      currentPage: page,
+      totalPages: Math.ceil(totalCount / pageSize),
+    };
+  }
+
+  private async getTopWorkspacesCount(searchTerm?: string): Promise<number> {
+    return this.createTopWorkspacesQueryBuilder(searchTerm).getCount();
+  }
+
+  private createTopWorkspacesQueryBuilder(
+    searchTerm?: string,
+  ): SelectQueryBuilder<WorkspaceEntity> {
+    const trimmedSearch = searchTerm?.trim();
+
+    const queryBuilder = this.workspaceRepository
+      .createQueryBuilder('workspace')
+      .where({ deletedAt: IsNull() });
 
     if (trimmedSearch && trimmedSearch.length > 0) {
       const like = `%${trimmedSearch}%`;
@@ -122,26 +199,7 @@ export class AdminPanelStatisticsService {
       );
     }
 
-    const rows: Array<{
-      id: string;
-      name: string | null;
-      subdomain: string | null;
-      logoFileId: string | null;
-      totalUsers: number;
-    }> = await queryBuilder.getRawMany();
-
-    return Promise.all(
-      rows.map(async (row) => ({
-        id: row.id,
-        logoUrl: await this.fileUrlService.signWorkspaceLogoUrl({
-          id: row.id,
-          logoFileId: row.logoFileId,
-        }),
-        name: row.name ?? '',
-        subdomain: row.subdomain ?? '',
-        totalUsers: row.totalUsers,
-      })),
-    );
+    return queryBuilder;
   }
 
   private async buildSignedAvatarUrlByUserId(
