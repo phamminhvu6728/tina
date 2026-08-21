@@ -198,8 +198,8 @@ export const buildPersonStandardFlatFieldMetadatas = ({
       },
       defaultValue: {
         primaryPhoneNumber: "''",
-        primaryPhoneCountryCode: "'VN'",
-        primaryPhoneCallingCode: "'+84'",
+        primaryPhoneCountryCode: "'US'",
+        primaryPhoneCallingCode: "'+1'",
         additionalPhones: null,
       },
     },

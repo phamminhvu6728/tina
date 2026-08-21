@@ -16,8 +16,8 @@ import { AdminResolver } from 'src/engine/api/graphql/graphql-config/decorators/
 import { AdminPanelHealthService } from 'src/engine/core-modules/admin-panel/admin-panel-health.service';
 import { AdminPanelQueueService } from 'src/engine/core-modules/admin-panel/admin-panel-queue.service';
 import { AdminChatThreadMessagesDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-chat-thread-messages.dto';
-import { AdminPanelRecentUserDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-recent-user.dto';
-import { AdminPanelTopWorkspaceDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-top-workspace.dto';
+import { AdminPanelRecentUsersPageDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-recent-users-page.dto';
+import { AdminPanelTopWorkspacesPageDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-top-workspaces-page.dto';
 import { AdminPanelWorkspaceBillingDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-workspace-billing.dto';
 import { AdminWorkspaceChatThreadDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-workspace-chat-thread.dto';
 import { ConfigVariableDTO } from 'src/engine/core-modules/admin-panel/dtos/config-variable.dto';
@@ -158,7 +158,7 @@ export class AdminPanelResolver {
   }
 
   @UseGuards(AdminPanelOrImpersonateGuard)
-  @Query(() => [AdminPanelRecentUserDTO])
+  @Query(() => AdminPanelRecentUsersPageDTO)
   async adminPanelRecentUsers(
     @Args('searchTerm', {
       type: () => String,
@@ -166,12 +166,18 @@ export class AdminPanelResolver {
       defaultValue: '',
     })
     searchTerm: string,
-  ): Promise<AdminPanelRecentUserDTO[]> {
-    return this.adminStatisticsService.getRecentUsers(searchTerm);
+    @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
+    @Args('pageSize', { type: () => Int, defaultValue: 10 }) pageSize: number,
+  ): Promise<AdminPanelRecentUsersPageDTO> {
+    return this.adminStatisticsService.getRecentUsers(
+      searchTerm,
+      Math.max(1, page),
+      Math.min(100, Math.max(1, pageSize)),
+    );
   }
 
   @UseGuards(ServerLevelImpersonateGuard)
-  @Query(() => [AdminPanelTopWorkspaceDTO])
+  @Query(() => AdminPanelTopWorkspacesPageDTO)
   async adminPanelTopWorkspaces(
     @Args('searchTerm', {
       type: () => String,
@@ -179,8 +185,14 @@ export class AdminPanelResolver {
       defaultValue: '',
     })
     searchTerm: string,
-  ): Promise<AdminPanelTopWorkspaceDTO[]> {
-    return this.adminStatisticsService.getTopWorkspaces(searchTerm);
+    @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
+    @Args('pageSize', { type: () => Int, defaultValue: 10 }) pageSize: number,
+  ): Promise<AdminPanelTopWorkspacesPageDTO> {
+    return this.adminStatisticsService.getTopWorkspaces(
+      searchTerm,
+      Math.max(1, page),
+      Math.min(100, Math.max(1, pageSize)),
+    );
   }
 
   @UseGuards(AdminPanelGuard, NoImpersonationGuard)
