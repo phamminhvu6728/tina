@@ -38,10 +38,7 @@ export const SettingsExperience = () => {
         </Section>
 
         <Section>
-          <H2Title
-            title={t`Language`}
-            description={t`Select your preferred language`}
-          />
+          <H2Title title={t`Language`} description={t`Select your language`} />
           <LocalePicker />
         </Section>
 

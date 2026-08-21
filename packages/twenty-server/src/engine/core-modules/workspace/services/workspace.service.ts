@@ -4,8 +4,14 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import assert from 'assert';
 
 import { msg } from '@lingui/core/macro';
+import { type CountryCode, getCountryCallingCode } from 'libphonenumber-js';
 import { PermissionFlagType } from 'twenty-shared/constants';
-import { assertIsDefinedOrThrow, isDefined } from 'twenty-shared/utils';
+import { FieldMetadataType } from 'twenty-shared/types';
+import {
+  assertIsDefinedOrThrow,
+  isDefined,
+  isValidCountryCode,
+} from 'twenty-shared/utils';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
 import {
   DataSource,
@@ -119,6 +125,7 @@ export class WorkspaceService {
     enabledAiModelIds: PermissionFlagType.AI_SETTINGS,
     useRecommendedModels: PermissionFlagType.AI_SETTINGS,
     isInternalMessagesImportEnabled: PermissionFlagType.WORKSPACE,
+    workspaceCountryCode: PermissionFlagType.WORKSPACE,
   };
 
   constructor(
@@ -128,6 +135,8 @@ export class WorkspaceService {
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(UserWorkspaceEntity)
     private readonly userWorkspaceRepository: Repository<UserWorkspaceEntity>,
+    @InjectRepository(FieldMetadataEntity)
+    private readonly fieldMetadataRepository: Repository<FieldMetadataEntity>,
     private readonly workspaceManagerService: WorkspaceManagerService,
     private readonly featureFlagService: FeatureFlagService,
     private readonly billingSubscriptionService: BillingSubscriptionService,
@@ -303,12 +312,40 @@ export class WorkspaceService {
 
     let updatedWorkspace: WorkspaceEntity;
 
+    const workspaceCountryCode = payload.workspaceCountryCode;
+    const isChangingWorkspaceCountryCode =
+      isDefined(workspaceCountryCode) &&
+      workspaceCountryCode !== workspace.workspaceCountryCode;
+    let hasUpdatedPhoneFieldMetadata = false;
+
     try {
+      if (isChangingWorkspaceCountryCode) {
+        assert(
+          isValidCountryCode(workspaceCountryCode),
+          'Invalid workspace country code',
+        );
+        await this.updatePhoneFieldMetadataCountryCode({
+          workspaceId: workspace.id,
+          countryCode: workspaceCountryCode,
+        });
+        hasUpdatedPhoneFieldMetadata = true;
+      }
+
       updatedWorkspace = await this.workspaceRepository.save({
         ...workspace,
         ...payload,
       });
     } catch (error) {
+      if (hasUpdatedPhoneFieldMetadata) {
+        assert(
+          isValidCountryCode(workspace.workspaceCountryCode),
+          'Invalid previous workspace country code',
+        );
+        await this.updatePhoneFieldMetadataCountryCode({
+          workspaceId: workspace.id,
+          countryCode: workspace.workspaceCountryCode,
+        });
+      }
       // revert custom domain registration on error
       if (payload.customDomain && customDomainRegistered) {
         this.dnsManagerService
@@ -318,6 +355,13 @@ export class WorkspaceService {
           });
       }
       throw error;
+    }
+
+    if (isChangingWorkspaceCountryCode) {
+      await this.flatEntityMapsCacheService.invalidateFlatEntityMaps({
+        workspaceId: workspace.id,
+        flatMapsKeys: ['flatFieldMetadataMaps'],
+      });
     }
 
     await this.coreEntityCacheService.invalidate(
@@ -333,6 +377,34 @@ export class WorkspaceService {
     }
 
     return updatedWorkspace;
+  }
+
+  private async updatePhoneFieldMetadataCountryCode({
+    workspaceId,
+    countryCode,
+  }: {
+    workspaceId: string;
+    countryCode: CountryCode;
+  }): Promise<void> {
+    const callingCode = `+${getCountryCallingCode(countryCode)}`;
+    const phoneDefaultValues = JSON.stringify({
+      primaryPhoneCountryCode: `'${countryCode}'`,
+      primaryPhoneCallingCode: `'${callingCode}'`,
+    });
+
+    await this.fieldMetadataRepository
+      .createQueryBuilder()
+      .update(FieldMetadataEntity)
+      .set({
+        defaultValue: () =>
+          `COALESCE("defaultValue", '{}'::jsonb) || CAST(:phoneDefaultValues AS jsonb)`,
+      })
+      .where('"workspaceId" = :workspaceId', { workspaceId })
+      .andWhere('"type" = :fieldType', {
+        fieldType: FieldMetadataType.PHONES,
+      })
+      .setParameter('phoneDefaultValues', phoneDefaultValues)
+      .execute();
   }
 
   async activateWorkspace(user: AuthContextUser, workspace: WorkspaceEntity) {

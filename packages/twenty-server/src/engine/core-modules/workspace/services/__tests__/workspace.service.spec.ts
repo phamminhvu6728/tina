@@ -1,6 +1,7 @@
 import { Test, type TestingModule } from '@nestjs/testing';
 import { getDataSourceToken, getRepositoryToken } from '@nestjs/typeorm';
 
+import { FieldMetadataType } from 'twenty-shared/types';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
 import { IsNull, Not, type Repository } from 'typeorm';
 
@@ -26,6 +27,7 @@ import { WorkspaceManyOrAllFlatEntityMapsCacheService } from 'src/engine/metadat
 import { UpgradeMigrationService } from 'src/engine/core-modules/upgrade/services/upgrade-migration.service';
 import { UpgradeSequenceReaderService } from 'src/engine/core-modules/upgrade/services/upgrade-sequence-reader.service';
 import { AiModelRegistryService } from 'src/engine/metadata-modules/ai/ai-models/services/ai-model-registry.service';
+import { FieldMetadataEntity } from 'src/engine/metadata-modules/field-metadata/field-metadata.entity';
 import { PermissionsService } from 'src/engine/metadata-modules/permissions/permissions.service';
 import { CoreEntityCacheService } from 'src/engine/core-entity-cache/services/core-entity-cache.service';
 import { WorkspaceCacheStorageService } from 'src/engine/workspace-cache-storage/workspace-cache-storage.service';
@@ -42,6 +44,7 @@ describe('WorkspaceService', () => {
   let userWorkspaceRepository: Repository<UserWorkspaceEntity>;
   let userRepository: Repository<UserEntity>;
   let workspaceRepository: Repository<WorkspaceEntity>;
+  let fieldMetadataRepository: Repository<FieldMetadataEntity>;
   let workspaceCacheStorageService: WorkspaceCacheStorageService;
   let messageQueueService: MessageQueueService;
   let dnsManagerService: DnsManagerService;
@@ -77,6 +80,12 @@ describe('WorkspaceService', () => {
           provide: getRepositoryToken(UserEntity),
           useValue: {
             softDelete: jest.fn(),
+          },
+        },
+        {
+          provide: getRepositoryToken(FieldMetadataEntity),
+          useValue: {
+            createQueryBuilder: jest.fn(),
           },
         },
         {
@@ -184,6 +193,9 @@ describe('WorkspaceService', () => {
     workspaceRepository = module.get<Repository<WorkspaceEntity>>(
       getRepositoryToken(WorkspaceEntity),
     );
+    fieldMetadataRepository = module.get<Repository<FieldMetadataEntity>>(
+      getRepositoryToken(FieldMetadataEntity),
+    );
     workspaceCacheStorageService = module.get<WorkspaceCacheStorageService>(
       WorkspaceCacheStorageService,
     );
@@ -205,6 +217,50 @@ describe('WorkspaceService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('updatePhoneFieldMetadataCountryCode', () => {
+    it('updates all phone field metadata defaults with one query', async () => {
+      const workspaceId = '20202020-0000-0000-0000-000000000000';
+      const queryBuilder = {
+        update: jest.fn().mockReturnThis(),
+        set: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        setParameter: jest.fn().mockReturnThis(),
+        execute: jest.fn().mockResolvedValue(undefined),
+      };
+
+      jest
+        .spyOn(fieldMetadataRepository, 'createQueryBuilder')
+        .mockReturnValue(queryBuilder as never);
+
+      await service['updatePhoneFieldMetadataCountryCode']({
+        workspaceId,
+        countryCode: 'VN',
+      });
+
+      expect(queryBuilder.update).toHaveBeenCalledWith(FieldMetadataEntity);
+      expect(queryBuilder.set).toHaveBeenCalledWith({
+        defaultValue: expect.any(Function),
+      });
+      expect(queryBuilder.where).toHaveBeenCalledWith(
+        '"workspaceId" = :workspaceId',
+        { workspaceId },
+      );
+      expect(queryBuilder.andWhere).toHaveBeenCalledWith(
+        '"type" = :fieldType',
+        { fieldType: FieldMetadataType.PHONES },
+      );
+      expect(queryBuilder.setParameter).toHaveBeenCalledWith(
+        'phoneDefaultValues',
+        JSON.stringify({
+          primaryPhoneCountryCode: "'VN'",
+          primaryPhoneCallingCode: "'+84'",
+        }),
+      );
+      expect(queryBuilder.execute).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('handleRemoveWorkspaceMember', () => {

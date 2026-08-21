@@ -144,6 +144,10 @@ export class WorkspaceEntity {
   @Column({ type: 'integer', default: 90 })
   eventLogRetentionDays: number;
 
+  @Field(() => String)
+  @Column({ type: 'varchar', length: 2, default: 'US' })
+  workspaceCountryCode: string;
+
   // Relations
   @OneToMany(() => AppTokenEntity, (appToken) => appToken.workspace, {
     cascade: true,
