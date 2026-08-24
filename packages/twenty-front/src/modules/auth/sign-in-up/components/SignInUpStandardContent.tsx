@@ -8,7 +8,7 @@ import { type JSX } from 'react';
 import { AppPath } from 'twenty-shared/types';
 import { AnimatedEaseIn } from 'twenty-ui/layout';
 import { ModalContent } from 'twenty-ui/surfaces';
-import { themeCssVariables } from 'twenty-ui/theme-constants';
+import { MOBILE_VIEWPORT, themeCssVariables } from 'twenty-ui/theme-constants';
 import { type PublicWorkspaceData } from '~/generated-metadata/graphql';
 
 const StyledTitleContainer = styled.div`
@@ -24,6 +24,29 @@ const StyledFormContainer = styled.div`
   margin-top: ${themeCssVariables.spacing[6]};
   min-width: 0;
   width: 100%;
+`;
+
+const StyledMobileAuthContent = styled.div`
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: ${themeCssVariables.spacing[10]};
+  width: 100%;
+
+  @media (max-width: ${MOBILE_VIEWPORT}px) {
+    min-height: 100dvh;
+    padding: 159px ${themeCssVariables.spacing[5]} 68px;
+  }
+`;
+
+const StyledFooterContainer = styled.div`
+  display: contents;
+
+  @media (max-width: ${MOBILE_VIEWPORT}px) {
+    display: block;
+    margin-top: auto;
+  }
 `;
 
 type SignInUpStandardContentProps = {
@@ -42,31 +65,37 @@ export const SignInUpStandardContent = ({
   onClickOnLogo,
 }: SignInUpStandardContentProps) => {
   return (
-    <ModalContent isVerticallyCentered isHorizontallyCentered>
-      <AnimatedEaseIn>
-        <Logo
-          secondaryLogo={workspacePublicData?.logo}
-          placeholder={workspacePublicData?.displayName}
-          onClick={onClickOnLogo}
-          to={AppPath.SignInUp}
-        />
-      </AnimatedEaseIn>
-      <StyledTitleContainer>
-        <Title animate>{title}</Title>
-      </StyledTitleContainer>
-      <StyledFormContainer>{signInUpForm}</StyledFormContainer>
-      {signInUpStep === SignInUpStep.WorkspaceSelection && (
-        <WorkspaceSelectionFooter />
-      )}
-      {![
-        SignInUpStep.Password,
-        SignInUpStep.TwoFactorAuthenticationProvision,
-        SignInUpStep.TwoFactorAuthenticationVerification,
-        SignInUpStep.WorkspaceSelection,
-        SignInUpStep.WorkspaceCreation,
-      ].includes(signInUpStep) && (
-        <FooterNote secondaryAgreement="dataProcessingAgreement" />
-      )}
+    <ModalContent isVerticallyCentered isHorizontallyCentered noPadding>
+      <StyledMobileAuthContent>
+        <AnimatedEaseIn>
+          <Logo
+            secondaryLogo={workspacePublicData?.logo}
+            placeholder={workspacePublicData?.displayName}
+            onClick={onClickOnLogo}
+            to={AppPath.SignInUp}
+          />
+        </AnimatedEaseIn>
+        <StyledTitleContainer>
+          <Title animate color={themeCssVariables.grayScale.gray12}>
+            {title}
+          </Title>
+        </StyledTitleContainer>
+        <StyledFormContainer>{signInUpForm}</StyledFormContainer>
+        {signInUpStep === SignInUpStep.WorkspaceSelection && (
+          <WorkspaceSelectionFooter />
+        )}
+        <StyledFooterContainer>
+          {![
+            SignInUpStep.Password,
+            SignInUpStep.TwoFactorAuthenticationProvision,
+            SignInUpStep.TwoFactorAuthenticationVerification,
+            SignInUpStep.WorkspaceSelection,
+            SignInUpStep.WorkspaceCreation,
+          ].includes(signInUpStep) && (
+            <FooterNote secondaryAgreement="dataProcessingAgreement" />
+          )}
+        </StyledFooterContainer>
+      </StyledMobileAuthContent>
     </ModalContent>
   );
 };

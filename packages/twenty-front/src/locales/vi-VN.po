@@ -17582,6 +17582,10 @@ msgstr "Lỗi tạm thời"
 msgid "Terms / Privacy"
 msgstr "Điều khoản / Quyền riêng tư"
 
+#: src/modules/auth/sign-in-up/components/FooterNote.tsx
+msgid "Terms"
+msgstr "Điều khoản"
+
 #. js-lingui-id: xowcRf
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx

@@ -7,16 +7,33 @@ import {
 } from '@/auth/states/signInUpStepState';
 import { AuthenticatedMethod } from '@/auth/types/AuthenticatedMethod.enum';
 import { type SocialSSOSignInUpActionType } from '@/auth/types/socialSSOSignInUp.type';
+import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
+import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
+import { styled } from '@linaria/react';
 import { useLingui } from '@lingui/react/macro';
 import { memo, useContext } from 'react';
 import { IconGoogle } from 'twenty-ui/icon';
-import { HorizontalSeparator } from 'twenty-ui/layout';
 import { MainButton } from 'twenty-ui/input';
-import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
-import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
+import { HorizontalSeparator } from 'twenty-ui/layout';
+import { MOBILE_VIEWPORT, ThemeContext } from 'twenty-ui/theme-constants';
 import { LastUsedPill } from './LastUsedPill';
 import { StyledSSOButtonContainer } from './SignInUpSSOButtonStyles';
-import { ThemeContext } from 'twenty-ui/theme-constants';
+
+const StyledGoogleButton = styled(MainButton)`
+  @media (max-width: ${MOBILE_VIEWPORT}px) {
+    & {
+      font-size: 16px;
+      font-weight: 500;
+      max-height: none;
+    }
+
+    svg {
+      height: 24px;
+      width: 24px;
+    }
+  }
+`;
+
 const GoogleIcon = memo(() => {
   const { theme } = useContext(ThemeContext);
   return <IconGoogle size={theme.icon.size.md} />;
@@ -47,7 +64,7 @@ export const SignInUpWithGoogle = ({
   return (
     <>
       <StyledSSOButtonContainer>
-        <MainButton
+        <StyledGoogleButton
           Icon={GoogleIcon}
           title={t`Continue with Google`}
           onClick={handleClick}
