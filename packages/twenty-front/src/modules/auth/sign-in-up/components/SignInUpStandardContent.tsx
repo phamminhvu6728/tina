@@ -24,6 +24,10 @@ const StyledFormContainer = styled.div`
   margin-top: ${themeCssVariables.spacing[6]};
   min-width: 0;
   width: 100%;
+
+  @media (max-width: ${MOBILE_VIEWPORT}px) {
+    margin-top: 0;
+  }
 `;
 
 const StyledMobileAuthContent = styled.div`
@@ -36,7 +40,6 @@ const StyledMobileAuthContent = styled.div`
 
   @media (max-width: ${MOBILE_VIEWPORT}px) {
     min-height: 100dvh;
-    padding: 159px ${themeCssVariables.spacing[5]} 68px;
   }
 `;
 
