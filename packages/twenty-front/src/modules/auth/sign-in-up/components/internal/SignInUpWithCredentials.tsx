@@ -16,6 +16,9 @@ import { SignInUpMode } from '@/auth/types/signInUpMode';
 import { isRequestingCaptchaTokenState } from '@/captcha/states/isRequestingCaptchaTokenState';
 import { captchaState } from '@/client-config/states/captchaState';
 import { isDDLLockedState } from '@/client-config/states/isDDLLockedState';
+import { InputHint } from '@/ui/input/components/InputHint';
+import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
+import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { styled } from '@linaria/react';
 import { useLingui } from '@lingui/react/macro';
 import { useMemo, useState } from 'react';
@@ -23,9 +26,7 @@ import { useFormContext } from 'react-hook-form';
 import { isDefined } from 'twenty-shared/utils';
 import { Loader } from 'twenty-ui/feedback';
 import { MainButton } from 'twenty-ui/input';
-import { InputHint } from '@/ui/input/components/InputHint';
-import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
-import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
+import { MOBILE_VIEWPORT, themeCssVariables } from 'twenty-ui/theme-constants';
 
 const StyledForm = styled.form`
   align-items: center;
@@ -33,6 +34,20 @@ const StyledForm = styled.form`
   flex-direction: column;
   max-width: 100%;
   width: 100%;
+`;
+
+const StyledCredentialsButton = styled(MainButton)`
+  @media (max-width: ${MOBILE_VIEWPORT}px) {
+    &[data-variant='secondary'] {
+      background: ${themeCssVariables.background.transparent.light};
+      border-color: ${themeCssVariables.border.color.strong};
+      font-size: 16px;
+      font-weight: 500;
+      height: 42px;
+      line-height: 20px;
+      max-height: none;
+    }
+  }
 `;
 
 export const SignInUpWithCredentials = ({
@@ -162,7 +177,7 @@ export const SignInUpWithCredentials = ({
             />
           )}
           <StyledSSOButtonContainer>
-            <MainButton
+            <StyledCredentialsButton
               title={buttonTitle}
               type="submit"
               variant={

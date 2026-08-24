@@ -1,5 +1,6 @@
 import { styled } from '@linaria/react';
 import { isNonEmptyString } from '@sniptt/guards';
+import { type CSSProperties } from 'react';
 import { AppPath } from 'twenty-shared/types';
 import { getImageAbsoluteURI, isDefined } from 'twenty-shared/utils';
 import { Avatar } from 'twenty-ui/data-display';
@@ -17,12 +18,12 @@ type LogoProps = {
 };
 
 const StyledContainer = styled.div`
-  height: ${themeCssVariables.spacing[12]};
+  height: 142px;
   margin-bottom: ${themeCssVariables.spacing[4]};
-  margin-top: ${themeCssVariables.spacing[4]};
+  margin-top: ${themeCssVariables.spacing[30]};
 
   position: relative;
-  width: ${themeCssVariables.spacing[12]};
+  width: 120px;
 `;
 
 const StyledSecondaryLogo = styled.img`
@@ -46,7 +47,13 @@ const StyledSecondaryLogoContainer = styled.div`
 `;
 
 const StyledPrimaryLogo = styled.div`
-  background-size: cover;
+  background-image: var(
+    --auth-mobile-primary-logo-url,
+    var(--auth-primary-logo-url)
+  );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   height: 100%;
   width: 100%;
 `;
@@ -60,6 +67,7 @@ export const Logo = ({
 }: LogoProps) => {
   const { redirectToDefaultDomain } = useRedirectToDefaultDomain();
   const defaultPrimaryLogoUrl = `${window.location.origin}/images/icons/android/android-launchericon-192-192.png`;
+  const defaultMobilePrimaryLogoUrl = `${window.location.origin}/images/icons/logo_crm_ai_assistant.png`;
 
   const primaryLogoUrl = getImageAbsoluteURI({
     imageUrl: primaryLogo ?? defaultPrimaryLogoUrl,
@@ -75,18 +83,23 @@ export const Logo = ({
 
   const isUsingDefaultLogo = !isDefined(primaryLogo);
 
+  const primaryLogoStyle = {
+    '--auth-primary-logo-url': `url(${primaryLogoUrl})`,
+    ...(isUsingDefaultLogo
+      ? {
+          '--auth-mobile-primary-logo-url': `url(${defaultMobilePrimaryLogoUrl})`,
+        }
+      : {}),
+  } as CSSProperties;
+
   return (
     <StyledContainer onClick={() => onClick?.()}>
       {isUsingDefaultLogo ? (
         <UndecoratedLink to={to} onClick={() => redirectToDefaultDomain()}>
-          <StyledPrimaryLogo
-            style={{ backgroundImage: `url(${primaryLogoUrl})` }}
-          />
+          <StyledPrimaryLogo style={primaryLogoStyle} />
         </UndecoratedLink>
       ) : (
-        <StyledPrimaryLogo
-          style={{ backgroundImage: `url(${primaryLogoUrl})` }}
-        />
+        <StyledPrimaryLogo style={primaryLogoStyle} />
       )}
       {isDefined(secondaryLogoUrl) ? (
         <StyledSecondaryLogoContainer>

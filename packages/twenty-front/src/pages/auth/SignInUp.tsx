@@ -36,7 +36,7 @@ import { useLingui } from '@lingui/react/macro';
 import { useSearchParams } from 'react-router-dom';
 import { isDefined } from 'twenty-shared/utils';
 import { Loader } from 'twenty-ui/feedback';
-import { themeCssVariables } from 'twenty-ui/theme-constants';
+import { MOBILE_VIEWPORT, themeCssVariables } from 'twenty-ui/theme-constants';
 
 const StyledLoaderContainer = styled.div`
   align-items: center;
@@ -48,12 +48,20 @@ const StyledLoaderContainer = styled.div`
 `;
 
 const StyledBackground = styled.div`
-  background: ${themeCssVariables.background.secondary};
+  background-color: ${themeCssVariables.background.invertedPrimary};
+  background-image: url('/images/background/auth-desktop-background.webp');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   height: 100dvh;
   overflow-y: auto;
   width: 100%;
+
+  @media (max-width: ${MOBILE_VIEWPORT}px) {
+    background-image: url('/images/background/auth-mobile-background.webp');
+  }
 `;
 
 export const SignInUp = () => {
