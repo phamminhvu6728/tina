@@ -1,4 +1,5 @@
 import { useHasAccessTokenPair } from '@/auth/hooks/useHasAccessTokenPair';
+import { useCanUseAi } from '@/ai/hooks/useCanUseAi';
 import { useHasPermissionFlag } from '@/settings/roles/hooks/useHasPermissionFlag';
 import { useIsFeatureEnabled } from '@/workspace/hooks/useIsFeatureEnabled';
 import { type ReactNode } from 'react';
@@ -14,18 +15,21 @@ type SettingsProtectedRouteWrapperProps = {
   children?: ReactNode;
   settingsPermission?: PermissionFlagType;
   requiredFeatureFlag?: FeatureFlagKey;
+  requiresAiEntitlement?: boolean;
 };
 
 export const SettingsProtectedRouteWrapper = ({
   children,
   settingsPermission,
   requiredFeatureFlag,
+  requiresAiEntitlement = false,
 }: SettingsProtectedRouteWrapperProps) => {
   const hasAccessTokenPair = useHasAccessTokenPair();
   const hasPermission = useHasPermissionFlag(settingsPermission);
   const requiredFeatureFlagEnabled = useIsFeatureEnabled(
     requiredFeatureFlag || null,
   );
+  const canUseAi = useCanUseAi();
 
   if (!hasAccessTokenPair) {
     return null;
@@ -34,7 +38,11 @@ export const SettingsProtectedRouteWrapper = ({
   // TODO: this should be part of PageChangeEffect as otherwise we will have multiple sources of redirection that can:
   // - conflict (race conditions)
   // - degrade performance as we will redirect multiple times
-  if ((requiredFeatureFlag && !requiredFeatureFlagEnabled) || !hasPermission) {
+  if (
+    (requiredFeatureFlag && !requiredFeatureFlagEnabled) ||
+    !hasPermission ||
+    (requiresAiEntitlement && !canUseAi)
+  ) {
     return <Navigate to={getSettingsPath(SettingsPath.ProfilePage)} replace />;
   }
 

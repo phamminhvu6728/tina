@@ -1,4 +1,5 @@
 import { useSettingsNavigationItems } from '@/settings/hooks/useSettingsNavigationItems';
+import { useCanUseAi } from '@/ai/hooks/useCanUseAi';
 import { MockedProvider } from '@apollo/client/testing/react';
 import { renderHook } from '@testing-library/react';
 import { type ReactNode } from 'react';
@@ -69,6 +70,10 @@ jest.mock('@/settings/roles/hooks/usePermissionFlagMap', () => ({
   usePermissionFlagMap: jest.fn(),
 }));
 
+jest.mock('@/ai/hooks/useCanUseAi', () => ({
+  useCanUseAi: jest.fn(),
+}));
+
 jest.mock('@/domain-manager/hooks/useRedirectToWorkspaceDomain', () => ({
   useRedirectToWorkspaceDomain: jest.fn().mockImplementation(() => ({
     redirectToWorkspaceDomain: jest.fn(),
@@ -80,6 +85,7 @@ describe('useSettingsNavigationItems', () => {
     resetJotaiStore();
     jotaiStore.set(currentUserState.atom, mockCurrentUser);
     jotaiStore.set(billingState.atom, mockBilling);
+    (useCanUseAi as jest.Mock).mockReturnValue(true);
   });
 
   it('should hide workspace settings when no permissions', () => {
@@ -205,5 +211,39 @@ describe('useSettingsNavigationItems', () => {
         .filter((item) => item.path !== SettingsPath.Accounts)
         .every((item) => !item.isHidden),
     ).toBe(true);
+  });
+
+  it('should hide AI settings without the AI_AGENT entitlement', () => {
+    (useCanUseAi as jest.Mock).mockReturnValue(false);
+    (usePermissionFlagMap as jest.Mock).mockImplementation(() => ({
+      [PermissionFlagType.AI_SETTINGS]: true,
+    }));
+
+    const { result } = renderHook(() => useSettingsNavigationItems(), {
+      wrapper: Wrapper,
+    });
+
+    const aiItem = result.current
+      .find((section) => section.label === 'Workspace')
+      ?.items.find((item) => item.path === SettingsPath.AI);
+
+    expect(aiItem?.isHidden).toBe(true);
+  });
+
+  it('should show AI settings with permission and AI_AGENT entitlement', () => {
+    (useCanUseAi as jest.Mock).mockReturnValue(true);
+    (usePermissionFlagMap as jest.Mock).mockImplementation(() => ({
+      [PermissionFlagType.AI_SETTINGS]: true,
+    }));
+
+    const { result } = renderHook(() => useSettingsNavigationItems(), {
+      wrapper: Wrapper,
+    });
+
+    const aiItem = result.current
+      .find((section) => section.label === 'Workspace')
+      ?.items.find((item) => item.path === SettingsPath.AI);
+
+    expect(aiItem?.isHidden).toBe(false);
   });
 });

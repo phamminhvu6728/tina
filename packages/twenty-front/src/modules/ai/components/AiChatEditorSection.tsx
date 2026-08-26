@@ -18,6 +18,7 @@ import { AiChatSkeletonLoader } from '@/ai/components/internal/AiChatSkeletonLoa
 import { SendMessageButton } from '@/ai/components/internal/SendMessageButton';
 import { TinaAiDisclaimer } from '@/ai/components/TinaAiDisclaimer';
 import { useAgentChatModelId } from '@/ai/hooks/useAgentChatModelId';
+import { useCanUseAi } from '@/ai/hooks/useCanUseAi';
 import { useAiChatEditor } from '@/ai/hooks/useAiChatEditor';
 import { useAiModelOptions } from '@/ai/hooks/useAiModelOptions';
 import { useWorkspaceAiModelAvailability } from '@/ai/hooks/useWorkspaceAiModelAvailability';
@@ -119,6 +120,7 @@ const StyledRightButtonsContainer = styled.div`
 export const AiChatEditorSection = () => {
   const { t } = useLingui();
   const isMobile = useIsMobile();
+  const canUseAi = useCanUseAi();
   const hasReachedCurrentBillingPeriodCap = useAtomStateValue(
     hasReachedCurrentBillingPeriodCapSelector,
   );
@@ -156,16 +158,16 @@ export const AiChatEditorSection = () => {
 
       <StyledInputArea isMobile={isMobile}>
         <AgentChatContextPreview />
-        {hasNoEnabledModels && (
+        {canUseAi && hasNoEnabledModels && (
           <AiChatBanner
             message={t`No AI models are enabled in this workspace.`}
             variant="warning"
           />
         )}
-        {hasReachedCurrentBillingPeriodCap && (
+        {canUseAi && hasReachedCurrentBillingPeriodCap && (
           <AIChatNoMoreBillingCreditsBanner />
         )}
-        {isDefined(pendingQuestion) ? (
+        {!canUseAi ? null : isDefined(pendingQuestion) ? (
           <AiChatQuestionCard pendingQuestion={pendingQuestion} />
         ) : (
           <StyledInputBox>

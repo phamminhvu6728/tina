@@ -1,6 +1,7 @@
 import { FeatureFlagKey, SettingsPath } from 'twenty-shared/types';
 
 import { useAuth } from '@/auth/hooks/useAuth';
+import { useCanUseAi } from '@/ai/hooks/useCanUseAi';
 import { currentUserState } from '@/auth/states/currentUserState';
 import { currentWorkspaceMemberState } from '@/auth/states/currentWorkspaceMemberState';
 import { billingState } from '@/client-config/states/billingState';
@@ -62,6 +63,7 @@ const useSettingsNavigationItems = (): SettingsNavigationSection[] => {
   const { signOut } = useAuth();
   const supportChat = useAtomStateValue(supportChatState);
   const currentWorkspaceMember = useAtomStateValue(currentWorkspaceMemberState);
+  const canUseAi = useCanUseAi();
 
   const isBillingEnabled = billing?.isBillingEnabled ?? false;
   const currentUser = useAtomStateValue(currentUserState);
@@ -171,7 +173,7 @@ const useSettingsNavigationItems = (): SettingsNavigationSection[] => {
           label: t`AI`,
           path: SettingsPath.AI,
           Icon: IconSparkles,
-          isHidden: !permissionMap[PermissionFlagType.AI_SETTINGS],
+          isHidden: !permissionMap[PermissionFlagType.AI_SETTINGS] || !canUseAi,
         },
         {
           label: t`Communication`,

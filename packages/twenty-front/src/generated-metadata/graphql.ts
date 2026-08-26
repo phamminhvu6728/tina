@@ -615,6 +615,7 @@ export type BillingEntitlement = {
 };
 
 export enum BillingEntitlementKey {
+  AI_AGENT = 'AI_AGENT',
   AUDIT_LOGS = 'AUDIT_LOGS',
   CUSTOM_DOMAIN = 'CUSTOM_DOMAIN',
   RLS = 'RLS',
