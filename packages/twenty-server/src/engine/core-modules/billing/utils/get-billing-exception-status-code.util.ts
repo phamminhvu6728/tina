@@ -27,6 +27,7 @@ export const getBillingExceptionStatusCode = (
     case BillingExceptionCode.BILLING_CREDIT_AMOUNT_INVALID:
       return 400;
     case BillingExceptionCode.BILLING_CREDITS_EXHAUSTED:
+    case BillingExceptionCode.BILLING_FEATURE_NOT_AVAILABLE:
       return 402;
     case BillingExceptionCode.BILLING_CUSTOMER_EVENT_WORKSPACE_NOT_FOUND:
     case BillingExceptionCode.BILLING_PRICE_NOT_FOUND:

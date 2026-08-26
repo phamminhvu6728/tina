@@ -13,6 +13,13 @@ describe('transformStripeEntitlementUpdatedEventToDatabaseEntitlement', () => {
         entitlements: {
           data: [
             {
+              lookup_key: 'AI_AGENT',
+              feature: 'AI_AGENT',
+              livemode: false,
+              id: 'ent_ai_agent',
+              object: 'entitlements.active_entitlement',
+            },
+            {
               lookup_key: 'SSO',
               feature: 'SSO',
               livemode: false,
@@ -35,6 +42,12 @@ describe('transformStripeEntitlementUpdatedEventToDatabaseEntitlement', () => {
     );
 
     expect(result).toEqual([
+      {
+        workspaceId: 'workspaceId',
+        key: BillingEntitlementKey.AI_AGENT,
+        value: true,
+        stripeCustomerId: 'cus_123',
+      },
       {
         workspaceId: 'workspaceId',
         key: BillingEntitlementKey.SSO,
@@ -91,6 +104,12 @@ describe('transformStripeEntitlementUpdatedEventToDatabaseEntitlement', () => {
     );
 
     expect(result).toEqual([
+      {
+        workspaceId: 'workspaceId',
+        key: BillingEntitlementKey.AI_AGENT,
+        value: false,
+        stripeCustomerId: 'cus_123',
+      },
       {
         workspaceId: 'workspaceId',
         key: BillingEntitlementKey.SSO,

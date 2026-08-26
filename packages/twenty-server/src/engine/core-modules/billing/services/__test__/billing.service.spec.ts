@@ -4,6 +4,8 @@ import { Test, type TestingModule } from '@nestjs/testing';
 
 import { BillingCustomerEntity } from 'src/engine/core-modules/billing/entities/billing-customer.entity';
 import { BillingSubscriptionEntity } from 'src/engine/core-modules/billing/entities/billing-subscription.entity';
+import { BillingEntitlementKey } from 'src/engine/core-modules/billing/enums/billing-entitlement-key.enum';
+import { BillingExceptionCode } from 'src/engine/core-modules/billing/billing.exception';
 import { BillingProductService } from 'src/engine/core-modules/billing/services/billing-product.service';
 import { BillingSubscriptionService } from 'src/engine/core-modules/billing/services/billing-subscription.service';
 import { BillingService } from 'src/engine/core-modules/billing/services/billing.service';
@@ -17,6 +19,10 @@ describe('BillingService', () => {
     Pick<StripeCustomerService, 'createStripeCustomer'>
   >;
   let billingCustomerRepository: jest.Mocked<{ findOne: jest.Mock }>;
+  let twentyConfigService: jest.Mocked<Pick<TwentyConfigService, 'get'>>;
+  let billingSubscriptionService: jest.Mocked<
+    Pick<BillingSubscriptionService, 'getWorkspaceEntitlementByKey'>
+  >;
 
   const ensureParams = {
     userEmail: 'user@example.com',
@@ -34,7 +40,7 @@ describe('BillingService', () => {
         },
         {
           provide: BillingSubscriptionService,
-          useValue: {},
+          useValue: { getWorkspaceEntitlementByKey: jest.fn() },
         },
         {
           provide: BillingProductService,
@@ -64,6 +70,8 @@ describe('BillingService', () => {
     billingCustomerRepository = module.get(
       getWorkspaceScopedRepositoryToken(BillingCustomerEntity),
     );
+    twentyConfigService = module.get(TwentyConfigService);
+    billingSubscriptionService = module.get(BillingSubscriptionService);
   });
 
   afterEach(() => {
@@ -89,6 +97,37 @@ describe('BillingService', () => {
       await service.ensureBillingCustomer(ensureParams);
 
       expect(stripeCustomerService.createStripeCustomer).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('assertHasEntitlement', () => {
+    it('resolves without checking entitlements when billing is disabled', async () => {
+      twentyConfigService.get.mockReturnValue(false);
+
+      await expect(
+        service.assertHasEntitlement('ws_123', BillingEntitlementKey.AI_AGENT),
+      ).resolves.toBeUndefined();
+      expect(
+        billingSubscriptionService.getWorkspaceEntitlementByKey,
+      ).not.toHaveBeenCalled();
+    });
+
+    it('resolves when the workspace has the entitlement', async () => {
+      jest.spyOn(service, 'hasEntitlement').mockResolvedValue(true);
+
+      await expect(
+        service.assertHasEntitlement('ws_123', BillingEntitlementKey.AI_AGENT),
+      ).resolves.toBeUndefined();
+    });
+
+    it('throws when the workspace does not have the entitlement', async () => {
+      jest.spyOn(service, 'hasEntitlement').mockResolvedValue(false);
+
+      await expect(
+        service.assertHasEntitlement('ws_123', BillingEntitlementKey.AI_AGENT),
+      ).rejects.toMatchObject({
+        code: BillingExceptionCode.BILLING_FEATURE_NOT_AVAILABLE,
+      });
     });
   });
 });

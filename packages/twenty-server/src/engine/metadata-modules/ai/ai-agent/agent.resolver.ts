@@ -12,6 +12,8 @@ import { WorkspaceAuthGuard } from 'src/engine/guards/workspace-auth.guard';
 import { fromFlatAgentWithRoleIdToAgentDto } from 'src/engine/metadata-modules/flat-agent/utils/from-agent-entity-to-agent-dto.util';
 import { WorkspaceMigrationGraphqlApiExceptionInterceptor } from 'src/engine/workspace-manager/workspace-migration/interceptors/workspace-migration-graphql-api-exception.interceptor';
 import { AiModelRegistryService } from 'src/engine/metadata-modules/ai/ai-models/services/ai-model-registry.service';
+import { BillingEntitlementKey } from 'src/engine/core-modules/billing/enums/billing-entitlement-key.enum';
+import { BillingService } from 'src/engine/core-modules/billing/services/billing.service';
 
 import { AgentService } from './agent.service';
 
@@ -31,6 +33,7 @@ export class AgentResolver {
   constructor(
     private readonly agentService: AgentService,
     private readonly aiModelRegistryService: AiModelRegistryService,
+    private readonly billingService: BillingService,
   ) {}
 
   @Query(() => [AgentDTO])
@@ -62,6 +65,11 @@ export class AgentResolver {
     @Args('input') input: CreateAgentInput,
     @AuthWorkspace() workspace: WorkspaceEntity,
   ): Promise<AgentDTO> {
+    await this.billingService.assertHasEntitlement(
+      workspace.id,
+      BillingEntitlementKey.AI_AGENT,
+    );
+
     if (isNonEmptyString(input.modelId)) {
       this.aiModelRegistryService.validateModelAvailability(
         input.modelId,

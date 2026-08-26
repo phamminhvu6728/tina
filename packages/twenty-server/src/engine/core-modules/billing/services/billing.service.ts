@@ -6,7 +6,11 @@ import { isDefined } from 'twenty-shared/utils';
 
 import { BillingCustomerEntity } from 'src/engine/core-modules/billing/entities/billing-customer.entity';
 import { BillingSubscriptionEntity } from 'src/engine/core-modules/billing/entities/billing-subscription.entity';
-import { type BillingEntitlementKey } from 'src/engine/core-modules/billing/enums/billing-entitlement-key.enum';
+import { BillingEntitlementKey } from 'src/engine/core-modules/billing/enums/billing-entitlement-key.enum';
+import {
+  BillingException,
+  BillingExceptionCode,
+} from 'src/engine/core-modules/billing/billing.exception';
 import { BillingProductService } from 'src/engine/core-modules/billing/services/billing-product.service';
 import { BillingSubscriptionService } from 'src/engine/core-modules/billing/services/billing-subscription.service';
 import { StripeCustomerService } from 'src/engine/core-modules/billing/stripe/services/stripe-customer.service';
@@ -83,6 +87,18 @@ export class BillingService {
       workspaceId,
       entitlementKey,
     );
+  }
+
+  async assertHasEntitlement(
+    workspaceId: string,
+    entitlementKey: BillingEntitlementKey,
+  ): Promise<void> {
+    if (!(await this.hasEntitlement(workspaceId, entitlementKey))) {
+      throw new BillingException(
+        `Entitlement ${entitlementKey} is required for workspace ${workspaceId}`,
+        BillingExceptionCode.BILLING_FEATURE_NOT_AVAILABLE,
+      );
+    }
   }
 
   async isSubscriptionIncompleteOnboardingStatus(workspaceId: string) {

@@ -43,6 +43,8 @@ import { MessageQueueService } from 'src/engine/core-modules/message-queue/servi
 import { MetricsService } from 'src/engine/core-modules/metrics/metrics.service';
 import { MetricsKeys } from 'src/engine/core-modules/metrics/types/metrics-keys.type';
 import { WorkspaceCacheService } from 'src/engine/workspace-cache/services/workspace-cache.service';
+import { BillingEntitlementKey } from 'src/engine/core-modules/billing/enums/billing-entitlement-key.enum';
+import { BillingService } from 'src/engine/core-modules/billing/services/billing.service';
 
 @Injectable()
 export class ApplicationInstallService {
@@ -63,6 +65,7 @@ export class ApplicationInstallService {
     private readonly messageQueueService: MessageQueueService,
     private readonly workspaceCacheService: WorkspaceCacheService,
     private readonly metricsService: MetricsService,
+    private readonly billingService: BillingService,
   ) {}
 
   async installApplication(params: {
@@ -282,6 +285,13 @@ export class ApplicationInstallService {
     }
 
     const isVersionUpgrade = isDefined(existingApplication);
+
+    if (!isVersionUpgrade && resolvedPackage.manifest.agents.length > 0) {
+      await this.billingService.assertHasEntitlement(
+        params.workspaceId,
+        BillingEntitlementKey.AI_AGENT,
+      );
+    }
 
     const previousVersion = existingApplication?.version ?? undefined;
 
