@@ -32,7 +32,15 @@ const StyledSelectedRecordsCount = styled.div`
   padding-left: ${themeCssVariables.spacing['0.5']};
 `;
 
-export const RecordIndexPageHeader = () => {
+type RecordIndexPageHeaderProps = {
+  customActionButton?: React.ReactNode;
+  suppressSelectedRecordsCount?: boolean;
+};
+
+export const RecordIndexPageHeader = ({
+  customActionButton,
+  suppressSelectedRecordsCount = false,
+}: RecordIndexPageHeaderProps) => {
   const { findObjectMetadataItemByNamePlural } =
     useFilteredObjectMetadataItems();
 
@@ -43,14 +51,14 @@ export const RecordIndexPageHeader = () => {
   const { formatNumber } = useNumberFormat();
 
   const { objectNamePlural } = useRecordIndexContextOrThrow();
-
+  const isWorkflowIndex = objectNamePlural === 'workflows';
   const objectMetadataItem =
     findObjectMetadataItemByNamePlural(objectNamePlural);
 
   const label = objectMetadataItem?.labelPlural ?? objectNamePlural;
 
   const pageHeaderTitle =
-    contextStoreNumberOfSelectedRecords > 0 ? (
+    !suppressSelectedRecordsCount && contextStoreNumberOfSelectedRecords > 0 ? (
       <StyledTitleWithSelectedRecords>
         <StyledTitle>{label}</StyledTitle>
         <>{'->'}</>
@@ -79,7 +87,8 @@ export const RecordIndexPageHeader = () => {
       actionButton={
         isDefined(contextStoreCurrentViewId) ? (
           <>
-            <RecordIndexCommandMenu />
+            {!isWorkflowIndex && <RecordIndexCommandMenu />}
+            {customActionButton}
             {!isLayoutCustomizationModeEnabled && <SidePanelToggleButton />}
           </>
         ) : undefined

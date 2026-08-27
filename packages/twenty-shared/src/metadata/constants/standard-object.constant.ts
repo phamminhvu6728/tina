@@ -1788,6 +1788,10 @@ export const STANDARD_OBJECTS = {
         universalIdentifier: '20202020-f1af-48f7-893b-2007a73dd508',
       },
       jobTitle: { universalIdentifier: '20202020-b0d0-415a-bef9-640a26dacd9b' },
+      birthday: { universalIdentifier: '4fa4aaab-2f2c-4a9e-b412-01304afa7209' },
+      customerType: {
+        universalIdentifier: 'cdadb943-b6d5-4f01-8a38-5fd3860e4de7',
+      },
       phones: { universalIdentifier: '20202020-0638-448e-8825-439134618022' },
       avatarUrl: {
         universalIdentifier: '20202020-b8a6-40df-961c-373dc5d2ec21',
@@ -1918,6 +1922,12 @@ export const STANDARD_OBJECTS = {
           },
           jobTitle: {
             universalIdentifier: '20202020-af02-4a02-8a02-ae0a1ea12204',
+          },
+          birthday: {
+            universalIdentifier: '804366b7-9332-460c-86c6-6b6db65d915f',
+          },
+          customerType: {
+            universalIdentifier: 'a1b2ac77-085c-498f-b8df-e7c45a90a59c',
           },
           linkedinLink: {
             universalIdentifier: '20202020-af02-4a02-8a02-ae0a1ea12205',

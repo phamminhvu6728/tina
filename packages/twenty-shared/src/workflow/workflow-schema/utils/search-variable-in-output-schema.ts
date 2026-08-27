@@ -555,6 +555,10 @@ const searchThroughIteratorOutputSchema = ({
   }
 
   if (iteratorResultKey === 'currentItem') {
+    if (!isDefined(iteratorOutputSchema.currentItem)) {
+      return EMPTY_RESULT;
+    }
+
     const schema = iteratorOutputSchema.currentItem.value;
 
     if (!isDefined(schema)) {

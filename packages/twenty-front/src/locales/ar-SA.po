@@ -280,6 +280,12 @@ msgstr "{0} أوقفوا الاشتراك في هذا الموضوع"
 msgid "{0} selected"
 msgstr "تم تحديد {0}"
 
+#. js-lingui-id: LXTJSh
+#. placeholder {0}: template.requiredSettings.length
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCard.tsx
+msgid "{0} setup fields"
+msgstr ""
+
 #. js-lingui-id: peiknr
 #. placeholder {0}: activeFilterLabels.length
 #. placeholder {0}: activeSortLabels.length
@@ -1897,6 +1903,7 @@ msgstr "تنبيه"
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelUpdateFieldsValueForObject.tsx
 #: src/modules/settings/roles/role-permissions/object-level-permissions/field-permissions/components/SettingsRolePermissionsObjectLevelObjectFieldPermissionTableAllHeaderRow.tsx
 #: src/modules/views/view-picker/components/ViewPickerDropdown.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
 msgid "All"
 msgstr "الكل"
 
@@ -1919,6 +1926,11 @@ msgstr "جميع تسجيلات التطبيقات"
 #: src/modules/settings/admin-panel/apps/components/SettingsAdminApps.tsx
 msgid "All application registrations across the platform, including orphaned marketplace apps"
 msgstr "جميع تسجيلات التطبيقات عبر المنصة، بما في ذلك التطبيقات اليتيمة في سوق التطبيقات"
+
+#. js-lingui-id: ao0hkA
+#: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
+#~ msgid "All current workspace members assigned to these roles will receive the email"
+#~ msgstr ""
 
 #. js-lingui-id: 1kLn6M
 #: src/modules/activities/calendar/components/CalendarEventRow.tsx
@@ -2933,6 +2945,7 @@ msgstr "اسم المحور"
 #: src/modules/auth/sign-in-up/components/internal/SignInUpTwoFactorAuthenticationVerification.tsx
 #: src/modules/side-panel/components/SidePanelBackButton.tsx
 #: src/modules/spreadsheet-import/components/StepNavigationButton.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
 #: src/pages/onboarding/BookCall.tsx
 msgid "Back"
 msgstr "رجوع"
@@ -2951,6 +2964,16 @@ msgstr "العودة إلى المحتوى"
 #: src/modules/marketplace/components/SettingsApplicationInstallPermissionValidationModal.tsx
 msgid "Back to settings"
 msgstr "العودة إلى الإعدادات"
+
+#. js-lingui-id: UNaXdI
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Back to templates"
+msgstr ""
+
+#. js-lingui-id: +d2TMz
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateHeaderButton.tsx
+msgid "Back to workflows"
+msgstr ""
 
 #. js-lingui-id: RJnYR0
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
@@ -3100,6 +3123,11 @@ msgstr "فترة الفوترة"
 #: src/modules/settings/billing/hooks/useBillingPortalSession.ts
 msgid "Billing portal session error. Please retry or contact Twenty team"
 msgstr "خطأ في جلسة بوابة الفوترة. يُرجى المحاولة مرة أخرى أو الاتصال بفريق TinaCRM"
+
+#. js-lingui-id: pwJ1Tv
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Blank workflow created"
+msgstr ""
 
 #. js-lingui-id: K1172m
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistSection.tsx
@@ -3671,6 +3699,11 @@ msgstr "ChatGPT"
 #: src/pages/settings/admin-panel/SettingsAdminWorkspaceDetail.tsx
 msgid "Chats"
 msgstr "الدردشات"
+
+#. js-lingui-id: c9+oKq
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
+msgid "Check condition"
+msgstr ""
 
 #. js-lingui-id: h5C4B4
 #: src/modules/settings/emailing-domains/components/SettingsEmailingDomainVerifyButton.tsx
@@ -4280,6 +4313,11 @@ msgstr "قم بتكوين إعدادات IMAP لاستقبال ومزامنة ر
 #: src/modules/settings/accounts/components/SettingsAccountsConnectionForm.tsx
 msgid "Configure SMTP settings to send emails from your account."
 msgstr "قم بتكوين إعدادات SMTP لإرسال رسائل البريد الإلكتروني من حسابك."
+
+#. js-lingui-id: LVnHGj
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Configure template"
+msgstr ""
 
 #. js-lingui-id: TiCmQz
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
@@ -4969,6 +5007,11 @@ msgstr "إنشاء وتكوين وكلاء الذكاء الاصطناعي"
 msgid "Create API key"
 msgstr "إنشاء مفتاح API"
 
+#. js-lingui-id: +3Pdw9
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Create blank workflow"
+msgstr ""
+
 #. js-lingui-id: fbe2ik
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Create Calendar Event"
@@ -4988,6 +5031,11 @@ msgstr "إنشاء عرض مخصص"
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownCalendarFieldsContent.tsx
 msgid "Create date field"
 msgstr "إنشاء حقل تاريخ"
+
+#. js-lingui-id: /NVhwV
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Create draft"
+msgstr ""
 
 #. js-lingui-id: vY2Gfm
 #: src/modules/views/view-picker/components/ViewPickerCreateButton.tsx
@@ -5087,8 +5135,8 @@ msgstr "تم الإنشاء"
 
 #. js-lingui-id: 4fBuqE
 #: src/modules/side-panel/components/SidePanelRecordInfo.tsx
-msgid "Created {beautifiedCreatedAt}"
-msgstr "أنشئ {beautifiedCreatedAt}"
+#~ msgid "Created {beautifiedCreatedAt}"
+#~ msgstr "أنشئ {beautifiedCreatedAt}"
 
 #. js-lingui-id: 6vWyWm
 #: src/modules/ai/constants/crud-tool-operation-verbs.constant.ts
@@ -5112,6 +5160,16 @@ msgstr "تم الإنشاء في {0}"
 #: src/modules/ai/constants/crud-tool-operation-verbs.constant.ts
 msgid "Creating {objectLabel}"
 msgstr "جارٍ إنشاء {objectLabel}"
+
+#. js-lingui-id: qvD1cU
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Creating blank..."
+msgstr ""
+
+#. js-lingui-id: y0IM0x
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Creating draft..."
+msgstr ""
 
 #. js-lingui-id: 00OfBp
 #: src/modules/auth/sign-in-up/constants/WorkspaceActivationMessages.tsx
@@ -7972,10 +8030,20 @@ msgstr "فشل في إضافة المزود"
 msgid "Failed to claim ownership."
 msgstr "فشل في المطالبة بالملكية."
 
+#. js-lingui-id: jc9Efz
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Failed to create blank workflow"
+msgstr ""
+
 #. js-lingui-id: ITWxKI
 #: src/pages/settings/communications/SettingsWorkspaceNewUnsubscribeTopic.tsx
 msgid "Failed to create unsubscribe topic."
 msgstr "فشل إنشاء موضوع إلغاء الاشتراك."
+
+#. js-lingui-id: 9MJID5
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+#~ msgid "Failed to create workflow draft"
+#~ msgstr ""
 
 #. js-lingui-id: AXveCw
 #: src/pages/settings/communications/SettingsWorkspaceCommunicationGroupChannelDetail.tsx
@@ -8609,6 +8677,11 @@ msgstr "الاسم الأول"
 #: src/pages/onboarding/CreateProfile.tsx
 msgid "First name can not be empty"
 msgstr "لا يمكن أن يكون الاسم الأول فارغًا"
+
+#. js-lingui-id: bAG4xT
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "First page"
+msgstr ""
 
 #. js-lingui-id: JREYkg
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
@@ -10415,6 +10488,7 @@ msgid "Label must contain at least one alphanumeric character"
 msgstr "يجب أن تحتوي التسمية على محرف أبجدي رقمي واحد على الأقل"
 
 #. js-lingui-id: vXIe7J
+#: src/pages/settings/profile/appearance/components/LocalePicker.tsx
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
 msgid "Language"
 msgstr "اللغة"
@@ -10447,13 +10521,13 @@ msgstr "آخر ١ ساعة (الأقدم ← الأحدث)"
 
 #. js-lingui-id: YoKFgq
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-msgid "Last 10 users created. Click to impersonate."
-msgstr "آخر 10 مستخدمين تم إنشاؤهم. انقر لانتحال الشخصية."
+#~ msgid "Last 10 users created. Click to impersonate."
+#~ msgstr "آخر 10 مستخدمين تم إنشاؤهم. انقر لانتحال الشخصية."
 
 #. js-lingui-id: sgqwjE
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-msgid "Last 10 users created. Click to manage feature flags or impersonate."
-msgstr "آخر 10 مستخدمين تم إنشاؤهم. انقر لإدارة أعلام الميزات أو لانتحال الشخصية."
+#~ msgid "Last 10 users created. Click to manage feature flags or impersonate."
+#~ msgstr "آخر 10 مستخدمين تم إنشاؤهم. انقر لإدارة أعلام الميزات أو لانتحال الشخصية."
 
 #. js-lingui-id: XUlP/Y
 #: src/modules/settings/admin-panel/health-status/constants/WorkerQueueMetricsSelectOptions.ts
@@ -10557,6 +10631,11 @@ msgstr "الاسم الأخير"
 #: src/pages/onboarding/CreateProfile.tsx
 msgid "Last name can not be empty"
 msgstr "لا يمكن أن يكون اسم العائلة فارغًا"
+
+#. js-lingui-id: viJSRT
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Last page"
+msgstr ""
 
 #. js-lingui-id: s0kiVA
 #: src/modules/information-banner/components/billing/InformationBannerFailPaymentInfo.tsx
@@ -10966,6 +11045,11 @@ msgstr "جارٍ تحميل المهارات..."
 #: src/modules/page-layout/widgets/email-thread/components/EmailThreadWidget.tsx
 msgid "Loading thread"
 msgstr "جارٍ تحميل السلسلة"
+
+#. js-lingui-id: mzek9k
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Loading workflow templates"
+msgstr ""
 
 #. js-lingui-id: Z3FXyt
 #: src/modules/activities/timeline-activities/rows/calendar/components/EventCardCalendarEvent.tsx
@@ -11732,6 +11816,16 @@ msgstr "ادفع العمل قدمًا عبر الفرق والوكلاء"
 msgid "must be a number"
 msgstr "يجب أن يكون رقمًا"
 
+#. js-lingui-id: C4Vsez
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Must be a valid email address"
+msgstr ""
+
+#. js-lingui-id: A4Un2k
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Must be a valid number"
+msgstr ""
+
 #. js-lingui-id: qJVW/e
 #: src/modules/object-record/spreadsheet-import/utils/getSpreadSheetFieldValidationDefinitions.ts
 msgid "must be an array of object with valid phone, calling code and country code (format: '[{\"number\":\"123456789\", \"callingCode\":\"+33\", \"countryCode\":\"FR\"}]')"
@@ -12142,6 +12236,11 @@ msgstr "Webhook جديد"
 msgid "New widget"
 msgstr "ودجت جديد"
 
+#. js-lingui-id: IvQJq5
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateHeaderButton.tsx
+msgid "New workflow"
+msgstr ""
+
 #. js-lingui-id: horr45
 #: src/pages/settings/communications/SettingsWorkspaceNewUnsubscribeTopic.tsx
 msgid "Newsletters"
@@ -12159,6 +12258,11 @@ msgstr "التالي"
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
 msgid "Next charge {totalRenewDate}. Invoice amount may vary if you add members or credits between periods"
 msgstr "الرسوم التالية في {totalRenewDate}. قد يختلف مبلغ الفاتورة إذا أضفت أعضاء أو أرصدة بين الفترات"
+
+#. js-lingui-id: /dqduX
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Next page"
+msgstr ""
 
 #. js-lingui-id: 8+lM81
 #: src/modules/object-record/record-calendar/components/RecordCalendarTopBar.tsx
@@ -12582,6 +12686,11 @@ msgstr "لم يتم تسجيل أي سجلات لهذه الخطوة."
 #: src/pages/settings/ai/components/SettingsAgentLogsTab.tsx
 msgid "No logs yet"
 msgstr "لا توجد سجلات بعد"
+
+#. js-lingui-id: qjXnWY
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "No matching templates"
+msgstr ""
 
 #. js-lingui-id: UwvrGq
 #: src/pages/settings/members/tabs/SettingsWorkspaceMembersTeamTab.tsx
@@ -13731,6 +13840,11 @@ msgstr ""
 msgid "Page"
 msgstr "الصفحة"
 
+#. js-lingui-id: Mr/64e
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Page {item}"
+msgstr ""
+
 #. js-lingui-id: SZgFyi
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 #: src/pages/settings/layout/SettingsLayoutPageLayoutDetail.tsx
@@ -14270,6 +14384,11 @@ msgstr "السابق"
 msgid "Previous 7 days"
 msgstr "آخر 7 أيام"
 
+#. js-lingui-id: aHKcKc
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Previous page"
+msgstr ""
+
 #. js-lingui-id: KaMwgJ
 #: src/modules/object-record/record-calendar/components/RecordCalendarTopBar.tsx
 msgid "Previous period"
@@ -14588,6 +14707,11 @@ msgstr "تعريف {entityTypeLabel} للقراءة فقط الذي يأتي م�
 msgid "Read/Edit/Delete permissions"
 msgstr "أذونات قراءة/تحرير/حذف"
 
+#. js-lingui-id: UjYPpQ
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCard.tsx
+msgid "Ready to use"
+msgstr ""
+
 #. js-lingui-id: wUf2OL
 #: src/modules/workflow/workflow-run/observability/WorkflowRunStepLogsAiAgentDetail.tsx
 msgid "Reasoning"
@@ -14624,6 +14748,11 @@ msgstr "أحدث المستخدمين"
 #: src/modules/ai/components/NavigationDrawerAiChatContent.tsx
 msgid "Recents"
 msgstr "الحديثة"
+
+#. js-lingui-id: lAxGwv
+#: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
+#~ msgid "Recipient roles"
+#~ msgstr ""
 
 #. js-lingui-id: yPrbsy
 #: src/modules/activities/emails/components/EmailComposerFields.tsx
@@ -14808,6 +14937,8 @@ msgstr "إعادة إنشاء المفتاح"
 #. js-lingui-id: uJ+Ve2
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
+#: src/pages/settings/general/SettingsGeneral.tsx
+#: src/pages/settings/profile/appearance/components/WorkspaceCountryCodePicker.tsx
 msgid "Region"
 msgstr "المنطقة"
 
@@ -15473,6 +15604,11 @@ msgstr "تشغيل"
 msgid "Run a workflow and return here to view its executions"
 msgstr "شغّل سير عمل ثم عد هنا لعرض عمليات تنفيذه"
 
+#. js-lingui-id: 8oYk3W
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
+msgid "Run action"
+msgstr ""
+
 #. js-lingui-id: rRyKdg
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Run code to analyze files and data"
@@ -15845,6 +15981,11 @@ msgstr "ابحث في السجلات..."
 msgid "Search registrations..."
 msgstr "ابحث عن التسجيلات..."
 
+#. js-lingui-id: 2YeVRn
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Search workflow templates"
+msgstr ""
+
 #. js-lingui-id: YIix5Y
 #: src/modules/settings/developers/components/WebhookEntitySelect.tsx
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
@@ -16102,6 +16243,11 @@ msgstr "حدد مزودًا معروفًا أو أنشئ مزودًا مخصصً
 msgid "Select a navigation item to edit"
 msgstr "حدّد عنصر تنقل لتحريره"
 
+#. js-lingui-id: 3ZbIBq
+#: src/pages/settings/profile/appearance/components/WorkspaceCountryCodePicker.tsx
+msgid "Select a region"
+msgstr ""
+
 #. js-lingui-id: YkYui1
 #: src/modules/activities/emails/components/CampaignComposerFields.tsx
 msgid "Select a sender"
@@ -16209,6 +16355,11 @@ msgstr "حدد المعامل"
 msgid "Select options"
 msgstr "حدد الخيارات"
 
+#. js-lingui-id: 1Ky5Mj
+#: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
+#~ msgid "Select roles"
+#~ msgstr ""
+
 #. js-lingui-id: 9c44h0
 #: src/modules/object-record/record-table/record-table-cell/components/RecordTableCellCheckbox.tsx
 msgid "Select row"
@@ -16233,6 +16384,11 @@ msgstr "حدد الخطوة"
 #: src/modules/settings/billing/components/internal/ResourceCreditPackagePickerModal.tsx
 msgid "Select the credit package to add to your {intervalAdjective} bill."
 msgstr "اختر حزمة الأرصدة لإضافتها إلى فاتورة {intervalAdjective} الخاصة بك."
+
+#. js-lingui-id: kfRrta
+#: src/pages/settings/general/SettingsGeneral.tsx
+msgid "Select the default region for your workspace"
+msgstr ""
 
 #. js-lingui-id: pofGCP
 #: src/modules/settings/data-model/fields/forms/boolean/components/SettingsDataModelFieldBooleanForm.tsx
@@ -16264,10 +16420,15 @@ msgstr "اختر قيمة"
 msgid "Select which models appear as recommended in the workspace model picker"
 msgstr "حدد النماذج التي ستظهر كموصى بها في منتقي النماذج لمساحة العمل"
 
+#. js-lingui-id: 4q8P59
+#: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
+msgid "Select your language"
+msgstr ""
+
 #. js-lingui-id: AXTJAW
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
-msgid "Select your preferred language"
-msgstr "اختر اللغة المفضلة لديك"
+#~ msgid "Select your preferred language"
+#~ msgstr "اختر اللغة المفضلة لديك"
 
 #. js-lingui-id: JlFcis
 #: src/modules/page-layout/widgets/email-thread/components/EmailThreadComposer.tsx
@@ -16287,6 +16448,7 @@ msgstr "إرسال الحملة"
 
 #. js-lingui-id: 65dxv8
 #: src/modules/workflow/workflow-run/observability/WorkflowRunStepLogsEmailDetail.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
 msgid "Send email"
 msgstr "إرسال البريد الإلكتروني"
 
@@ -17038,6 +17200,11 @@ msgstr "ابدأ اشتراك Enterprise جديدًا."
 msgid "Start date"
 msgstr "تاريخ البداية"
 
+#. js-lingui-id: MHpcMS
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Start from scratch with an empty workflow canvas."
+msgstr ""
+
 #. js-lingui-id: s+K73L
 #: src/modules/settings/billing/components/internal/SettingsBillingSubscriptionInfoModals.tsx
 #: src/modules/settings/billing/components/StartSubscriptionConfirmationModal.tsx
@@ -17577,6 +17744,16 @@ msgstr "الفريق"
 msgid "Team member"
 msgstr "عضو في الفريق"
 
+#. js-lingui-id: c9tEZo
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Template setup"
+msgstr ""
+
+#. js-lingui-id: JVKzIq
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Templates are unavailable"
+msgstr ""
+
 #. js-lingui-id: lKXcJz
 #: src/pages/settings/emailing-domains/utils/getEmailingDomainStatusText.ts
 msgid "Temporary Failure"
@@ -17844,6 +18021,11 @@ msgstr "يجب أن تكون قيم هذا الحقل فريدة"
 msgid "The whole event details will be shared with your team."
 msgstr "سيتم مشاركة تفاصيل الحدث بالكامل مع فريقك."
 
+#. js-lingui-id: 2NqoD7
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "The workflow will be created as a draft. You can review every trigger and action before publishing."
+msgstr ""
+
 #. js-lingui-id: bEXHAZ
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationClaims.tsx
 msgid "The workspace that claimed this app registration"
@@ -18053,6 +18235,11 @@ msgstr "يرتبط مفتاح Enterprise هذا حاليًا بمثيل خادم
 msgid "This feature is part of the Enterprise Plan"
 msgstr "هذه الميزة جزء من خطة Enterprise"
 
+#. js-lingui-id: B8AaMI
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "This field is required"
+msgstr ""
+
 #. js-lingui-id: own57K
 #: src/modules/activities/files/components/DocumentViewer.tsx
 msgid "This file cannot be previewed because it is hosted locally."
@@ -18157,6 +18344,11 @@ msgstr "هذا يجب ألا يحدث أبداً"
 #: src/modules/settings/domains/utils/getSubdomainValidationSchema.ts
 msgid "This subdomain is reserved"
 msgstr "هذا النطاق الفرعي محجوز"
+
+#. js-lingui-id: JMtb5+
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "This template is ready to create without additional setup."
+msgstr ""
 
 #. js-lingui-id: MMGDfe
 #: src/modules/settings/admin-panel/config-variables/components/ConfigVariableHelpText.tsx
@@ -18459,8 +18651,8 @@ msgstr "أدوات"
 
 #. js-lingui-id: nCq25C
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-msgid "Top 10 workspaces by number of users"
-msgstr "أكثر 10 مساحات عمل من حيث عدد المستخدمين"
+#~ msgid "Top 10 workspaces by number of users"
+#~ msgstr "أكثر 10 مساحات عمل من حيث عدد المستخدمين"
 
 #. js-lingui-id: A4dnvW
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
@@ -18565,6 +18757,7 @@ msgstr "الفترة التجريبية"
 #: src/modules/side-panel/components/SidePanelWorkflowStepInfo.tsx
 #: src/modules/workflow/workflow-diagram/workflow-nodes/components/WorkflowDiagramEmptyTriggerEditable.tsx
 #: src/modules/workflow/workflow-diagram/workflow-nodes/components/WorkflowDiagramEmptyTriggerReadonly.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
 msgid "Trigger"
 msgstr "تحفيز"
 
@@ -18624,6 +18817,11 @@ msgstr "صحيح"
 #: src/modules/onboarding/components/upgrade-free-trial/ChooseYourPlanErrorState.tsx
 #: src/modules/settings/billing/components/SettingsBillingPlansErrorState.tsx
 msgid "Try again"
+msgstr ""
+
+#. js-lingui-id: 7Jg38e
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Try another search term or category."
 msgstr ""
 
 #. js-lingui-id: 64tOpZ
@@ -19506,6 +19704,11 @@ msgstr "استخدام القائمة بالكامل"
 msgid "Use this email"
 msgstr "استخدام هذا البريد الإلكتروني"
 
+#. js-lingui-id: p6eI8J
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCard.tsx
+msgid "Use this template"
+msgstr ""
+
 #. js-lingui-id: 664z2C
 #: src/pages/settings/ai/components/SettingsAiModelsTab.tsx
 msgid "Used for chats, agents, and complex reasoning"
@@ -20329,6 +20532,11 @@ msgstr "إجراء سير العمل"
 msgid "Workflow agents"
 msgstr "وكلاء سير العمل"
 
+#. js-lingui-id: tFmIJg
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Workflow draft created"
+msgstr ""
+
 #. js-lingui-id: 2jzcC5
 #: src/modules/command-menu-item/engine-command/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 msgid "Workflow duplicated successfully"
@@ -20338,6 +20546,16 @@ msgstr "تم تكرار سير العمل بنجاح"
 #: src/modules/settings/usage/utils/getOperationTypeLabel.ts
 msgid "Workflow Execution"
 msgstr "تنفيذ سير العمل"
+
+#. js-lingui-id: oCFOTm
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Workflow template categories"
+msgstr ""
+
+#. js-lingui-id: nIdzsH
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Workflow templates"
+msgstr ""
 
 #. js-lingui-id: woYYQq
 #: src/modules/settings/billing/constants/SettingsBillingPlanComparisonRows.ts
