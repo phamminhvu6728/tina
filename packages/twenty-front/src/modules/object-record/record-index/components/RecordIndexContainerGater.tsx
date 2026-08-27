@@ -20,9 +20,11 @@ import { RECORD_INDEX_DRAG_SELECT_BOUNDARY_CLASS } from '@/ui/utilities/drag-sel
 import { PageCardLayout } from '@/ui/layout/page/components/PageCardLayout';
 import { PageTitle } from '@/ui/utilities/page-title/components/PageTitle';
 import { ViewComponentInstanceContext } from '@/views/states/contexts/ViewComponentInstanceContext';
+import { WorkflowTemplateCatalog } from '@/workflow/workflow-template/components/WorkflowTemplateCatalog';
+import { WorkflowTemplateHeaderButton } from '@/workflow/workflow-template/components/WorkflowTemplateHeaderButton';
 import { styled } from '@linaria/react';
 import { useStore } from 'jotai';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const StyledIndexContainer = styled.div`
   display: flex;
@@ -53,6 +55,13 @@ export const RecordIndexContainerGater = () => {
   );
 
   const hasObjectReadPermissions = objectPermissions.canReadObjectRecords;
+  const isWorkflowIndex = objectMetadataItem.namePlural === 'workflows';
+  const [isWorkflowTemplateMode, setIsWorkflowTemplateMode] = useState(false);
+
+  // Automatically reset template mode whenever user navigates to a different object (sidebar tab change)
+  useEffect(() => {
+    setIsWorkflowTemplateMode(false);
+  }, [objectMetadataItem.namePlural]);
 
   const {
     fieldDefinitionByFieldMetadataItemId,
@@ -95,15 +104,34 @@ export const RecordIndexContainerGater = () => {
             >
               <PageTitle title={objectMetadataItem.labelPlural} />
               <PageCardLayout
-                header={<RecordIndexPageHeader />}
+                header={
+                  <RecordIndexPageHeader
+                    suppressSelectedRecordsCount={isWorkflowTemplateMode}
+                    customActionButton={
+                      isWorkflowIndex ? (
+                        <WorkflowTemplateHeaderButton
+                          isTemplateMode={isWorkflowTemplateMode}
+                          onClick={() =>
+                            setIsWorkflowTemplateMode(
+                              (currentTemplateMode) => !currentTemplateMode,
+                            )
+                          }
+                        />
+                      ) : undefined
+                    }
+                  />
+                }
                 secondaryBar={
-                  hasObjectReadPermissions && <RecordIndexViewBar />
+                  hasObjectReadPermissions &&
+                  !isWorkflowTemplateMode && <RecordIndexViewBar />
                 }
               >
                 <StyledIndexContainer
                   className={RECORD_INDEX_DRAG_SELECT_BOUNDARY_CLASS}
                 >
-                  {hasObjectReadPermissions ? (
+                  {hasObjectReadPermissions && isWorkflowTemplateMode ? (
+                    <WorkflowTemplateCatalog />
+                  ) : hasObjectReadPermissions ? (
                     <>
                       <RecordIndexContainerContextStoreNumberOfSelectedRecordsEffect />
                       <RecordIndexContainer />

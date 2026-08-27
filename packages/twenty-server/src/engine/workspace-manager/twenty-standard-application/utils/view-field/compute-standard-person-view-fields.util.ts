@@ -139,6 +139,32 @@ export const computeStandardPersonViewFields = (
         viewFieldGroupName: 'general',
       },
     }),
+    personRecordPageFieldsBirthday: createStandardViewFieldFlatMetadata({
+      ...args,
+      objectName: 'person',
+      context: {
+        viewName: 'personRecordPageFields',
+        viewFieldName: 'birthday',
+        fieldName: 'birthday',
+        position: 2,
+        isVisible: true,
+        size: 150,
+        viewFieldGroupName: 'general',
+      },
+    }),
+    personRecordPageFieldsCustomerType: createStandardViewFieldFlatMetadata({
+      ...args,
+      objectName: 'person',
+      context: {
+        viewName: 'personRecordPageFields',
+        viewFieldName: 'customerType',
+        fieldName: 'customerType',
+        position: 3,
+        isVisible: true,
+        size: 150,
+        viewFieldGroupName: 'general',
+      },
+    }),
     personRecordPageFieldsPointOfContactForOpportunities:
       createStandardViewFieldFlatMetadata({
         ...args,

@@ -6,6 +6,7 @@ import { MessageQueueModule } from 'src/engine/core-modules/message-queue/messag
 import { GlobalWorkspaceDataSourceModule } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-datasource.module';
 import { TwentyORMModule } from 'src/engine/twenty-orm/twenty-orm.module';
 import { WorkspaceEventEmitterModule } from 'src/engine/workspace-event-emitter/workspace-event-emitter.module';
+import { I18nModule } from 'src/engine/core-modules/i18n/i18n.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { WorkspaceEventEmitterModule } from 'src/engine/workspace-event-emitter/
     JobsModule,
     TwentyORMModule,
     GlobalWorkspaceDataSourceModule,
+    I18nModule,
   ],
 })
 export class QueueWorkerModule {}

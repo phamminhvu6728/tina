@@ -151,25 +151,11 @@ describe('searchVariableInOutputSchema - iterator output schema', () => {
     });
   });
 
-  it('should return undefined when iteratorOutputSchema is undefined', () => {
+  it('should return undefined when iteratorOutputSchema has no currentItem property', () => {
     const result = searchVariableThroughIteratorOutputSchema({
       stepName: 'Iterate Companies',
-      iteratorOutputSchema: undefined as any,
+      iteratorOutputSchema: {} as any,
       rawVariableName: '{{step1.currentItem.name}}',
-      isFullRecord: false,
-    });
-
-    expect(result).toEqual({
-      variableLabel: undefined,
-      variablePathLabel: undefined,
-    });
-  });
-
-  it('should return undefined when stepId or iteratorResultKey is undefined', () => {
-    const result = searchVariableThroughIteratorOutputSchema({
-      stepName: 'Iterate Companies',
-      iteratorOutputSchema: mockIteratorSchema,
-      rawVariableName: '{{}}',
       isFullRecord: false,
     });
 

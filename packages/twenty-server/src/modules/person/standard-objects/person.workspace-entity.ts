@@ -24,6 +24,8 @@ export class PersonWorkspaceEntity extends BaseWorkspaceEntity {
   emails: EmailsMetadata;
   linkedinLink: LinksMetadata | null;
   jobTitle: string | null;
+  birthday: Date | null;
+  customerType: string | null;
   /** @deprecated Use `phones` field instead */
   phone: string | null;
   phones: PhonesMetadata;

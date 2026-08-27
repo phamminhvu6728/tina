@@ -205,6 +205,8 @@ export {
   searchRecordOutputSchema,
   searchVariableInOutputSchema,
 } from './workflow-schema/utils/search-variable-in-output-schema';
+export type { WorkflowTemplateRequiredSetting } from './workflow-template-schema';
+export { buildWorkflowTemplateSettingsZodSchema } from './workflow-template-schema';
 export type {
   GlobalAvailability,
   SingleRecordAvailability,

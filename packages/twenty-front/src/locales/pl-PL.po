@@ -280,6 +280,12 @@ msgstr "{0} zrezygnowało z tego tematu"
 msgid "{0} selected"
 msgstr "{0} wybrano"
 
+#. js-lingui-id: LXTJSh
+#. placeholder {0}: template.requiredSettings.length
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCard.tsx
+msgid "{0} setup fields"
+msgstr ""
+
 #. js-lingui-id: peiknr
 #. placeholder {0}: activeFilterLabels.length
 #. placeholder {0}: activeSortLabels.length
@@ -1897,6 +1903,7 @@ msgstr "Alert"
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelUpdateFieldsValueForObject.tsx
 #: src/modules/settings/roles/role-permissions/object-level-permissions/field-permissions/components/SettingsRolePermissionsObjectLevelObjectFieldPermissionTableAllHeaderRow.tsx
 #: src/modules/views/view-picker/components/ViewPickerDropdown.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
 msgid "All"
 msgstr "Wszystkie"
 
@@ -1919,6 +1926,11 @@ msgstr "Wszystkie rejestracje aplikacji"
 #: src/modules/settings/admin-panel/apps/components/SettingsAdminApps.tsx
 msgid "All application registrations across the platform, including orphaned marketplace apps"
 msgstr "Wszystkie rejestracje aplikacji w całej platformie, w tym osierocone aplikacje w Marketplace"
+
+#. js-lingui-id: ao0hkA
+#: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
+#~ msgid "All current workspace members assigned to these roles will receive the email"
+#~ msgstr ""
 
 #. js-lingui-id: 1kLn6M
 #: src/modules/activities/calendar/components/CalendarEventRow.tsx
@@ -2933,6 +2945,7 @@ msgstr "Nazwa osi"
 #: src/modules/auth/sign-in-up/components/internal/SignInUpTwoFactorAuthenticationVerification.tsx
 #: src/modules/side-panel/components/SidePanelBackButton.tsx
 #: src/modules/spreadsheet-import/components/StepNavigationButton.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
 #: src/pages/onboarding/BookCall.tsx
 msgid "Back"
 msgstr "Wstecz"
@@ -2951,6 +2964,16 @@ msgstr "Powrót do treści"
 #: src/modules/marketplace/components/SettingsApplicationInstallPermissionValidationModal.tsx
 msgid "Back to settings"
 msgstr "Powrót do ustawień"
+
+#. js-lingui-id: UNaXdI
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Back to templates"
+msgstr ""
+
+#. js-lingui-id: +d2TMz
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateHeaderButton.tsx
+msgid "Back to workflows"
+msgstr ""
 
 #. js-lingui-id: RJnYR0
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
@@ -3100,6 +3123,11 @@ msgstr "Okres rozliczeniowy"
 #: src/modules/settings/billing/hooks/useBillingPortalSession.ts
 msgid "Billing portal session error. Please retry or contact Twenty team"
 msgstr "Błąd sesji portalu rozliczeń. Spróbuj ponownie lub skontaktuj się z zespołem TinaCRM"
+
+#. js-lingui-id: pwJ1Tv
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Blank workflow created"
+msgstr ""
 
 #. js-lingui-id: K1172m
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistSection.tsx
@@ -3671,6 +3699,11 @@ msgstr "ChatGPT"
 #: src/pages/settings/admin-panel/SettingsAdminWorkspaceDetail.tsx
 msgid "Chats"
 msgstr "Czaty"
+
+#. js-lingui-id: c9+oKq
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
+msgid "Check condition"
+msgstr ""
 
 #. js-lingui-id: h5C4B4
 #: src/modules/settings/emailing-domains/components/SettingsEmailingDomainVerifyButton.tsx
@@ -4280,6 +4313,11 @@ msgstr "Skonfiguruj ustawienia IMAP, aby odbierać i synchronizować swoje maile
 #: src/modules/settings/accounts/components/SettingsAccountsConnectionForm.tsx
 msgid "Configure SMTP settings to send emails from your account."
 msgstr "Skonfiguruj ustawienia SMTP, aby wysyłać e-maile z Twojego konta."
+
+#. js-lingui-id: LVnHGj
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Configure template"
+msgstr ""
 
 #. js-lingui-id: TiCmQz
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
@@ -4969,6 +5007,11 @@ msgstr "Twórz i konfiguruj agentów AI"
 msgid "Create API key"
 msgstr "Stwórz klucz API"
 
+#. js-lingui-id: +3Pdw9
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Create blank workflow"
+msgstr ""
+
 #. js-lingui-id: fbe2ik
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Create Calendar Event"
@@ -4988,6 +5031,11 @@ msgstr "Utwórz widok niestandardowy"
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownCalendarFieldsContent.tsx
 msgid "Create date field"
 msgstr "Utwórz pole daty"
+
+#. js-lingui-id: /NVhwV
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Create draft"
+msgstr ""
 
 #. js-lingui-id: vY2Gfm
 #: src/modules/views/view-picker/components/ViewPickerCreateButton.tsx
@@ -5087,8 +5135,8 @@ msgstr "Utworzono"
 
 #. js-lingui-id: 4fBuqE
 #: src/modules/side-panel/components/SidePanelRecordInfo.tsx
-msgid "Created {beautifiedCreatedAt}"
-msgstr ""
+#~ msgid "Created {beautifiedCreatedAt}"
+#~ msgstr ""
 
 #. js-lingui-id: 6vWyWm
 #: src/modules/ai/constants/crud-tool-operation-verbs.constant.ts
@@ -5112,6 +5160,16 @@ msgstr "Utworzono {0}"
 #: src/modules/ai/constants/crud-tool-operation-verbs.constant.ts
 msgid "Creating {objectLabel}"
 msgstr "Tworzenie {objectLabel}"
+
+#. js-lingui-id: qvD1cU
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Creating blank..."
+msgstr ""
+
+#. js-lingui-id: y0IM0x
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Creating draft..."
+msgstr ""
 
 #. js-lingui-id: 00OfBp
 #: src/modules/auth/sign-in-up/constants/WorkspaceActivationMessages.tsx
@@ -7972,10 +8030,20 @@ msgstr "Nie udało się dodać dostawcy"
 msgid "Failed to claim ownership."
 msgstr "Nie udało się przejąć własności."
 
+#. js-lingui-id: jc9Efz
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Failed to create blank workflow"
+msgstr ""
+
 #. js-lingui-id: ITWxKI
 #: src/pages/settings/communications/SettingsWorkspaceNewUnsubscribeTopic.tsx
 msgid "Failed to create unsubscribe topic."
 msgstr "Nie udało się utworzyć tematu wypisania."
+
+#. js-lingui-id: 9MJID5
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+#~ msgid "Failed to create workflow draft"
+#~ msgstr ""
 
 #. js-lingui-id: AXveCw
 #: src/pages/settings/communications/SettingsWorkspaceCommunicationGroupChannelDetail.tsx
@@ -8609,6 +8677,11 @@ msgstr "Imię"
 #: src/pages/onboarding/CreateProfile.tsx
 msgid "First name can not be empty"
 msgstr "Imię nie może być puste"
+
+#. js-lingui-id: bAG4xT
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "First page"
+msgstr ""
 
 #. js-lingui-id: JREYkg
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
@@ -10415,6 +10488,7 @@ msgid "Label must contain at least one alphanumeric character"
 msgstr "Etykieta musi zawierać co najmniej jeden znak alfanumeryczny"
 
 #. js-lingui-id: vXIe7J
+#: src/pages/settings/profile/appearance/components/LocalePicker.tsx
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
 msgid "Language"
 msgstr "Język"
@@ -10447,13 +10521,13 @@ msgstr "Ostatnia 1 godzina (od najstarszego → do najnowszego)"
 
 #. js-lingui-id: YoKFgq
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-msgid "Last 10 users created. Click to impersonate."
-msgstr "Ostatnich 10 utworzonych użytkowników. Kliknij, aby podszyć się pod użytkownika."
+#~ msgid "Last 10 users created. Click to impersonate."
+#~ msgstr "Ostatnich 10 utworzonych użytkowników. Kliknij, aby podszyć się pod użytkownika."
 
 #. js-lingui-id: sgqwjE
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-msgid "Last 10 users created. Click to manage feature flags or impersonate."
-msgstr "Ostatnich 10 utworzonych użytkowników. Kliknij, aby zarządzać flagami funkcji lub podszyć się pod użytkownika."
+#~ msgid "Last 10 users created. Click to manage feature flags or impersonate."
+#~ msgstr "Ostatnich 10 utworzonych użytkowników. Kliknij, aby zarządzać flagami funkcji lub podszyć się pod użytkownika."
 
 #. js-lingui-id: XUlP/Y
 #: src/modules/settings/admin-panel/health-status/constants/WorkerQueueMetricsSelectOptions.ts
@@ -10557,6 +10631,11 @@ msgstr "Nazwisko"
 #: src/pages/onboarding/CreateProfile.tsx
 msgid "Last name can not be empty"
 msgstr "Nazwisko nie może być puste"
+
+#. js-lingui-id: viJSRT
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Last page"
+msgstr ""
 
 #. js-lingui-id: s0kiVA
 #: src/modules/information-banner/components/billing/InformationBannerFailPaymentInfo.tsx
@@ -10966,6 +11045,11 @@ msgstr "Ładowanie umiejętności..."
 #: src/modules/page-layout/widgets/email-thread/components/EmailThreadWidget.tsx
 msgid "Loading thread"
 msgstr "Ładowanie wątku"
+
+#. js-lingui-id: mzek9k
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Loading workflow templates"
+msgstr ""
 
 #. js-lingui-id: Z3FXyt
 #: src/modules/activities/timeline-activities/rows/calendar/components/EventCardCalendarEvent.tsx
@@ -11732,6 +11816,16 @@ msgstr "Przesuwaj pracę naprzód między zespołami i agentami"
 msgid "must be a number"
 msgstr "musi być liczbą"
 
+#. js-lingui-id: C4Vsez
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Must be a valid email address"
+msgstr ""
+
+#. js-lingui-id: A4Un2k
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Must be a valid number"
+msgstr ""
+
 #. js-lingui-id: qJVW/e
 #: src/modules/object-record/spreadsheet-import/utils/getSpreadSheetFieldValidationDefinitions.ts
 msgid "must be an array of object with valid phone, calling code and country code (format: '[{\"number\":\"123456789\", \"callingCode\":\"+33\", \"countryCode\":\"FR\"}]')"
@@ -12142,6 +12236,11 @@ msgstr "Nowy webhook"
 msgid "New widget"
 msgstr ""
 
+#. js-lingui-id: IvQJq5
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateHeaderButton.tsx
+msgid "New workflow"
+msgstr ""
+
 #. js-lingui-id: horr45
 #: src/pages/settings/communications/SettingsWorkspaceNewUnsubscribeTopic.tsx
 msgid "Newsletters"
@@ -12159,6 +12258,11 @@ msgstr "Dalej"
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
 msgid "Next charge {totalRenewDate}. Invoice amount may vary if you add members or credits between periods"
 msgstr "Następne obciążenie {totalRenewDate}. Kwota na fakturze może się różnić, jeśli dodasz członków lub kredyty między okresami"
+
+#. js-lingui-id: /dqduX
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Next page"
+msgstr ""
 
 #. js-lingui-id: 8+lM81
 #: src/modules/object-record/record-calendar/components/RecordCalendarTopBar.tsx
@@ -12581,6 +12685,11 @@ msgstr "Dla tego kroku nie zarejestrowano żadnych logów."
 #. js-lingui-id: 5sf2dF
 #: src/pages/settings/ai/components/SettingsAgentLogsTab.tsx
 msgid "No logs yet"
+msgstr ""
+
+#. js-lingui-id: qjXnWY
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "No matching templates"
 msgstr ""
 
 #. js-lingui-id: UwvrGq
@@ -13731,6 +13840,11 @@ msgstr ""
 msgid "Page"
 msgstr "Strona"
 
+#. js-lingui-id: Mr/64e
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Page {item}"
+msgstr ""
+
 #. js-lingui-id: SZgFyi
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 #: src/pages/settings/layout/SettingsLayoutPageLayoutDetail.tsx
@@ -14270,6 +14384,11 @@ msgstr "Poprzedni"
 msgid "Previous 7 days"
 msgstr "Poprzednie 7 dni"
 
+#. js-lingui-id: aHKcKc
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Previous page"
+msgstr ""
+
 #. js-lingui-id: KaMwgJ
 #: src/modules/object-record/record-calendar/components/RecordCalendarTopBar.tsx
 msgid "Previous period"
@@ -14588,6 +14707,11 @@ msgstr "Definicja {entityTypeLabel} tylko do odczytu dostarczona przez tę aplik
 msgid "Read/Edit/Delete permissions"
 msgstr "Uprawnienia odczytu/edycji/usuwania"
 
+#. js-lingui-id: UjYPpQ
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCard.tsx
+msgid "Ready to use"
+msgstr ""
+
 #. js-lingui-id: wUf2OL
 #: src/modules/workflow/workflow-run/observability/WorkflowRunStepLogsAiAgentDetail.tsx
 msgid "Reasoning"
@@ -14624,6 +14748,11 @@ msgstr "Ostatni użytkownicy"
 #: src/modules/ai/components/NavigationDrawerAiChatContent.tsx
 msgid "Recents"
 msgstr "Ostatnie"
+
+#. js-lingui-id: lAxGwv
+#: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
+#~ msgid "Recipient roles"
+#~ msgstr ""
 
 #. js-lingui-id: yPrbsy
 #: src/modules/activities/emails/components/EmailComposerFields.tsx
@@ -14808,6 +14937,8 @@ msgstr "Wygeneruj ponownie klucz"
 #. js-lingui-id: uJ+Ve2
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
+#: src/pages/settings/general/SettingsGeneral.tsx
+#: src/pages/settings/profile/appearance/components/WorkspaceCountryCodePicker.tsx
 msgid "Region"
 msgstr "Region"
 
@@ -15473,6 +15604,11 @@ msgstr ""
 msgid "Run a workflow and return here to view its executions"
 msgstr "Uruchom workflow i wróć tutaj, aby zobaczyć jego wykonania"
 
+#. js-lingui-id: 8oYk3W
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
+msgid "Run action"
+msgstr ""
+
 #. js-lingui-id: rRyKdg
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Run code to analyze files and data"
@@ -15845,6 +15981,11 @@ msgstr "Przeszukaj rekordy..."
 msgid "Search registrations..."
 msgstr "Szukaj rejestracji..."
 
+#. js-lingui-id: 2YeVRn
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Search workflow templates"
+msgstr ""
+
 #. js-lingui-id: YIix5Y
 #: src/modules/settings/developers/components/WebhookEntitySelect.tsx
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
@@ -16102,6 +16243,11 @@ msgstr "Wybierz znanego dostawcę lub utwórz niestandardowego"
 msgid "Select a navigation item to edit"
 msgstr "Wybierz element nawigacji do edycji"
 
+#. js-lingui-id: 3ZbIBq
+#: src/pages/settings/profile/appearance/components/WorkspaceCountryCodePicker.tsx
+msgid "Select a region"
+msgstr ""
+
 #. js-lingui-id: YkYui1
 #: src/modules/activities/emails/components/CampaignComposerFields.tsx
 msgid "Select a sender"
@@ -16209,6 +16355,11 @@ msgstr "Wybierz operand"
 msgid "Select options"
 msgstr "Wybierz opcje"
 
+#. js-lingui-id: 1Ky5Mj
+#: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
+#~ msgid "Select roles"
+#~ msgstr ""
+
 #. js-lingui-id: 9c44h0
 #: src/modules/object-record/record-table/record-table-cell/components/RecordTableCellCheckbox.tsx
 msgid "Select row"
@@ -16233,6 +16384,11 @@ msgstr "Wybierz krok"
 #: src/modules/settings/billing/components/internal/ResourceCreditPackagePickerModal.tsx
 msgid "Select the credit package to add to your {intervalAdjective} bill."
 msgstr "Wybierz pakiet kredytów, który dodasz do swojego {intervalAdjective} rachunku."
+
+#. js-lingui-id: kfRrta
+#: src/pages/settings/general/SettingsGeneral.tsx
+msgid "Select the default region for your workspace"
+msgstr ""
 
 #. js-lingui-id: pofGCP
 #: src/modules/settings/data-model/fields/forms/boolean/components/SettingsDataModelFieldBooleanForm.tsx
@@ -16264,10 +16420,15 @@ msgstr "Wybierz wartość"
 msgid "Select which models appear as recommended in the workspace model picker"
 msgstr "Wybierz, które modele pojawią się jako rekomendowane w selektorze modeli przestrzeni roboczej"
 
+#. js-lingui-id: 4q8P59
+#: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
+msgid "Select your language"
+msgstr ""
+
 #. js-lingui-id: AXTJAW
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
-msgid "Select your preferred language"
-msgstr "Wybierz preferowany język"
+#~ msgid "Select your preferred language"
+#~ msgstr "Wybierz preferowany język"
 
 #. js-lingui-id: JlFcis
 #: src/modules/page-layout/widgets/email-thread/components/EmailThreadComposer.tsx
@@ -16287,6 +16448,7 @@ msgstr "Wyślij kampanię"
 
 #. js-lingui-id: 65dxv8
 #: src/modules/workflow/workflow-run/observability/WorkflowRunStepLogsEmailDetail.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
 msgid "Send email"
 msgstr "Wyślij e-mail"
 
@@ -17038,6 +17200,11 @@ msgstr "Rozpocznij nową subskrypcję Enterprise."
 msgid "Start date"
 msgstr "Data rozpoczęcia"
 
+#. js-lingui-id: MHpcMS
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Start from scratch with an empty workflow canvas."
+msgstr ""
+
 #. js-lingui-id: s+K73L
 #: src/modules/settings/billing/components/internal/SettingsBillingSubscriptionInfoModals.tsx
 #: src/modules/settings/billing/components/StartSubscriptionConfirmationModal.tsx
@@ -17577,6 +17744,16 @@ msgstr "Zespół"
 msgid "Team member"
 msgstr "Członek zespołu"
 
+#. js-lingui-id: c9tEZo
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Template setup"
+msgstr ""
+
+#. js-lingui-id: JVKzIq
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Templates are unavailable"
+msgstr ""
+
 #. js-lingui-id: lKXcJz
 #: src/pages/settings/emailing-domains/utils/getEmailingDomainStatusText.ts
 msgid "Temporary Failure"
@@ -17844,6 +18021,11 @@ msgstr "Wartości tego pola muszą być unikatowe"
 msgid "The whole event details will be shared with your team."
 msgstr "Szczegóły całego zdarzenia zostaną udostępnione twojemu zespołowi."
 
+#. js-lingui-id: 2NqoD7
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "The workflow will be created as a draft. You can review every trigger and action before publishing."
+msgstr ""
+
 #. js-lingui-id: bEXHAZ
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationClaims.tsx
 msgid "The workspace that claimed this app registration"
@@ -18053,6 +18235,11 @@ msgstr "Ten klucz Enterprise jest obecnie powiązany z inną instancją serwera.
 msgid "This feature is part of the Enterprise Plan"
 msgstr "Ta funkcja jest dostępna w planie Enterprise"
 
+#. js-lingui-id: B8AaMI
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "This field is required"
+msgstr ""
+
 #. js-lingui-id: own57K
 #: src/modules/activities/files/components/DocumentViewer.tsx
 msgid "This file cannot be previewed because it is hosted locally."
@@ -18157,6 +18344,11 @@ msgstr "To nigdy nie powinno się zdarzyć"
 #: src/modules/settings/domains/utils/getSubdomainValidationSchema.ts
 msgid "This subdomain is reserved"
 msgstr "Ta subdomena jest zarezerwowana"
+
+#. js-lingui-id: JMtb5+
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "This template is ready to create without additional setup."
+msgstr ""
 
 #. js-lingui-id: MMGDfe
 #: src/modules/settings/admin-panel/config-variables/components/ConfigVariableHelpText.tsx
@@ -18459,8 +18651,8 @@ msgstr "Narzędzia"
 
 #. js-lingui-id: nCq25C
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-msgid "Top 10 workspaces by number of users"
-msgstr "10 najlepszych przestrzeni roboczych według liczby użytkowników"
+#~ msgid "Top 10 workspaces by number of users"
+#~ msgstr "10 najlepszych przestrzeni roboczych według liczby użytkowników"
 
 #. js-lingui-id: A4dnvW
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
@@ -18565,6 +18757,7 @@ msgstr "Okres próbny"
 #: src/modules/side-panel/components/SidePanelWorkflowStepInfo.tsx
 #: src/modules/workflow/workflow-diagram/workflow-nodes/components/WorkflowDiagramEmptyTriggerEditable.tsx
 #: src/modules/workflow/workflow-diagram/workflow-nodes/components/WorkflowDiagramEmptyTriggerReadonly.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
 msgid "Trigger"
 msgstr "Wyzwalacz"
 
@@ -18624,6 +18817,11 @@ msgstr "Prawda"
 #: src/modules/onboarding/components/upgrade-free-trial/ChooseYourPlanErrorState.tsx
 #: src/modules/settings/billing/components/SettingsBillingPlansErrorState.tsx
 msgid "Try again"
+msgstr ""
+
+#. js-lingui-id: 7Jg38e
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Try another search term or category."
 msgstr ""
 
 #. js-lingui-id: 64tOpZ
@@ -19506,6 +19704,11 @@ msgstr "Użyj całej listy"
 msgid "Use this email"
 msgstr "Użyj tego e-maila"
 
+#. js-lingui-id: p6eI8J
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCard.tsx
+msgid "Use this template"
+msgstr ""
+
 #. js-lingui-id: 664z2C
 #: src/pages/settings/ai/components/SettingsAiModelsTab.tsx
 msgid "Used for chats, agents, and complex reasoning"
@@ -20329,6 +20532,11 @@ msgstr "Akcja Przepływu Pracy"
 msgid "Workflow agents"
 msgstr ""
 
+#. js-lingui-id: tFmIJg
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Workflow draft created"
+msgstr ""
+
 #. js-lingui-id: 2jzcC5
 #: src/modules/command-menu-item/engine-command/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 msgid "Workflow duplicated successfully"
@@ -20338,6 +20546,16 @@ msgstr ""
 #: src/modules/settings/usage/utils/getOperationTypeLabel.ts
 msgid "Workflow Execution"
 msgstr "Wykonywanie przepływu pracy"
+
+#. js-lingui-id: oCFOTm
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Workflow template categories"
+msgstr ""
+
+#. js-lingui-id: nIdzsH
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Workflow templates"
+msgstr ""
 
 #. js-lingui-id: woYYQq
 #: src/modules/settings/billing/constants/SettingsBillingPlanComparisonRows.ts

@@ -280,6 +280,12 @@ msgstr "{0} 个已退出此主题订阅"
 msgid "{0} selected"
 msgstr "{0} 已选择"
 
+#. js-lingui-id: LXTJSh
+#. placeholder {0}: template.requiredSettings.length
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCard.tsx
+msgid "{0} setup fields"
+msgstr ""
+
 #. js-lingui-id: peiknr
 #. placeholder {0}: activeFilterLabels.length
 #. placeholder {0}: activeSortLabels.length
@@ -1897,6 +1903,7 @@ msgstr "警报"
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelUpdateFieldsValueForObject.tsx
 #: src/modules/settings/roles/role-permissions/object-level-permissions/field-permissions/components/SettingsRolePermissionsObjectLevelObjectFieldPermissionTableAllHeaderRow.tsx
 #: src/modules/views/view-picker/components/ViewPickerDropdown.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
 msgid "All"
 msgstr "全部"
 
@@ -1919,6 +1926,11 @@ msgstr "所有应用注册"
 #: src/modules/settings/admin-panel/apps/components/SettingsAdminApps.tsx
 msgid "All application registrations across the platform, including orphaned marketplace apps"
 msgstr "整个平台上的所有应用注册，包括孤立的应用市场应用"
+
+#. js-lingui-id: ao0hkA
+#: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
+#~ msgid "All current workspace members assigned to these roles will receive the email"
+#~ msgstr ""
 
 #. js-lingui-id: 1kLn6M
 #: src/modules/activities/calendar/components/CalendarEventRow.tsx
@@ -2933,6 +2945,7 @@ msgstr "轴名称"
 #: src/modules/auth/sign-in-up/components/internal/SignInUpTwoFactorAuthenticationVerification.tsx
 #: src/modules/side-panel/components/SidePanelBackButton.tsx
 #: src/modules/spreadsheet-import/components/StepNavigationButton.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
 #: src/pages/onboarding/BookCall.tsx
 msgid "Back"
 msgstr "返回"
@@ -2951,6 +2964,16 @@ msgstr "返回内容"
 #: src/modules/marketplace/components/SettingsApplicationInstallPermissionValidationModal.tsx
 msgid "Back to settings"
 msgstr "返回设置"
+
+#. js-lingui-id: UNaXdI
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Back to templates"
+msgstr ""
+
+#. js-lingui-id: +d2TMz
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateHeaderButton.tsx
+msgid "Back to workflows"
+msgstr ""
 
 #. js-lingui-id: RJnYR0
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
@@ -3100,6 +3123,11 @@ msgstr "计费周期"
 #: src/modules/settings/billing/hooks/useBillingPortalSession.ts
 msgid "Billing portal session error. Please retry or contact Twenty team"
 msgstr "计费门户会话错误。请重试或联系 TinaCRM 团队"
+
+#. js-lingui-id: pwJ1Tv
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Blank workflow created"
+msgstr ""
 
 #. js-lingui-id: K1172m
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistSection.tsx
@@ -3671,6 +3699,11 @@ msgstr "ChatGPT"
 #: src/pages/settings/admin-panel/SettingsAdminWorkspaceDetail.tsx
 msgid "Chats"
 msgstr "聊天"
+
+#. js-lingui-id: c9+oKq
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
+msgid "Check condition"
+msgstr ""
 
 #. js-lingui-id: h5C4B4
 #: src/modules/settings/emailing-domains/components/SettingsEmailingDomainVerifyButton.tsx
@@ -4280,6 +4313,11 @@ msgstr "配置 IMAP 设置以接收和同步您的电子邮件。"
 #: src/modules/settings/accounts/components/SettingsAccountsConnectionForm.tsx
 msgid "Configure SMTP settings to send emails from your account."
 msgstr "配置 SMTP 设置以从您的账户发送电子邮件。"
+
+#. js-lingui-id: LVnHGj
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Configure template"
+msgstr ""
 
 #. js-lingui-id: TiCmQz
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
@@ -4969,6 +5007,11 @@ msgstr "创建和配置 AI 代理"
 msgid "Create API key"
 msgstr "创建 API 密钥"
 
+#. js-lingui-id: +3Pdw9
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Create blank workflow"
+msgstr ""
+
 #. js-lingui-id: fbe2ik
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Create Calendar Event"
@@ -4988,6 +5031,11 @@ msgstr "创建自定义视图"
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownCalendarFieldsContent.tsx
 msgid "Create date field"
 msgstr "创建日期字段"
+
+#. js-lingui-id: /NVhwV
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Create draft"
+msgstr ""
 
 #. js-lingui-id: vY2Gfm
 #: src/modules/views/view-picker/components/ViewPickerCreateButton.tsx
@@ -5087,8 +5135,8 @@ msgstr "已创建"
 
 #. js-lingui-id: 4fBuqE
 #: src/modules/side-panel/components/SidePanelRecordInfo.tsx
-msgid "Created {beautifiedCreatedAt}"
-msgstr ""
+#~ msgid "Created {beautifiedCreatedAt}"
+#~ msgstr ""
 
 #. js-lingui-id: 6vWyWm
 #: src/modules/ai/constants/crud-tool-operation-verbs.constant.ts
@@ -5112,6 +5160,16 @@ msgstr "创建于 {0}"
 #: src/modules/ai/constants/crud-tool-operation-verbs.constant.ts
 msgid "Creating {objectLabel}"
 msgstr "正在创建 {objectLabel}"
+
+#. js-lingui-id: qvD1cU
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Creating blank..."
+msgstr ""
+
+#. js-lingui-id: y0IM0x
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Creating draft..."
+msgstr ""
 
 #. js-lingui-id: 00OfBp
 #: src/modules/auth/sign-in-up/constants/WorkspaceActivationMessages.tsx
@@ -7972,10 +8030,20 @@ msgstr "添加提供商失败"
 msgid "Failed to claim ownership."
 msgstr "认领所有权失败。"
 
+#. js-lingui-id: jc9Efz
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Failed to create blank workflow"
+msgstr ""
+
 #. js-lingui-id: ITWxKI
 #: src/pages/settings/communications/SettingsWorkspaceNewUnsubscribeTopic.tsx
 msgid "Failed to create unsubscribe topic."
 msgstr "创建退订主题失败。"
+
+#. js-lingui-id: 9MJID5
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+#~ msgid "Failed to create workflow draft"
+#~ msgstr ""
 
 #. js-lingui-id: AXveCw
 #: src/pages/settings/communications/SettingsWorkspaceCommunicationGroupChannelDetail.tsx
@@ -8609,6 +8677,11 @@ msgstr "名字"
 #: src/pages/onboarding/CreateProfile.tsx
 msgid "First name can not be empty"
 msgstr "名不能为空"
+
+#. js-lingui-id: bAG4xT
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "First page"
+msgstr ""
 
 #. js-lingui-id: JREYkg
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
@@ -10392,6 +10465,7 @@ msgid "Label must contain at least one alphanumeric character"
 msgstr "标签必须至少包含一个字母或数字字符"
 
 #. js-lingui-id: vXIe7J
+#: src/pages/settings/profile/appearance/components/LocalePicker.tsx
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
 msgid "Language"
 msgstr "语言"
@@ -10424,13 +10498,13 @@ msgstr "最近1小时（最旧 → 最新）"
 
 #. js-lingui-id: YoKFgq
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-msgid "Last 10 users created. Click to impersonate."
-msgstr "最近创建的 10 位用户。点击以模拟其身份。"
+#~ msgid "Last 10 users created. Click to impersonate."
+#~ msgstr "最近创建的 10 位用户。点击以模拟其身份。"
 
 #. js-lingui-id: sgqwjE
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-msgid "Last 10 users created. Click to manage feature flags or impersonate."
-msgstr "最近创建的 10 位用户。点击以管理功能开关或模拟其身份。"
+#~ msgid "Last 10 users created. Click to manage feature flags or impersonate."
+#~ msgstr "最近创建的 10 位用户。点击以管理功能开关或模拟其身份。"
 
 #. js-lingui-id: XUlP/Y
 #: src/modules/settings/admin-panel/health-status/constants/WorkerQueueMetricsSelectOptions.ts
@@ -10534,6 +10608,11 @@ msgstr "姓氏"
 #: src/pages/onboarding/CreateProfile.tsx
 msgid "Last name can not be empty"
 msgstr "姓不能为空"
+
+#. js-lingui-id: viJSRT
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Last page"
+msgstr ""
 
 #. js-lingui-id: s0kiVA
 #: src/modules/information-banner/components/billing/InformationBannerFailPaymentInfo.tsx
@@ -10943,6 +11022,11 @@ msgstr "正在加载技能..."
 #: src/modules/page-layout/widgets/email-thread/components/EmailThreadWidget.tsx
 msgid "Loading thread"
 msgstr "正在加载会话"
+
+#. js-lingui-id: mzek9k
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Loading workflow templates"
+msgstr ""
 
 #. js-lingui-id: Z3FXyt
 #: src/modules/activities/timeline-activities/rows/calendar/components/EventCardCalendarEvent.tsx
@@ -11709,6 +11793,16 @@ msgstr "跨团队和代理推进工作进展"
 msgid "must be a number"
 msgstr "必须是一个数字"
 
+#. js-lingui-id: C4Vsez
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Must be a valid email address"
+msgstr ""
+
+#. js-lingui-id: A4Un2k
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Must be a valid number"
+msgstr ""
+
 #. js-lingui-id: qJVW/e
 #: src/modules/object-record/spreadsheet-import/utils/getSpreadSheetFieldValidationDefinitions.ts
 msgid "must be an array of object with valid phone, calling code and country code (format: '[{\"number\":\"123456789\", \"callingCode\":\"+33\", \"countryCode\":\"FR\"}]')"
@@ -12119,6 +12213,11 @@ msgstr "新 Webhook"
 msgid "New widget"
 msgstr ""
 
+#. js-lingui-id: IvQJq5
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateHeaderButton.tsx
+msgid "New workflow"
+msgstr ""
+
 #. js-lingui-id: horr45
 #: src/pages/settings/communications/SettingsWorkspaceNewUnsubscribeTopic.tsx
 msgid "Newsletters"
@@ -12136,6 +12235,11 @@ msgstr "下一个"
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
 msgid "Next charge {totalRenewDate}. Invoice amount may vary if you add members or credits between periods"
 msgstr "下次扣费时间为 {totalRenewDate}。如果你在计费周期之间添加成员或积分，发票金额可能会有所变化"
+
+#. js-lingui-id: /dqduX
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Next page"
+msgstr ""
 
 #. js-lingui-id: 8+lM81
 #: src/modules/object-record/record-calendar/components/RecordCalendarTopBar.tsx
@@ -12558,6 +12662,11 @@ msgstr "此步骤未记录任何日志。"
 #. js-lingui-id: 5sf2dF
 #: src/pages/settings/ai/components/SettingsAgentLogsTab.tsx
 msgid "No logs yet"
+msgstr ""
+
+#. js-lingui-id: qjXnWY
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "No matching templates"
 msgstr ""
 
 #. js-lingui-id: UwvrGq
@@ -13708,6 +13817,11 @@ msgstr ""
 msgid "Page"
 msgstr "页面"
 
+#. js-lingui-id: Mr/64e
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Page {item}"
+msgstr ""
+
 #. js-lingui-id: SZgFyi
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 #: src/pages/settings/layout/SettingsLayoutPageLayoutDetail.tsx
@@ -14247,6 +14361,11 @@ msgstr "上一个"
 msgid "Previous 7 days"
 msgstr "过去7天"
 
+#. js-lingui-id: aHKcKc
+#: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
+msgid "Previous page"
+msgstr ""
+
 #. js-lingui-id: KaMwgJ
 #: src/modules/object-record/record-calendar/components/RecordCalendarTopBar.tsx
 msgid "Previous period"
@@ -14565,6 +14684,11 @@ msgstr "由此应用提供的只读 {entityTypeLabel} 定义"
 msgid "Read/Edit/Delete permissions"
 msgstr "读取/编辑/删除权限"
 
+#. js-lingui-id: UjYPpQ
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCard.tsx
+msgid "Ready to use"
+msgstr ""
+
 #. js-lingui-id: wUf2OL
 #: src/modules/workflow/workflow-run/observability/WorkflowRunStepLogsAiAgentDetail.tsx
 msgid "Reasoning"
@@ -14601,6 +14725,11 @@ msgstr "最新用户"
 #: src/modules/ai/components/NavigationDrawerAiChatContent.tsx
 msgid "Recents"
 msgstr "最近"
+
+#. js-lingui-id: lAxGwv
+#: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
+#~ msgid "Recipient roles"
+#~ msgstr ""
 
 #. js-lingui-id: yPrbsy
 #: src/modules/activities/emails/components/EmailComposerFields.tsx
@@ -14785,6 +14914,8 @@ msgstr "重新生成密钥"
 #. js-lingui-id: uJ+Ve2
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
+#: src/pages/settings/general/SettingsGeneral.tsx
+#: src/pages/settings/profile/appearance/components/WorkspaceCountryCodePicker.tsx
 msgid "Region"
 msgstr "区域"
 
@@ -15450,6 +15581,11 @@ msgstr ""
 msgid "Run a workflow and return here to view its executions"
 msgstr "运行工作流并返回此处查看其执行情况"
 
+#. js-lingui-id: 8oYk3W
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
+msgid "Run action"
+msgstr ""
+
 #. js-lingui-id: rRyKdg
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Run code to analyze files and data"
@@ -15822,6 +15958,11 @@ msgstr "搜索记录..."
 msgid "Search registrations..."
 msgstr "搜索注册..."
 
+#. js-lingui-id: 2YeVRn
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Search workflow templates"
+msgstr ""
+
 #. js-lingui-id: YIix5Y
 #: src/modules/settings/developers/components/WebhookEntitySelect.tsx
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
@@ -16079,6 +16220,11 @@ msgstr "选择一个已知提供商或创建自定义提供商"
 msgid "Select a navigation item to edit"
 msgstr "选择要编辑的导航项"
 
+#. js-lingui-id: 3ZbIBq
+#: src/pages/settings/profile/appearance/components/WorkspaceCountryCodePicker.tsx
+msgid "Select a region"
+msgstr ""
+
 #. js-lingui-id: YkYui1
 #: src/modules/activities/emails/components/CampaignComposerFields.tsx
 msgid "Select a sender"
@@ -16186,6 +16332,11 @@ msgstr "选择操作数"
 msgid "Select options"
 msgstr "选择选项"
 
+#. js-lingui-id: 1Ky5Mj
+#: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
+#~ msgid "Select roles"
+#~ msgstr ""
+
 #. js-lingui-id: 9c44h0
 #: src/modules/object-record/record-table/record-table-cell/components/RecordTableCellCheckbox.tsx
 msgid "Select row"
@@ -16210,6 +16361,11 @@ msgstr "选择步骤"
 #: src/modules/settings/billing/components/internal/ResourceCreditPackagePickerModal.tsx
 msgid "Select the credit package to add to your {intervalAdjective} bill."
 msgstr "选择要添加到 {intervalAdjective} 账单中的积分套餐。"
+
+#. js-lingui-id: kfRrta
+#: src/pages/settings/general/SettingsGeneral.tsx
+msgid "Select the default region for your workspace"
+msgstr ""
 
 #. js-lingui-id: pofGCP
 #: src/modules/settings/data-model/fields/forms/boolean/components/SettingsDataModelFieldBooleanForm.tsx
@@ -16241,10 +16397,15 @@ msgstr "选择值"
 msgid "Select which models appear as recommended in the workspace model picker"
 msgstr "选择哪些模型在工作区模型选择器中显示为推荐"
 
+#. js-lingui-id: 4q8P59
+#: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
+msgid "Select your language"
+msgstr ""
+
 #. js-lingui-id: AXTJAW
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
-msgid "Select your preferred language"
-msgstr "选择您偏好的语言"
+#~ msgid "Select your preferred language"
+#~ msgstr "选择您偏好的语言"
 
 #. js-lingui-id: JlFcis
 #: src/modules/page-layout/widgets/email-thread/components/EmailThreadComposer.tsx
@@ -16264,6 +16425,7 @@ msgstr "发送营销活动"
 
 #. js-lingui-id: 65dxv8
 #: src/modules/workflow/workflow-run/observability/WorkflowRunStepLogsEmailDetail.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
 msgid "Send email"
 msgstr "发送邮件"
 
@@ -17015,6 +17177,11 @@ msgstr "开始新的企业订阅。"
 msgid "Start date"
 msgstr "开始日期"
 
+#. js-lingui-id: MHpcMS
+#: src/modules/workflow/workflow-template/components/CreateBlankWorkflowCard.tsx
+msgid "Start from scratch with an empty workflow canvas."
+msgstr ""
+
 #. js-lingui-id: s+K73L
 #: src/modules/settings/billing/components/internal/SettingsBillingSubscriptionInfoModals.tsx
 #: src/modules/settings/billing/components/StartSubscriptionConfirmationModal.tsx
@@ -17554,6 +17721,16 @@ msgstr "团队"
 msgid "Team member"
 msgstr "团队成员"
 
+#. js-lingui-id: c9tEZo
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Template setup"
+msgstr ""
+
+#. js-lingui-id: JVKzIq
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Templates are unavailable"
+msgstr ""
+
 #. js-lingui-id: lKXcJz
 #: src/pages/settings/emailing-domains/utils/getEmailingDomainStatusText.ts
 msgid "Temporary Failure"
@@ -17791,6 +17968,11 @@ msgstr "此字段的值必须唯一"
 msgid "The whole event details will be shared with your team."
 msgstr "整个事件详情将与您的团队分享。"
 
+#. js-lingui-id: 2NqoD7
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "The workflow will be created as a draft. You can review every trigger and action before publishing."
+msgstr ""
+
 #. js-lingui-id: bEXHAZ
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationClaims.tsx
 msgid "The workspace that claimed this app registration"
@@ -18000,6 +18182,11 @@ msgstr "此企业密钥当前绑定到其他服务器实例。在此处转移后
 msgid "This feature is part of the Enterprise Plan"
 msgstr "此功能是企业计划的一部分。"
 
+#. js-lingui-id: B8AaMI
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "This field is required"
+msgstr ""
+
 #. js-lingui-id: own57K
 #: src/modules/activities/files/components/DocumentViewer.tsx
 msgid "This file cannot be previewed because it is hosted locally."
@@ -18104,6 +18291,11 @@ msgstr "这不应该发生"
 #: src/modules/settings/domains/utils/getSubdomainValidationSchema.ts
 msgid "This subdomain is reserved"
 msgstr "该子域名已被保留"
+
+#. js-lingui-id: JMtb5+
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "This template is ready to create without additional setup."
+msgstr ""
 
 #. js-lingui-id: MMGDfe
 #: src/modules/settings/admin-panel/config-variables/components/ConfigVariableHelpText.tsx
@@ -18406,8 +18598,8 @@ msgstr "工具"
 
 #. js-lingui-id: nCq25C
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-msgid "Top 10 workspaces by number of users"
-msgstr "按用户数量排名的前 10 个工作区"
+#~ msgid "Top 10 workspaces by number of users"
+#~ msgstr "按用户数量排名的前 10 个工作区"
 
 #. js-lingui-id: A4dnvW
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
@@ -18512,6 +18704,7 @@ msgstr "试用期"
 #: src/modules/side-panel/components/SidePanelWorkflowStepInfo.tsx
 #: src/modules/workflow/workflow-diagram/workflow-nodes/components/WorkflowDiagramEmptyTriggerEditable.tsx
 #: src/modules/workflow/workflow-diagram/workflow-nodes/components/WorkflowDiagramEmptyTriggerReadonly.tsx
+#: src/modules/workflow/workflow-template/components/WorkflowTemplatePreview.tsx
 msgid "Trigger"
 msgstr "触发器"
 
@@ -18571,6 +18764,11 @@ msgstr "真"
 #: src/modules/onboarding/components/upgrade-free-trial/ChooseYourPlanErrorState.tsx
 #: src/modules/settings/billing/components/SettingsBillingPlansErrorState.tsx
 msgid "Try again"
+msgstr ""
+
+#. js-lingui-id: 7Jg38e
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Try another search term or category."
 msgstr ""
 
 #. js-lingui-id: 64tOpZ
@@ -19453,6 +19651,11 @@ msgstr "使用整个列表"
 msgid "Use this email"
 msgstr "使用此邮箱地址"
 
+#. js-lingui-id: p6eI8J
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCard.tsx
+msgid "Use this template"
+msgstr ""
+
 #. js-lingui-id: 664z2C
 #: src/pages/settings/ai/components/SettingsAiModelsTab.tsx
 msgid "Used for chats, agents, and complex reasoning"
@@ -20276,6 +20479,11 @@ msgstr "工作流动作"
 msgid "Workflow agents"
 msgstr ""
 
+#. js-lingui-id: tFmIJg
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Workflow draft created"
+msgstr ""
+
 #. js-lingui-id: 2jzcC5
 #: src/modules/command-menu-item/engine-command/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 msgid "Workflow duplicated successfully"
@@ -20285,6 +20493,16 @@ msgstr ""
 #: src/modules/settings/usage/utils/getOperationTypeLabel.ts
 msgid "Workflow Execution"
 msgstr "工作流执行"
+
+#. js-lingui-id: oCFOTm
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateLibrary.tsx
+msgid "Workflow template categories"
+msgstr ""
+
+#. js-lingui-id: nIdzsH
+#: src/modules/workflow/workflow-template/components/WorkflowTemplateCatalog.tsx
+msgid "Workflow templates"
+msgstr ""
 
 #. js-lingui-id: woYYQq
 #: src/modules/settings/billing/constants/SettingsBillingPlanComparisonRows.ts

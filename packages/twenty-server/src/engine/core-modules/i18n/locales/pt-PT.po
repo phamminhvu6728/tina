@@ -940,6 +940,11 @@ msgstr "Preço de cobrança não encontrado."
 msgid "Billing product not found."
 msgstr "Produto de cobrança não encontrado."
 
+#. js-lingui-id: +gCI2a
+#: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-person-standard-flat-field-metadata.util.ts
+msgid "Birthday"
+msgstr ""
+
 #. js-lingui-id: K1172m
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 #: src/engine/workspace-manager/twenty-standard-application/utils/object-metadata/create-standard-flat-object-metadata.util.ts
@@ -2108,6 +2113,21 @@ msgstr "Data em que o Registo foi Eliminado"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgid "Day First"
 msgstr "Dia em primeiro"
+
+#. js-lingui-id: f4oLL0
+#: src/modules/tinasoft/workflow-template/services/builders/customer-30-day-check-in.builder.ts
+msgid "Days before customer check-in"
+msgstr ""
+
+#. js-lingui-id: T7ZInp
+#: src/modules/tinasoft/workflow-template/services/builders/quote-expiry-reminder.builder.ts
+msgid "Days before quote expiry"
+msgstr ""
+
+#. js-lingui-id: khFYwz
+#: src/modules/tinasoft/workflow-template/services/builders/re-purchase-reminder.builder.ts
+msgid "Days since last purchase"
+msgstr ""
 
 #. js-lingui-id: yAT3be
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workflow-standard-flat-field-metadata.util.ts
@@ -4248,6 +4268,11 @@ msgstr "Solicitação de etapa de fluxo de trabalho inválida."
 #: src/modules/workflow/workflow-executor/exceptions/workflow-step-executor.exception.ts
 msgid "Invalid workflow step type."
 msgstr "Tipo de etapa de fluxo de trabalho inválido."
+
+#. js-lingui-id: 12Jstr
+#: src/modules/tinasoft/workflow-template/utils/workflow-template-settings.util.ts
+msgid "Invalid workflow template settings. Please check the template configuration fields."
+msgstr ""
 
 #. js-lingui-id: dw+g0N
 #: src/modules/workflow/workflow-trigger/exceptions/workflow-trigger.exception.ts
@@ -6814,6 +6839,11 @@ msgstr "Em execução"
 msgid "Runs"
 msgstr "Execuções"
 
+#. js-lingui-id: Zlkp9V
+#: src/modules/tinasoft/workflow-template/services/builders/new-lead-alert.builder.ts
+msgid "Sales team email"
+msgstr ""
+
 #. js-lingui-id: +5kO8P
 #: src/engine/api/graphql/graphql-query-runner/group-by/resolvers/utils/format-result-with-group-by-dimension-values.util.ts
 msgid "Saturday"
@@ -8436,6 +8466,11 @@ msgstr "É necessária a configuração da autenticação de dois fatores."
 msgid "Two-factor authentication verification is required."
 msgstr "É necessária a verificação da autenticação de dois fatores."
 
+#. js-lingui-id: +zy2Nq
+#: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-person-standard-flat-field-metadata.util.ts
+msgid "Type"
+msgstr ""
+
 #. js-lingui-id: Qx95XY
 #: src/engine/metadata-modules/flat-field-metadata/validators/utils/validate-morph-or-relation-flat-field-metadata.util.ts
 msgid "Udpated field is not a morph relation or a relation"
@@ -9518,6 +9553,11 @@ msgstr "Posição do membro do workspace"
 #: src/engine/workspace-manager/twenty-standard-application/utils/object-metadata/create-standard-flat-object-metadata.util.ts
 msgid "Workspace Members"
 msgstr "Membros do Espaço de Trabalho"
+
+#. js-lingui-id: CozWO1
+#: src/modules/tinasoft/workflow-template/services/builders/customer-birthday-email.builder.ts
+msgid "Workspace name"
+msgstr ""
 
 #. js-lingui-id: bcIybO
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
