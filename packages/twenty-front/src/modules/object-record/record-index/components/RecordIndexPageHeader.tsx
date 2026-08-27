@@ -4,6 +4,7 @@ import { contextStoreCurrentViewIdComponentState } from '@/context-store/states/
 import { contextStoreNumberOfSelectedRecordsComponentState } from '@/context-store/states/contextStoreNumberOfSelectedRecordsComponentState';
 import { isLayoutCustomizationModeEnabledState } from '@/layout-customization/states/isLayoutCustomizationModeEnabledState';
 import { useNumberFormat } from '@/localization/hooks/useNumberFormat';
+import { useOpenMainNavigationDrawer } from '@/navigation/hooks/useOpenMainNavigationDrawer';
 import { useFilteredObjectMetadataItems } from '@/object-metadata/hooks/useFilteredObjectMetadataItems';
 import { RecordIndexPageHeaderIcon } from '@/object-record/record-index/components/RecordIndexPageHeaderIcon';
 import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
@@ -54,6 +55,7 @@ export const RecordIndexPageHeader = ({
   const isWorkflowIndex = objectNamePlural === 'workflows';
   const objectMetadataItem =
     findObjectMetadataItemByNamePlural(objectNamePlural);
+  const { openMainNavigationDrawer } = useOpenMainNavigationDrawer();
 
   const label = objectMetadataItem?.labelPlural ?? objectNamePlural;
 
@@ -84,6 +86,9 @@ export const RecordIndexPageHeader = ({
         <RecordIndexPageHeaderIcon objectMetadataItem={objectMetadataItem} />
       }
       title={pageHeaderTitle}
+      mobileNavigationTitle={label}
+      mobileNavigationAriaLabel={`Back to ${objectMetadataItem?.labelPlural}`}
+      onMobileNavigationBackButtonClick={openMainNavigationDrawer}
       actionButton={
         isDefined(contextStoreCurrentViewId) ? (
           <>

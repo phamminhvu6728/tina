@@ -4,6 +4,7 @@ import {
   Breadcrumb,
   type BreadcrumbProps,
 } from '@/ui/navigation/bread-crumb/components/Breadcrumb';
+import { MobileNavigationBackButton } from '@/navigation/components/MobileNavigationBackButton';
 import { PAGE_ACTION_CONTAINER_CLICK_OUTSIDE_ID } from '@/ui/layout/page/constants/PageActionContainerClickOutsideId';
 import { NavigationDrawerCollapseButton } from '@/ui/navigation/navigation-drawer/components/NavigationDrawerCollapseButton';
 import { useIsMobile } from '@/ui/utilities/responsive/hooks/useIsMobile';
@@ -21,6 +22,9 @@ type PageCardHeaderProps = {
   actionButton?: ReactNode;
   centerTitle?: boolean;
   titleColor?: string;
+  mobileNavigationTitle?: ReactNode;
+  mobileNavigationAriaLabel?: string;
+  onMobileNavigationBackButtonClick?: () => void;
 };
 
 const StyledHeader = styled.div<{ centerTitle?: boolean }>`
@@ -80,6 +84,30 @@ const StyledRight = styled.div<{ centerTitle?: boolean }>`
   width: 100%;
 `;
 
+const StyledMobileNavigationHeader = styled.div`
+  align-items: center;
+  background-color: ${themeCssVariables.background.secondary};
+  border-bottom: 1px solid ${themeCssVariables.border.color.medium};
+  box-sizing: border-box;
+  display: flex;
+  gap: ${themeCssVariables.spacing[2]};
+  min-height: ${SIDE_PANEL_TOP_BAR_HEIGHT}px;
+  min-width: 0;
+  padding: 0 ${themeCssVariables.spacing[3]};
+  width: 100%;
+`;
+
+const StyledMobileNavigationTitle = styled.div`
+  color: ${themeCssVariables.font.color.primary};
+  flex: 1 1 auto;
+  font-size: ${themeCssVariables.font.size.md};
+  font-weight: ${themeCssVariables.font.weight.medium};
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
 export const PageCardHeader = ({
   links,
   breadcrumb,
@@ -89,9 +117,31 @@ export const PageCardHeader = ({
   actionButton,
   centerTitle = false,
   titleColor,
+  mobileNavigationTitle,
+  mobileNavigationAriaLabel,
+  onMobileNavigationBackButtonClick,
 }: PageCardHeaderProps) => {
   const isMobile = useIsMobile();
   const isNavigationDrawerExpanded = useNavigationDrawerExpanded();
+
+  if (
+    isMobile &&
+    isDefined(mobileNavigationTitle) &&
+    isDefined(mobileNavigationAriaLabel) &&
+    isDefined(onMobileNavigationBackButtonClick)
+  ) {
+    return (
+      <StyledMobileNavigationHeader>
+        <MobileNavigationBackButton
+          ariaLabel={mobileNavigationAriaLabel}
+          onClick={onMobileNavigationBackButtonClick}
+        />
+        <StyledMobileNavigationTitle>
+          {mobileNavigationTitle}
+        </StyledMobileNavigationTitle>
+      </StyledMobileNavigationHeader>
+    );
+  }
 
   const hasTitleContent =
     !isMobile && (isDefined(icon) || isDefined(title) || isDefined(tag));
