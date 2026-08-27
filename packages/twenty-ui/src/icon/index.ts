@@ -20,6 +20,7 @@ export { IconGmail } from './components/IconGmail';
 export { IconGoogle } from './components/IconGoogle';
 export { IconGoogleCalendar } from './components/IconGoogleCalendar';
 export { IconLockCustom } from './components/IconLock';
+export { IconMenu } from './components/IconMenu';
 export { IconMicrosoft } from './components/IconMicrosoft';
 export { IconMicrosoftCalendar } from './components/IconMicrosoftCalendar';
 export { IconMicrosoftOutlook } from './components/IconMicrosoftOutlook';
