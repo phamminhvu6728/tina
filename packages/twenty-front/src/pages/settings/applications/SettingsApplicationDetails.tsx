@@ -53,6 +53,7 @@ import { SettingsApplicationDetailContentTab } from '~/pages/settings/applicatio
 import { SettingsApplicationDetailSettingsTab } from '~/pages/settings/applications/tabs/SettingsApplicationDetailSettingsTab';
 import { SettingsApplicationPermissionsTab } from '~/pages/settings/applications/tabs/SettingsApplicationPermissionsTab';
 import { applicationHasHttpTriggeredFunctions } from '~/pages/settings/applications/utils/applicationHasHttpTriggeredFunctions';
+import { getDisplayedApplicationVariables } from '~/pages/settings/applications/utils/getDisplayedApplicationVariables';
 import { isNewerSemver } from '~/pages/settings/applications/utils/isNewerSemver';
 
 const APPLICATION_DETAIL_ID = 'application-detail-id';
@@ -247,15 +248,22 @@ export const SettingsApplicationDetails = () => {
       disabled: !isDefined(application?.defaultRoleId),
     },
     (() => {
-      const hasVariables = (application?.applicationVariables ?? []).length > 0;
+      const hasVariables =
+        getDisplayedApplicationVariables(
+          application?.applicationVariables ?? [],
+        ).length > 0;
       const hasConnectionProviders = connectionProviders.length > 0;
       const hasHttpTriggeredFunctions =
         applicationHasHttpTriggeredFunctions(application);
       const canShowFunctionDomain = hasHttpTriggeredFunctions;
+      const hasSettingsFrontComponent = isDefined(
+        application?.settingsCustomTabFrontComponentId,
+      );
       const hasNothingToConfigure =
         !hasVariables &&
         !hasConnectionProviders &&
         !canShowFunctionDomain &&
+        !hasSettingsFrontComponent &&
         !isUpgradableApplicationSourceType(sourceType);
 
       return {
@@ -317,7 +325,7 @@ export const SettingsApplicationDetails = () => {
             applicationInfo={{
               id: application.id,
               name: displayName,
-              logo: application.logo,
+              logoUrl: application.logoUrl,
               universalIdentifier: application.universalIdentifier,
             }}
           />
@@ -345,8 +353,8 @@ export const SettingsApplicationDetails = () => {
           isDefined(application) ? (
             <AppChip
               applicationId={application.id}
+              logoUrl={application.logoUrl}
               fallbackApplicationData={{
-                logo: application.logo,
                 name: displayName,
               }}
               size="md"

@@ -1,11 +1,11 @@
+import { MobileNavigationBackButton } from '@/navigation/components/MobileNavigationBackButton';
 import { useNavigationDrawerExpanded } from '@/navigation/hooks/useNavigationDrawerExpanded';
 import { SIDE_PANEL_TOP_BAR_HEIGHT } from '@/side-panel/constants/SidePanelTopBarHeight';
+import { PAGE_ACTION_CONTAINER_CLICK_OUTSIDE_ID } from '@/ui/layout/page/constants/PageActionContainerClickOutsideId';
 import {
   Breadcrumb,
   type BreadcrumbProps,
 } from '@/ui/navigation/bread-crumb/components/Breadcrumb';
-import { MobileNavigationBackButton } from '@/navigation/components/MobileNavigationBackButton';
-import { PAGE_ACTION_CONTAINER_CLICK_OUTSIDE_ID } from '@/ui/layout/page/constants/PageActionContainerClickOutsideId';
 import { NavigationDrawerCollapseButton } from '@/ui/navigation/navigation-drawer/components/NavigationDrawerCollapseButton';
 import { useIsMobile } from '@/ui/utilities/responsive/hooks/useIsMobile';
 import { styled } from '@linaria/react';
@@ -37,7 +37,7 @@ const StyledHeader = styled.div<{ centerTitle?: boolean }>`
   grid-template-columns: ${({ centerTitle }) =>
     centerTitle
       ? 'minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr)'
-      : 'minmax(0, auto) minmax(0, 1fr)'};
+      : 'minmax(0, auto) minmax(min-content, 1fr)'};
   min-height: ${SIDE_PANEL_TOP_BAR_HEIGHT}px;
   padding: 0 ${themeCssVariables.spacing[3]};
   width: 100%;
@@ -80,7 +80,6 @@ const StyledRight = styled.div<{ centerTitle?: boolean }>`
   grid-column: ${({ centerTitle }) => (centerTitle ? 3 : 2)};
   justify-content: flex-end;
   justify-self: end;
-  min-width: 0;
   width: 100%;
 `;
 
@@ -158,7 +157,7 @@ export const PageCardHeader = ({
   return (
     <StyledHeader centerTitle={shouldCenterTitle}>
       <StyledLeft>
-        {!isNavigationDrawerExpanded && (
+        {!isMobile && !isNavigationDrawerExpanded && (
           <NavigationDrawerCollapseButton direction="right" />
         )}
         {isDefined(breadcrumb)

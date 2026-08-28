@@ -1,7 +1,6 @@
 import { useSwitchToNewAiChat } from '@/ai/hooks/useSwitchToNewAiChat';
 import { MAIN_CONTEXT_STORE_INSTANCE_ID } from '@/context-store/constants/MainContextStoreInstanceId';
 import { contextStoreCurrentObjectMetadataItemIdComponentState } from '@/context-store/states/contextStoreCurrentObjectMetadataItemIdComponentState';
-import { useDefaultHomePagePath } from '@/navigation/hooks/useDefaultHomePagePath';
 import { useIsSettingsPage } from '@/navigation/hooks/useIsSettingsPage';
 import { currentMobileNavigationDrawerState } from '@/navigation/states/currentMobileNavigationDrawerState';
 import { useFilteredObjectMetadataItems } from '@/object-metadata/hooks/useFilteredObjectMetadataItems';
@@ -15,8 +14,6 @@ import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { useSetAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useSetAtomComponentState';
 import { styled } from '@linaria/react';
-import { useLingui } from '@lingui/react/macro';
-import { useNavigate } from 'react-router-dom';
 import { IconMenu, IconSearch } from 'twenty-ui/icon';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 import { PermissionFlagType } from '~/generated-metadata/graphql';
@@ -92,9 +89,6 @@ const StyledAiButtonInner = styled.span`
 `;
 
 export const MobileNavigationBar = () => {
-  const { t } = useLingui();
-  const navigate = useNavigate();
-  const { defaultHomePagePath } = useDefaultHomePagePath();
   const isSidePanelOpened = useAtomStateValue(isSidePanelOpenedState);
   const navigationMemorizedUrl = useAtomStateValue(navigationMemorizedUrlState);
   const { closeSidePanelMenu } = useSidePanelMenu();

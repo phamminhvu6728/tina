@@ -460,7 +460,11 @@ export const DPA_TEMPLATE_BLOCKS: DpaTemplateBlock[] = [
   },
   {
     kind: 'paragraph',
-    text: 'Data Importer (Processor): {{PROCESSOR_ENTITY}}, {{PROCESSOR_LEGAL_FORM}}. Registered office: {{PROCESSOR_ADDRESS}}. {{PROCESSOR_ENTITY}} provides cloud-based CRM software and related services and Processes Customer Personal Data in the {{HOSTING_REGION}}. Contact for privacy inquiries: privacy@tinacrm.com. {{PROCESSOR_ENTITY}} acts as Processor (and, where applicable, Service Provider under the CCPA and data importer under the SCCs). The applicable Processor entity, hosting region, and governing law are those specified in the Order Form or Customer’s workspace configuration.',
+    text: 'Data Importer (Processor): {{PROCESSOR_ENTITY}}, {{PROCESSOR_LEGAL_FORM}}. Registered office: {{PROCESSOR_ADDRESS}}. {{PROCESSOR_ENTITY}} provides cloud-based CRM software and related services and Processes Customer Personal Data hosted in the {{HOSTING_REGION}}. Contact for privacy inquiries: privacy@twenty.com. {{PROCESSOR_ENTITY}} acts as Processor (and, where applicable, Service Provider under the CCPA and data importer under the SCCs). The Processor entity and governing law do not change based on hosting region.',
+  },
+  {
+    kind: 'paragraph',
+    text: 'EU Affiliate: {{EU_AFFILIATE_ENTITY}}, {{EU_AFFILIATE_LEGAL_FORM}}. Registered office: {{EU_AFFILIATE_ADDRESS}}. {{EU_AFFILIATE_ENTITY}} joins this DPA as Twenty’s European affiliate and privacy contact and is bound by the obligations applicable to any Processing it performs, without replacing {{PROCESSOR_ENTITY}} as Processor or data importer.',
   },
   {
     kind: 'paragraph',

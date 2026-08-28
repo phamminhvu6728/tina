@@ -9,8 +9,8 @@ import { RecordPositionService } from 'src/engine/core-modules/record-position/s
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { WorkspaceManyOrAllFlatEntityMapsCacheService } from 'src/engine/metadata-modules/flat-entity/services/workspace-many-or-all-flat-entity-maps-cache.service';
 import { buildObjectIdByNameMaps } from 'src/engine/metadata-modules/flat-object-metadata/utils/build-object-id-by-name-maps.util';
-import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
+import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
 import { PrefillLogicFunctionService } from 'src/engine/workspace-manager/standard-objects-prefill-data/services/prefill-logic-function.service';
 import { type WorkflowTemplateDTO } from 'src/modules/tinasoft/workflow-template/api/dtos/workflow-template.dto';
 import { getWorkflowTemplateLogicFunctionDefinitions } from 'src/modules/tinasoft/workflow-template/catalog/workflow-template-logic-functions.constant';
@@ -48,7 +48,7 @@ type WorkflowTemplateStepFilter = {
 @Injectable()
 export class WorkflowTemplateWorkspaceService {
   constructor(
-    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
+    private readonly workspaceOrmManager: WorkspaceOrmManager,
     private readonly recordPositionService: RecordPositionService,
     private readonly i18nService: I18nService,
     private readonly prefillLogicFunctionService: PrefillLogicFunctionService,
@@ -127,89 +127,83 @@ export class WorkflowTemplateWorkspaceService {
     });
     const authContext = buildSystemAuthContext(workspaceId);
 
-    return this.globalWorkspaceOrmManager.executeInWorkspaceContext(
-      async () => {
-        const workflowRepository =
-          await this.globalWorkspaceOrmManager.getRepository(
-            workspaceId,
-            'workflow',
-            { shouldBypassPermissionChecks: true },
-          );
+    return this.workspaceOrmManager.executeInWorkspaceContext(async () => {
+      const workflowRepository = await this.workspaceOrmManager.getRepository(
+        'workflow',
+        { shouldBypassPermissionChecks: true },
+      );
 
-        const workflowVersionRepository =
-          await this.globalWorkspaceOrmManager.getRepository<WorkflowVersionWorkspaceEntity>(
-            workspaceId,
-            'workflowVersion',
-            { shouldBypassPermissionChecks: true },
-          );
-
-        const workflowPosition =
-          await this.recordPositionService.buildRecordPosition({
-            value: 'first',
-            objectMetadata: {
-              isCustom: false,
-              nameSingular: 'workflow',
-            },
-            workspaceId,
-          });
-
-        const insertWorkflowResult = await workflowRepository.insert({
-          name: workflowTemplateDefinition.workflowName,
-          statuses: [WorkflowStatus.DRAFT],
-          position: workflowPosition,
-        });
-
-        const workflowId = (
-          insertWorkflowResult.generatedMaps[0] as WorkflowWorkspaceEntity
-        ).id;
-
-        const workflowVersionPosition =
-          await this.recordPositionService.buildRecordPosition({
-            value: 'first',
-            objectMetadata: {
-              isCustom: false,
-              nameSingular: 'workflowVersion',
-            },
-            workspaceId,
-          });
-
-        const insertWorkflowVersionResult =
-          await workflowVersionRepository.insert({
-            workflowId,
-            name: 'v1',
-            status: WorkflowVersionStatus.DRAFT,
-            trigger,
-            steps,
-            position: workflowVersionPosition,
-          });
-
-        const workflowVersion = insertWorkflowVersionResult
-          .generatedMaps[0] as WorkflowVersionWorkspaceEntity;
-
-        const enrichedSteps = await Promise.all(
-          steps.map((step) =>
-            this.workflowSchemaWorkspaceService.enrichOutputSchema({
-              step,
-              workspaceId,
-              workflowVersionId: workflowVersion.id,
-            }),
-          ),
+      const workflowVersionRepository =
+        await this.workspaceOrmManager.getRepository<WorkflowVersionWorkspaceEntity>(
+          'workflowVersion',
+          { shouldBypassPermissionChecks: true },
         );
 
-        await workflowVersionRepository.update(workflowVersion.id, {
-          steps: enrichedSteps,
+      const workflowPosition =
+        await this.recordPositionService.buildRecordPosition({
+          value: 'first',
+          objectMetadata: {
+            isCustom: false,
+            nameSingular: 'workflow',
+          },
+          workspaceId,
         });
 
-        return {
-          ...workflowVersion,
-          name: workflowVersion.name ?? '',
+      const insertWorkflowResult = await workflowRepository.insert({
+        name: workflowTemplateDefinition.workflowName,
+        statuses: [WorkflowStatus.DRAFT],
+        position: workflowPosition,
+      });
+
+      const workflowId = (
+        insertWorkflowResult.generatedMaps[0] as WorkflowWorkspaceEntity
+      ).id;
+
+      const workflowVersionPosition =
+        await this.recordPositionService.buildRecordPosition({
+          value: 'first',
+          objectMetadata: {
+            isCustom: false,
+            nameSingular: 'workflowVersion',
+          },
+          workspaceId,
+        });
+
+      const insertWorkflowVersionResult =
+        await workflowVersionRepository.insert({
           workflowId,
+          name: 'v1',
+          status: WorkflowVersionStatus.DRAFT,
           trigger,
-          steps: enrichedSteps,
-        };
-      },
-      authContext,
-    );
+          steps,
+          position: workflowVersionPosition,
+        });
+
+      const workflowVersion = insertWorkflowVersionResult
+        .generatedMaps[0] as WorkflowVersionWorkspaceEntity;
+
+      const enrichedSteps = await Promise.all(
+        steps.map((step) =>
+          this.workflowSchemaWorkspaceService.enrichOutputSchema({
+            step,
+            workspaceId,
+            workflowVersionId: workflowVersion.id,
+          }),
+        ),
+      );
+
+      await workflowVersionRepository.update(workflowVersion.id, {
+        steps: enrichedSteps,
+      });
+
+      return {
+        ...workflowVersion,
+        name: workflowVersion.name ?? '',
+        workflowId,
+        trigger,
+        steps: enrichedSteps,
+      };
+    }, authContext);
   }
 
   private async resolveFindRecordsFieldMetadataIds({

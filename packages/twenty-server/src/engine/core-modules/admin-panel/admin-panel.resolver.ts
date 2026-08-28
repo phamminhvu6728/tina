@@ -19,13 +19,17 @@ import { AdminChatThreadMessagesDTO } from 'src/engine/core-modules/admin-panel/
 import { AdminPanelRecentUsersPageDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-recent-users-page.dto';
 import { AdminPanelTopWorkspacesPageDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-top-workspaces-page.dto';
 import { AdminPanelWorkspaceBillingDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-workspace-billing.dto';
+import { AdminPanelWorkspaceCreditGrantDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-panel-workspace-credit-grant.dto';
 import { AdminWorkspaceChatThreadDTO } from 'src/engine/core-modules/admin-panel/dtos/admin-workspace-chat-thread.dto';
 import { ConfigVariableDTO } from 'src/engine/core-modules/admin-panel/dtos/config-variable.dto';
 import { ConfigVariablesDTO } from 'src/engine/core-modules/admin-panel/dtos/config-variables.dto';
 import { DeleteJobsResponseDTO } from 'src/engine/core-modules/admin-panel/dtos/delete-jobs-response.dto';
+import { GrantWorkspaceCreditsInput } from 'src/engine/core-modules/admin-panel/dtos/grant-workspace-credits.input';
+import { PaginatedAdminChatThreadsDTO } from 'src/engine/core-modules/admin-panel/dtos/paginated-admin-chat-threads.dto';
 import { QueueJobsResponseDTO } from 'src/engine/core-modules/admin-panel/dtos/queue-jobs-response.dto';
 import { RetryJobsResponseDTO } from 'src/engine/core-modules/admin-panel/dtos/retry-jobs-response.dto';
 import { RevokeSigningKeyInput } from 'src/engine/core-modules/admin-panel/dtos/revoke-signing-key.input';
+import { RevokeWorkspaceCreditGrantInput } from 'src/engine/core-modules/admin-panel/dtos/revoke-workspace-credit-grant.input';
 import { ServerAdminDTO } from 'src/engine/core-modules/admin-panel/dtos/server-admin.dto';
 import { SigningKeyDTO } from 'src/engine/core-modules/admin-panel/dtos/signing-key.dto';
 import { SigningKeysAdminPanelDTO } from 'src/engine/core-modules/admin-panel/dtos/signing-keys-admin-panel.dto';
@@ -35,6 +39,9 @@ import { UpdateWorkspaceFeatureFlagInput } from 'src/engine/core-modules/admin-p
 import { UserLookup } from 'src/engine/core-modules/admin-panel/dtos/user-lookup.dto';
 import { UserLookupInput } from 'src/engine/core-modules/admin-panel/dtos/user-lookup.input';
 import { VersionInfoDTO } from 'src/engine/core-modules/admin-panel/dtos/version-info.dto';
+import { AdminChatThreadScope } from 'src/engine/core-modules/admin-panel/enums/admin-chat-thread-scope.enum';
+import { AdminChatThreadSortDirection } from 'src/engine/core-modules/admin-panel/enums/admin-chat-thread-sort-direction.enum';
+import { AdminChatThreadSortField } from 'src/engine/core-modules/admin-panel/enums/admin-chat-thread-sort-field.enum';
 import { HealthIndicatorId } from 'src/engine/core-modules/admin-panel/enums/health-indicator-id.enum';
 import { JobStateEnum } from 'src/engine/core-modules/admin-panel/enums/job-state.enum';
 import { QueueMetricsTimeRange } from 'src/engine/core-modules/admin-panel/enums/queue-metrics-time-range.enum';
@@ -42,13 +49,15 @@ import { MaintenanceModeService } from 'src/engine/core-modules/admin-panel/main
 import { AdminPanelBillingService } from 'src/engine/core-modules/admin-panel/services/admin-panel-billing.service';
 import { AdminPanelChatService } from 'src/engine/core-modules/admin-panel/services/admin-panel-chat.service';
 import { AdminPanelConfigService } from 'src/engine/core-modules/admin-panel/services/admin-panel-config.service';
-import { AdminPanelSigningKeyService } from 'src/engine/core-modules/admin-panel/services/admin-panel-signing-key.service';
+import { AdminPanelGlobalChatThreadsService } from 'src/engine/core-modules/admin-panel/services/admin-panel-global-chat-threads.service';
 import { AdminPanelServerAdminService } from 'src/engine/core-modules/admin-panel/services/admin-panel-server-admin.service';
+import { AdminPanelSigningKeyService } from 'src/engine/core-modules/admin-panel/services/admin-panel-signing-key.service';
 import { AdminPanelStatisticsService } from 'src/engine/core-modules/admin-panel/services/admin-panel-statistics.service';
 import { AdminPanelUserLookupService } from 'src/engine/core-modules/admin-panel/services/admin-panel-user-lookup.service';
 import { AdminPanelVersionService } from 'src/engine/core-modules/admin-panel/services/admin-panel-version.service';
-import { ApplicationRegistrationVariableDTO } from 'src/engine/core-modules/application/application-registration-variable/dtos/application-registration-variable.dto';
+import { MarketplaceCatalogSyncCronJob } from 'src/engine/core-modules/application/application-marketplace/crons/marketplace-catalog-sync.cron.job';
 import { ApplicationRegistrationVariableService } from 'src/engine/core-modules/application/application-registration-variable/application-registration-variable.service';
+import { ApplicationRegistrationVariableDTO } from 'src/engine/core-modules/application/application-registration-variable/dtos/application-registration-variable.dto';
 import { UpdateApplicationRegistrationVariableInput } from 'src/engine/core-modules/application/application-registration-variable/dtos/update-application-registration-variable.input';
 import { ApplicationRegistrationClaimService } from 'src/engine/core-modules/application/application-registration/application-registration-claim.service';
 import { ApplicationRegistrationEntity } from 'src/engine/core-modules/application/application-registration/application-registration.entity';
@@ -59,6 +68,7 @@ import { ApplicationRegistrationStatsDTO } from 'src/engine/core-modules/applica
 import { FindApplicationRegistrationInstalledWorkspacesInput } from 'src/engine/core-modules/application/application-registration/dtos/find-application-registration-installed-workspaces.input';
 import { PaginatedApplicationRegistrationsDTO } from 'src/engine/core-modules/application/application-registration/dtos/paginated-application-registrations.dto';
 import { UpdateApplicationRegistrationInput } from 'src/engine/core-modules/application/application-registration/dtos/update-application-registration.input';
+import { ApplicationRegistrationSourceType } from 'src/engine/core-modules/application/application-registration/enums/application-registration-source-type.enum';
 import { AuthGraphqlApiExceptionFilter } from 'src/engine/core-modules/auth/filters/auth-graphql-api-exception.filter';
 import { type AuthContextUser } from 'src/engine/core-modules/auth/types/auth-context.type';
 import { AdminAiModelsDTO } from 'src/engine/core-modules/client-config/client-config.entity';
@@ -67,7 +77,6 @@ import { FeatureFlagService } from 'src/engine/core-modules/feature-flag/service
 import { PreventNestToAutoLogGraphqlErrorsFilter } from 'src/engine/core-modules/graphql/filters/prevent-nest-to-auto-log-graphql-errors.filter';
 import { ResolverValidationPipe } from 'src/engine/core-modules/graphql/pipes/resolver-validation.pipe';
 import { UserInputError } from 'src/engine/core-modules/graphql/utils/graphql-errors.util';
-import { MarketplaceCatalogSyncCronJob } from 'src/engine/core-modules/application/application-marketplace/crons/marketplace-catalog-sync.cron.job';
 import { InjectMessageQueue } from 'src/engine/core-modules/message-queue/decorators/message-queue.decorator';
 import { MessageQueue } from 'src/engine/core-modules/message-queue/message-queue.constants';
 import { MessageQueueService } from 'src/engine/core-modules/message-queue/services/message-queue.service';
@@ -94,6 +103,7 @@ import { DefaultAiCatalogService } from 'src/engine/metadata-modules/ai/ai-model
 import { ModelsDevCatalogService } from 'src/engine/metadata-modules/ai/ai-models/services/models-dev-catalog.service';
 import { AiModelRole } from 'src/engine/metadata-modules/ai/ai-models/types/ai-model-role.enum';
 import { type AiProviderConfig } from 'src/engine/metadata-modules/ai/ai-models/types/ai-provider-config.type';
+import { aiProviderModelConfigSchema } from 'src/engine/metadata-modules/ai/ai-models/types/ai-provider-model-config.schema';
 import { type AiProviderModelConfig } from 'src/engine/metadata-modules/ai/ai-models/types/ai-provider-model-config.type';
 import { extractConfigVariableName } from 'src/engine/metadata-modules/ai/ai-models/utils/extract-config-variable-name.util';
 
@@ -124,6 +134,7 @@ export class AdminPanelResolver {
     private readonly adminStatisticsService: AdminPanelStatisticsService,
     private readonly adminBillingService: AdminPanelBillingService,
     private readonly adminChatService: AdminPanelChatService,
+    private readonly adminGlobalChatThreadsService: AdminPanelGlobalChatThreadsService,
     private readonly adminConfigService: AdminPanelConfigService,
     private readonly adminVersionService: AdminPanelVersionService,
     private readonly adminPanelHealthService: AdminPanelHealthService,
@@ -498,12 +509,24 @@ export class AdminPanelResolver {
     searchTerm?: string,
     @Args('isPreInstalledOnly', { type: () => Boolean, nullable: true })
     isPreInstalledOnly?: boolean,
+    @Args('sourceTypes', {
+      type: () => [ApplicationRegistrationSourceType],
+      nullable: true,
+    })
+    sourceTypes?: ApplicationRegistrationSourceType[],
+    @Args('isListed', { type: () => Boolean, nullable: true })
+    isListed?: boolean,
+    @Args('isConfigured', { type: () => Boolean, nullable: true })
+    isConfigured?: boolean,
   ): Promise<PaginatedApplicationRegistrationsDTO> {
     return this.applicationRegistrationService.findAll({
       limit,
       offset,
       searchTerm,
       isPreInstalledOnly,
+      sourceTypes,
+      isListed,
+      isConfigured,
     });
   }
 
@@ -631,6 +654,17 @@ export class AdminPanelResolver {
     @Args('modelConfig', { type: () => GraphQLJSON })
     modelConfig: AiProviderModelConfig,
   ): Promise<boolean> {
+    const validatedModelConfig =
+      aiProviderModelConfigSchema.safeParse(modelConfig);
+
+    if (!validatedModelConfig.success) {
+      throw new UserInputError(
+        `Invalid model configuration: ${validatedModelConfig.error.issues
+          .map((issue) => `${issue.path.join('.')} ${issue.message}`)
+          .join(', ')}`,
+      );
+    }
+
     const customProviders = {
       ...this.twentyConfigService.get('AI_PROVIDERS'),
     };
@@ -645,18 +679,22 @@ export class AdminPanelResolver {
 
     const existingModels = existing.models ?? [];
     const alreadyExists = existingModels.some(
-      (model: AiProviderModelConfig) => model.name === modelConfig.name,
+      (model: AiProviderModelConfig) =>
+        model.name === validatedModelConfig.data.name,
     );
 
     if (alreadyExists) {
       throw new UserInputError(
-        `Model "${modelConfig.name}" already exists on provider "${providerName}"`,
+        `Model "${validatedModelConfig.data.name}" already exists on provider "${providerName}"`,
       );
     }
 
     customProviders[providerName] = {
       ...existing,
-      models: [...existingModels, { ...modelConfig, source: 'manual' }],
+      models: [
+        ...existingModels,
+        { ...validatedModelConfig.data, source: 'manual' },
+      ],
     };
 
     await this.twentyConfigService.set('AI_PROVIDERS', customProviders);
@@ -793,6 +831,35 @@ export class AdminPanelResolver {
     return this.adminBillingService.getWorkspaceBilling(workspaceId);
   }
 
+  @UseGuards(AdminPanelGuard)
+  @Mutation(() => AdminPanelWorkspaceCreditGrantDTO)
+  async grantWorkspaceCredits(
+    @Args() input: GrantWorkspaceCreditsInput,
+    @AuthUser() actor: AuthContextUser,
+  ): Promise<AdminPanelWorkspaceCreditGrantDTO> {
+    return this.adminBillingService.grantWorkspaceCredits({
+      workspaceId: input.workspaceId,
+      amount: input.amount,
+      type: input.type,
+      reason: input.reason,
+      clientOperationId: input.clientOperationId,
+      grantedByUserId: actor.id,
+    });
+  }
+
+  @UseGuards(AdminPanelGuard)
+  @Mutation(() => AdminPanelWorkspaceCreditGrantDTO)
+  async revokeWorkspaceCreditGrant(
+    @Args() input: RevokeWorkspaceCreditGrantInput,
+    @AuthUser() actor: AuthContextUser,
+  ): Promise<AdminPanelWorkspaceCreditGrantDTO> {
+    return this.adminBillingService.revokeWorkspaceCreditGrant({
+      workspaceId: input.workspaceId,
+      creditGrantId: input.creditGrantId,
+      revokedByUserId: actor.id,
+    });
+  }
+
   @UseGuards(ServerLevelImpersonateGuard)
   @Query(() => [AdminWorkspaceChatThreadDTO])
   async getAdminWorkspaceChatThreads(
@@ -807,6 +874,58 @@ export class AdminPanelResolver {
     @Args('threadId', { type: () => UUIDScalarType }) threadId: string,
   ): Promise<AdminChatThreadMessagesDTO> {
     return this.adminChatService.getChatThreadMessages(threadId);
+  }
+
+  @UseGuards(ServerLevelImpersonateGuard)
+  @Query(() => PaginatedAdminChatThreadsDTO)
+  async getAdminChatThreads(
+    @Args('scope', {
+      type: () => AdminChatThreadScope,
+      nullable: true,
+      defaultValue: AdminChatThreadScope.ALL,
+    })
+    scope: AdminChatThreadScope | null,
+    @Args('hasErrorOnly', {
+      type: () => Boolean,
+      nullable: true,
+      defaultValue: false,
+    })
+    hasErrorOnly: boolean | null,
+    @Args('userNeverEngagedOnly', {
+      type: () => Boolean,
+      nullable: true,
+      defaultValue: false,
+    })
+    userNeverEngagedOnly: boolean | null,
+    @Args('sortBy', {
+      type: () => AdminChatThreadSortField,
+      nullable: true,
+      defaultValue: AdminChatThreadSortField.CREATED_AT,
+    })
+    sortBy: AdminChatThreadSortField | null,
+    @Args('sortDirection', {
+      type: () => AdminChatThreadSortDirection,
+      nullable: true,
+      defaultValue: AdminChatThreadSortDirection.DESC,
+    })
+    sortDirection: AdminChatThreadSortDirection | null,
+    @Args('limit', { type: () => Int, nullable: true, defaultValue: 25 })
+    limit: number | null,
+    @Args('offset', { type: () => Int, nullable: true, defaultValue: 0 })
+    offset: number | null,
+    @Args('searchTerm', { type: () => String, nullable: true })
+    searchTerm?: string | null,
+  ): Promise<PaginatedAdminChatThreadsDTO> {
+    return this.adminGlobalChatThreadsService.getGlobalChatThreads({
+      scope: scope ?? AdminChatThreadScope.ALL,
+      hasErrorOnly: hasErrorOnly ?? false,
+      userNeverEngagedOnly: userNeverEngagedOnly ?? false,
+      searchTerm: searchTerm ?? undefined,
+      sortBy: sortBy ?? AdminChatThreadSortField.CREATED_AT,
+      sortDirection: sortDirection ?? AdminChatThreadSortDirection.DESC,
+      limit: limit ?? 25,
+      offset: offset ?? 0,
+    });
   }
 
   @UseGuards(AdminPanelGuard)

@@ -13,9 +13,12 @@ import { BillingReminderModule } from 'src/engine/core-modules/billing/reminders
 import { BillingReminderCronJob } from 'src/engine/core-modules/billing/reminders/crons/billing-reminder.cron.job';
 import { StripeModule } from 'src/engine/core-modules/billing/stripe/stripe.module';
 import { ApplicationInstallModule } from 'src/engine/core-modules/application/application-install/application-install.module';
+import { ApplicationManifestModule } from 'src/engine/core-modules/application/application-manifest/application-manifest.module';
 import { ApplicationRegistrationModule } from 'src/engine/core-modules/application/application-registration/application-registration.module';
 import { ApplicationUpgradeModule } from 'src/engine/core-modules/application/application-upgrade/application-upgrade.module';
 import { UpgradeApplicationsJob } from 'src/engine/core-modules/application/jobs/upgrade-applications.job';
+import { InstallPreInstalledAppsJob } from 'src/engine/core-modules/application/pre-installed-apps/jobs/install-pre-installed-apps.job';
+import { PreInstalledAppsModule } from 'src/engine/core-modules/application/pre-installed-apps/pre-installed-apps.module';
 import { InstallOnboardingAppsJob } from 'src/engine/core-modules/onboarding/jobs/install-onboarding-apps.job';
 import { OnboardingModule } from 'src/engine/core-modules/onboarding/onboarding.module';
 import { EmailSenderJob } from 'src/engine/core-modules/email/email-sender.job';
@@ -34,6 +37,7 @@ import { UpdateWorkspaceMemberEmailJob } from 'src/engine/core-modules/user/jobs
 import { UserVarsModule } from 'src/engine/core-modules/user/user-vars/user-vars.module';
 import { UserModule } from 'src/engine/core-modules/user/user.module';
 import { HandleWorkspaceMemberDeletedJob } from 'src/engine/core-modules/workspace/handle-workspace-member-deleted.job';
+import { WorkspaceDeletionApplicationUninstallJob } from 'src/engine/core-modules/workspace/jobs/workspace-deletion-application-uninstall.job';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { WorkspaceModule } from 'src/engine/core-modules/workspace/workspace.module';
 import { AiAgentMonitorModule } from 'src/engine/metadata-modules/ai/ai-agent-monitor/ai-agent-monitor.module';
@@ -93,8 +97,10 @@ import { WorkflowModule } from 'src/modules/workflow/workflow.module';
     EnterpriseModule,
     EmailingModule,
     ApplicationInstallModule,
+    ApplicationManifestModule,
     ApplicationRegistrationModule,
     ApplicationUpgradeModule,
+    PreInstalledAppsModule,
     OnboardingModule,
     BillingReminderModule,
   ],
@@ -108,11 +114,13 @@ import { WorkflowModule } from 'src/modules/workflow/workflow.module';
     RefreshCampaignStatsJob,
     UpdateSubscriptionQuantityJob,
     HandleWorkspaceMemberDeletedJob,
+    WorkspaceDeletionApplicationUninstallJob,
     CleanWorkspaceDeletionWarningUserVarsJob,
     UpdateWorkspaceMemberEmailJob,
     GenerateSdkClientJob,
     UpgradeApplicationsJob,
     InstallOnboardingAppsJob,
+    InstallPreInstalledAppsJob,
   ],
 })
 export class JobsModule {

@@ -94,7 +94,7 @@ RUN apk add --no-cache \
     'nghttp2-libs>=1.69.0-r0' \
     'libcrypto3>=3.5.7-r0' \
     'libssl3>=3.5.7-r0' \
-    'postgresql18-client>=18.4-r0' \
+    'postgresql18-client>=18.5-r0' \
     jq
 
 COPY ./packages/twenty-docker/twenty/entrypoint.sh /app/entrypoint.sh
@@ -115,6 +115,11 @@ COPY --chown=1000 --from=twenty-server-build /app/node_modules /app/node_modules
 COPY --chown=1000 --from=twenty-server-build /app/packages/twenty-server/package.json /app/packages/twenty-server/
 COPY --chown=1000 --from=twenty-server-build /app/packages/twenty-server/dist /app/packages/twenty-server/dist
 COPY --chown=1000 --from=twenty-server-build /app/packages/twenty-server/patches /app/packages/twenty-server/patches
+# Shell entrypoints referenced by package.json scripts (upgrade:background*)
+COPY --chown=1000 --from=twenty-server-build /app/packages/twenty-server/scripts /app/packages/twenty-server/scripts
+# COPY preserves the committed mode, but the scripts are also invoked directly
+# and not only through yarn, so do not let a dropped exec bit reach the pod
+RUN chmod +x /app/packages/twenty-server/scripts/upgrade-background.sh
 
 # Workspace packages (dist + package.json; node_modules symlinks resolve to these)
 COPY --chown=1000 --from=twenty-server-build /app/packages/twenty-shared/package.json /app/packages/twenty-shared/
