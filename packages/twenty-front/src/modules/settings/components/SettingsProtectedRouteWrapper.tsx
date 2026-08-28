@@ -1,5 +1,5 @@
-import { useHasAccessTokenPair } from '@/auth/hooks/useHasAccessTokenPair';
 import { useCanUseAi } from '@/ai/hooks/useCanUseAi';
+import { useIsLogged } from '@/auth/hooks/useIsLogged';
 import { useHasPermissionFlag } from '@/settings/roles/hooks/useHasPermissionFlag';
 import { useIsFeatureEnabled } from '@/workspace/hooks/useIsFeatureEnabled';
 import { type ReactNode } from 'react';
@@ -24,14 +24,14 @@ export const SettingsProtectedRouteWrapper = ({
   requiredFeatureFlag,
   requiresAiEntitlement = false,
 }: SettingsProtectedRouteWrapperProps) => {
-  const hasAccessTokenPair = useHasAccessTokenPair();
+  const isLogged = useIsLogged();
   const hasPermission = useHasPermissionFlag(settingsPermission);
   const requiredFeatureFlagEnabled = useIsFeatureEnabled(
     requiredFeatureFlag || null,
   );
   const canUseAi = useCanUseAi();
 
-  if (!hasAccessTokenPair) {
+  if (!isLogged) {
     return null;
   }
 

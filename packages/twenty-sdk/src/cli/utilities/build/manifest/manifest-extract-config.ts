@@ -16,12 +16,14 @@ export enum TargetFunction {
   DefineAgent = 'defineAgent',
   DefineConnectionProvider = 'defineConnectionProvider',
   DefineFrontComponent = 'defineFrontComponent',
+  DefineSettingsFrontComponent = 'defineSettingsFrontComponent',
   DefineView = 'defineView',
   DefineViewField = 'defineViewField',
   DefineNavigationMenuItem = 'defineNavigationMenuItem',
   DefinePageLayout = 'definePageLayout',
   DefinePageLayoutTab = 'definePageLayoutTab',
   DefineCommandMenuItem = 'defineCommandMenuItem',
+  DefineTimelineActivityType = 'defineTimelineActivityType',
 }
 
 export enum ManifestEntityKey {
@@ -43,6 +45,7 @@ export enum ManifestEntityKey {
   PageLayouts = 'pageLayouts',
   PageLayoutTabs = 'pageLayoutTabs',
   CommandMenuItems = 'commandMenuItems',
+  TimelineActivityTypes = 'timelineActivityTypes',
 }
 
 export type EntityFilePaths = Record<ManifestEntityKey, string[]>;
@@ -70,6 +73,8 @@ export const TARGET_FUNCTION_TO_ENTITY_KEY_MAPPING: Record<
   [TargetFunction.DefineConnectionProvider]:
     ManifestEntityKey.ConnectionProviders,
   [TargetFunction.DefineFrontComponent]: ManifestEntityKey.FrontComponents,
+  [TargetFunction.DefineSettingsFrontComponent]:
+    ManifestEntityKey.FrontComponents,
   [TargetFunction.DefineView]: ManifestEntityKey.Views,
   [TargetFunction.DefineViewField]: ManifestEntityKey.ViewFields,
   [TargetFunction.DefineNavigationMenuItem]:
@@ -77,6 +82,8 @@ export const TARGET_FUNCTION_TO_ENTITY_KEY_MAPPING: Record<
   [TargetFunction.DefinePageLayout]: ManifestEntityKey.PageLayouts,
   [TargetFunction.DefinePageLayoutTab]: ManifestEntityKey.PageLayoutTabs,
   [TargetFunction.DefineCommandMenuItem]: ManifestEntityKey.CommandMenuItems,
+  [TargetFunction.DefineTimelineActivityType]:
+    ManifestEntityKey.TimelineActivityTypes,
 };
 
 const computeIsTargetFunctionCall = (node: ts.Node): string | undefined => {

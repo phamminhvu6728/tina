@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 
-import { isWorkspaceNotFoundGraphQLError } from '@/apollo/utils/isWorkspaceNotFoundGraphQLError';
+import { checkIfItsAViteStaleChunkLazyLoadingError } from '@/error-handler/utils/checkIfItsAViteStaleChunkLazyLoadingError';
 import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import {
   CombinedGraphQLErrors,
@@ -35,14 +35,6 @@ export const PromiseRejectionEffect = () => {
     async (event: PromiseRejectionEvent) => {
       const error = event.reason;
       if (isApolloError(error)) {
-        // First-install / wiped DB: public workspace lookup can 404 — no toast
-        if (
-          CombinedGraphQLErrors.is(error) &&
-          error.errors.some(isWorkspaceNotFoundGraphQLError)
-        ) {
-          return;
-        }
-
         enqueueErrorSnackBar({
           apolloError: error,
         });
@@ -53,7 +45,11 @@ export const PromiseRejectionEffect = () => {
         error?.networkError?.name === 'AbortError' ||
         error?.name === 'AbortError';
 
-      if (!isAbortError) {
+      const isViteStaleChunkLazyLoadingError =
+        error instanceof Error &&
+        checkIfItsAViteStaleChunkLazyLoadingError(error);
+
+      if (!isAbortError && !isViteStaleChunkLazyLoadingError) {
         enqueueErrorSnackBar(
           error instanceof Error ? { message: error.message } : {},
         );

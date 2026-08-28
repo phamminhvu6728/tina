@@ -74,7 +74,6 @@ registerEnumType(WorkspaceDiscoverability, {
 @Entity({ name: 'workspace', schema: 'core' })
 @ObjectType('Workspace')
 export class WorkspaceEntity {
-  // Fields
   @Field(() => UUIDScalarType)
   @PrimaryGeneratedColumn('uuid')
   id: string;

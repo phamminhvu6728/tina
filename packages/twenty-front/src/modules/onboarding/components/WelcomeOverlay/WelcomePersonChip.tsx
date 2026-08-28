@@ -10,11 +10,6 @@ type WelcomePersonChipSizeVariant = 'default' | 'compact';
 
 const StyledChip = styled.div<{ sizeVariant: WelcomePersonChipSizeVariant }>`
   align-items: center;
-  background: ${themeCssVariables.background.transparent.light};
-  border-radius: ${({ sizeVariant }) =>
-    sizeVariant === 'compact'
-      ? themeCssVariables.border.radius.sm
-      : themeCssVariables.border.radius.md};
   display: inline-flex;
   gap: ${({ sizeVariant }) =>
     sizeVariant === 'compact'
@@ -28,11 +23,15 @@ const StyledChip = styled.div<{ sizeVariant: WelcomePersonChipSizeVariant }>`
 
 const StyledPersonName = styled.span`
   color: ${themeCssVariables.font.color.primary};
-  max-width: min(40vw, 360px);
+  max-width: min(calc(40vw / var(--t-zoom, 1)), 360px);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  @media (max-width: 600px) {
+    max-width: min(calc(70vw / var(--t-zoom, 1)), 360px);
+  }
 `;
 
 type WelcomePersonChipProps = {

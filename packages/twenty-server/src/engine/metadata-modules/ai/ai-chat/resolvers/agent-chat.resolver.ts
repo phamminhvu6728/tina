@@ -334,6 +334,11 @@ export class AgentChatResolver {
     answers: AgentChatQuestionAnswerInput[],
     @Args('modelId', { type: () => String, nullable: true })
     modelId: string | undefined,
+    @Args('fileAttachments', {
+      type: () => [FileAttachmentInput],
+      nullable: true,
+    })
+    fileAttachments: FileAttachmentInput[] | null,
     @AuthUserWorkspaceId() userWorkspaceId: string,
     @AuthWorkspace() workspace: WorkspaceEntity,
   ): Promise<SendChatMessageResultDTO> {
@@ -378,6 +383,7 @@ export class AgentChatResolver {
           userWorkspaceId,
           workspace,
           modelId,
+          fileAttachments: fileAttachments ?? undefined,
         },
       );
 

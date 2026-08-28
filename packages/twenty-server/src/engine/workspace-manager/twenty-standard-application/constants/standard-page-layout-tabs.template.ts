@@ -145,6 +145,12 @@ export const TAB_PROPS = {
     icon: 'IconSettings',
     layoutMode: PageLayoutTabLayoutMode.VERTICAL_LIST,
   },
+  composer: {
+    title: 'Email',
+    position: 15,
+    icon: 'IconMail',
+    layoutMode: PageLayoutTabLayoutMode.VERTICAL_LIST,
+  },
   flowSecondary: {
     title: 'Flow',
     position: 20,
@@ -212,6 +218,12 @@ export const WIDGET_PROPS = {
     title: 'Flow',
     type: WidgetType.WORKFLOW,
     gridPosition: GRID_POSITIONS.FULL_WIDTH,
+    position: VERTICAL_LIST_LAYOUT_POSITIONS.FIRST,
+  },
+  messageCampaign: {
+    title: 'Email',
+    type: WidgetType.MESSAGE_CAMPAIGN_BODY,
+    gridPosition: GRID_POSITIONS.RICH_TEXT,
     position: VERTICAL_LIST_LAYOUT_POSITIONS.FIRST,
   },
   workflowVersion: {
