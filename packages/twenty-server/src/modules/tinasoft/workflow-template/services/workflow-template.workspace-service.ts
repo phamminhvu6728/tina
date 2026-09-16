@@ -7,16 +7,24 @@ import { WorkspaceDomainsService } from 'src/engine/core-modules/domain/workspac
 import { I18nService } from 'src/engine/core-modules/i18n/i18n.service';
 import { RecordPositionService } from 'src/engine/core-modules/record-position/services/record-position.service';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
+import { FieldMetadataService } from 'src/engine/metadata-modules/field-metadata/services/field-metadata.service';
 import { WorkspaceManyOrAllFlatEntityMapsCacheService } from 'src/engine/metadata-modules/flat-entity/services/workspace-many-or-all-flat-entity-maps-cache.service';
 import { buildObjectIdByNameMaps } from 'src/engine/metadata-modules/flat-object-metadata/utils/build-object-id-by-name-maps.util';
+import { ObjectMetadataService } from 'src/engine/metadata-modules/object-metadata/object-metadata.service';
 import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
 import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
 import { PrefillLogicFunctionService } from 'src/engine/workspace-manager/standard-objects-prefill-data/services/prefill-logic-function.service';
+import { prefillCandidateCustomObject } from 'src/engine/workspace-manager/standard-objects-prefill-data/utils/prefill-candidate-custom-object.util';
+import { prefillJobCustomObject } from 'src/engine/workspace-manager/standard-objects-prefill-data/utils/prefill-job-custom-object.util';
 import { type WorkflowTemplateDTO } from 'src/modules/tinasoft/workflow-template/api/dtos/workflow-template.dto';
 import { getWorkflowTemplateLogicFunctionDefinitions } from 'src/modules/tinasoft/workflow-template/catalog/workflow-template-logic-functions.constant';
 import { WorkflowTemplateFactory } from 'src/modules/tinasoft/workflow-template/services/workflow-template.factory';
 import { type CreateWorkflowFromTemplateResult } from 'src/modules/tinasoft/workflow-template/types/workflow-template.type';
 import { validateWorkflowTemplateSettings } from 'src/modules/tinasoft/workflow-template/utils/workflow-template-settings.util';
+import {
+  JOB_DESCRIPTION_AGENT_UNIVERSAL_IDENTIFIER,
+  getJobDescriptionAgentId,
+} from 'src/modules/tinasoft/workflow-template/utils/workflow-template-agent.util';
 import {
   WorkflowVersionStatus,
   type WorkflowVersionWorkspaceEntity,
@@ -52,6 +60,8 @@ export class WorkflowTemplateWorkspaceService {
     private readonly recordPositionService: RecordPositionService,
     private readonly i18nService: I18nService,
     private readonly prefillLogicFunctionService: PrefillLogicFunctionService,
+    private readonly objectMetadataService: ObjectMetadataService,
+    private readonly fieldMetadataService: FieldMetadataService,
     private readonly flatEntityMapsCacheService: WorkspaceManyOrAllFlatEntityMapsCacheService,
     private readonly workflowSchemaWorkspaceService: WorkflowSchemaWorkspaceService,
     private readonly workflowTemplateFactory: WorkflowTemplateFactory,
@@ -110,6 +120,15 @@ export class WorkflowTemplateWorkspaceService {
       workspaceId,
       definitions: getWorkflowTemplateLogicFunctionDefinitions(workspaceId),
     });
+
+    await this.ensureWorkflowTemplateDataModelsSeeded({
+      workspaceId,
+      templateId,
+    });
+
+    if (templateId === 'hr-generate-job-description') {
+      await this.ensureJobDescriptionAgentSeeded(workspaceId);
+    }
 
     const workflowTemplateDefinition = builder.build({
       settings: validatedSettings,
@@ -204,6 +223,112 @@ export class WorkflowTemplateWorkspaceService {
         steps: enrichedSteps,
       };
     }, authContext);
+  }
+
+  private async ensureWorkflowTemplateDataModelsSeeded({
+    workspaceId,
+    templateId,
+  }: {
+    workspaceId: string;
+    templateId: string;
+  }): Promise<void> {
+    if (templateId === 'hr-generate-job-description') {
+      await prefillJobCustomObject({
+        workspaceId,
+        objectMetadataService: this.objectMetadataService,
+        fieldMetadataService: this.fieldMetadataService,
+      });
+    }
+
+    if (templateId === 'hr-cv-intake-matching') {
+      await prefillCandidateCustomObject({
+        workspaceId,
+        objectMetadataService: this.objectMetadataService,
+        fieldMetadataService: this.fieldMetadataService,
+      });
+    }
+  }
+
+  private async ensureJobDescriptionAgentSeeded(workspaceId: string) {
+    const [workspace] = await this.workspaceRepository.manager.query(
+      `SELECT "workspaceCustomApplicationId" FROM core."workspace" WHERE id = $1`,
+      [workspaceId],
+    );
+    const applicationId = workspace?.workspaceCustomApplicationId;
+
+    if (!applicationId) {
+      return;
+    }
+
+    const agentId = getJobDescriptionAgentId(workspaceId);
+
+    await this.workspaceRepository.manager
+      .createQueryBuilder()
+      .insert()
+      .into('core.agent', [
+        'id',
+        'name',
+        'label',
+        'icon',
+        'description',
+        'prompt',
+        'modelId',
+        'responseFormat',
+        'isCustom',
+        'workspaceId',
+        'applicationId',
+        'universalIdentifier',
+        'modelConfiguration',
+        'evaluationInputs',
+      ])
+      .orIgnore()
+      .values([
+        {
+          id: agentId,
+          name: 'generateJobDescriptionAgent',
+          label: 'Job Description Generator',
+          icon: 'IconBriefcase',
+          description:
+            'Generates comprehensive job descriptions based on a user-provided prompt',
+          prompt: `You are an expert HR specialist. Based on the user's input, generate a job title and a comprehensive job description.
+
+The jobDescription should include:
+1. Position Summary - Brief overview of the role
+2. Primary Responsibilities - Key duties and deliverables
+3. Required Qualifications - Essential skills and experience
+4. Nice-to-Have Skills - Preferred qualifications
+5. What We Offer - Benefits and compensation
+
+Make the description engaging, clear, and professional.`,
+          modelId: 'default-smart-model',
+          responseFormat: {
+            type: 'json',
+            schema: {
+              type: 'object',
+              properties: {
+                jobTitle: {
+                  type: 'string',
+                  description:
+                    'The extracted or inferred job title, e.g. Software Engineer',
+                },
+                jobDescription: {
+                  type: 'string',
+                  description: 'The full professional job description',
+                },
+              },
+              required: ['jobTitle', 'jobDescription'],
+              additionalProperties: false,
+            },
+          },
+          isCustom: false,
+          workspaceId,
+          applicationId,
+          universalIdentifier: JOB_DESCRIPTION_AGENT_UNIVERSAL_IDENTIFIER,
+          modelConfiguration: {},
+          evaluationInputs: [],
+        },
+      ])
+      .execute();
   }
 
   private async resolveFindRecordsFieldMetadataIds({

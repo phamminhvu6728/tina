@@ -5,6 +5,7 @@ import { I18nModule } from 'src/engine/core-modules/i18n/i18n.module';
 import { JobsModule } from 'src/engine/core-modules/message-queue/jobs.module';
 import { MessageQueueModule } from 'src/engine/core-modules/message-queue/message-queue.module';
 import { WorkspaceEventEmitterModule } from 'src/engine/workspace-event-emitter/workspace-event-emitter.module';
+import { TwentyOrmModule } from 'src/engine/twenty-orm/twenty-orm.module';
 
 @Module({
   imports: [
@@ -12,8 +13,7 @@ import { WorkspaceEventEmitterModule } from 'src/engine/workspace-event-emitter/
     MessageQueueModule.registerExplorer(),
     WorkspaceEventEmitterModule,
     JobsModule,
-    TwentyORMModule,
-    GlobalWorkspaceDataSourceModule,
+    TwentyOrmModule,
     I18nModule,
   ],
 })

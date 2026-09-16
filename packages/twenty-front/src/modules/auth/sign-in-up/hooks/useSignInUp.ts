@@ -157,30 +157,31 @@ export const useSignInUp = (form: UseFormReturn<Form>) => {
         }
 
         if (
-          !isInviteMode &&
           signInUpMode === SignInUpMode.SignUp &&
-          (!isOnAWorkspace || !isDefined(workspacePublicData))
+          !isInviteMode &&
+          (isDefined(workspaceInviteHash) ||
+            isDefined(workspacePersonalInviteToken))
         ) {
-          return await signUpWithCredentials(
-            data.email.toLowerCase().trim(),
-            data.password,
-            token,
+          const verifyEmailRedirectPath = buildAppPathWithQueryParams(
+            AppPath.PlanRequired,
+            await buildSearchParamsFromUrlSyncedStates(),
           );
+
+          return await signUpWithCredentialsInWorkspace({
+            email: data.email.toLowerCase().trim(),
+            password: data.password,
+            workspaceInviteHash,
+            workspacePersonalInviteToken,
+            captchaToken: token,
+            verifyEmailRedirectPath,
+          });
         }
 
-        const verifyEmailRedirectPath = buildAppPathWithQueryParams(
-          AppPath.PlanRequired,
-          await buildSearchParamsFromUrlSyncedStates(),
+        return await signUpWithCredentials(
+          data.email.toLowerCase().trim(),
+          data.password,
+          token,
         );
-
-        await signUpWithCredentialsInWorkspace({
-          email: data.email.toLowerCase().trim(),
-          password: data.password,
-          workspaceInviteHash,
-          workspacePersonalInviteToken,
-          captchaToken: token,
-          verifyEmailRedirectPath,
-        });
       } catch (error: unknown) {
         enqueueErrorSnackBar({
           ...(isErrorLike(error) ? { apolloError: error } : {}),

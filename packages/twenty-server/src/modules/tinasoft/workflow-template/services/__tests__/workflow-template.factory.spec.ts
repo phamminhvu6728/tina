@@ -26,10 +26,10 @@ describe('WorkflowTemplateFactory', () => {
     factory = module.get(WorkflowTemplateFactory);
   });
 
-  it('returns all 6 workflow template builders', () => {
+  it('returns all 8 workflow template builders', () => {
     const dtos = factory.getAllDTOs({ workspaceDisplayName: 'Acme' });
 
-    expect(dtos).toHaveLength(6);
+    expect(dtos).toHaveLength(8);
     expect(dtos.map(({ id }) => id).sort()).toEqual(
       [
         'new-lead-alert',
@@ -38,6 +38,8 @@ describe('WorkflowTemplateFactory', () => {
         'customer-30-day-check-in',
         're-purchase-reminder',
         'customer-birthday-email',
+        'hr-cv-intake-matching',
+        'hr-generate-job-description',
       ].sort(),
     );
   });
@@ -50,6 +52,8 @@ describe('WorkflowTemplateFactory', () => {
       'customer-30-day-check-in',
       're-purchase-reminder',
       'customer-birthday-email',
+      'hr-cv-intake-matching',
+      'hr-generate-job-description',
     ] as const;
 
     for (const templateId of templateIds) {

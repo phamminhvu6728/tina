@@ -94,6 +94,11 @@ export class CustomerBirthdayEmailWorkflowTemplateBuilder implements IWorkflowTe
             input: {
               objectName: 'person',
               limit: 200,
+              pagination: {
+                fetchAll: true,
+                maxRecords: 5000,
+                pageSize: 200,
+              },
               filter: {
                 recordFilterGroups: [
                   birthdayFilterGroup,

@@ -12,7 +12,9 @@ export type WorkflowTemplateId =
   | 'quote-expiry-reminder'
   | 'customer-30-day-check-in'
   | 're-purchase-reminder'
-  | 'customer-birthday-email';
+  | 'customer-birthday-email'
+  | 'hr-cv-intake-matching'
+  | 'hr-generate-job-description';
 
 export type WorkflowTemplateBuildContext = {
   settings: Record<string, unknown>;

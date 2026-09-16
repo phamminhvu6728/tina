@@ -1,5 +1,5 @@
 import { DEFAULT_WORKSPACE_LOGO } from '@/constants/DefaultWorkspaceLogo';
-import { Img } from '@react-email/components';
+import { Img } from 'react-email';
 
 const logoStyle = {
   marginBottom: '40px',

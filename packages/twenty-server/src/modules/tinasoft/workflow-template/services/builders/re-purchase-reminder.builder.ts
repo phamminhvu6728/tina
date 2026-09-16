@@ -104,6 +104,11 @@ export class RepurchaseReminderWorkflowTemplateBuilder implements IWorkflowTempl
             input: {
               objectName: 'company',
               limit: 200,
+              pagination: {
+                fetchAll: true,
+                maxRecords: 5000,
+                pageSize: 200,
+              },
               orderBy: {
                 gqlOperationOrderBy: [{ name: OrderByDirection.AscNullsLast }],
               },

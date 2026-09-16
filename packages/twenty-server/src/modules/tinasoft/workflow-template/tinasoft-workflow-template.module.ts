@@ -4,7 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { WorkspaceDomainsModule } from 'src/engine/core-modules/domain/workspace-domains/workspace-domains.module';
 import { RecordPositionModule } from 'src/engine/core-modules/record-position/record-position.module';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
+import { FieldMetadataModule } from 'src/engine/metadata-modules/field-metadata/field-metadata.module';
 import { WorkspaceManyOrAllFlatEntityMapsCacheModule } from 'src/engine/metadata-modules/flat-entity/services/workspace-many-or-all-flat-entity-maps-cache.module';
+import { ObjectMetadataModule } from 'src/engine/metadata-modules/object-metadata/object-metadata.module';
 import { PermissionsModule } from 'src/engine/metadata-modules/permissions/permissions.module';
 import { StandardObjectsPrefillModule } from 'src/engine/workspace-manager/standard-objects-prefill-data/standard-objects-prefill.module';
 import { WorkflowTemplateResolver } from 'src/modules/tinasoft/workflow-template/api/workflow-template.resolver';
@@ -24,6 +26,8 @@ import { WorkflowSchemaModule } from 'src/modules/workflow/workflow-builder/work
     RecordPositionModule,
     PermissionsModule,
     StandardObjectsPrefillModule,
+    ObjectMetadataModule,
+    FieldMetadataModule,
     WorkspaceManyOrAllFlatEntityMapsCacheModule,
     WorkflowSchemaModule,
   ],

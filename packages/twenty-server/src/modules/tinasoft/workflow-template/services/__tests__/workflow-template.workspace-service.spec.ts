@@ -7,8 +7,10 @@ import { WorkspaceDomainsService } from 'src/engine/core-modules/domain/workspac
 import { I18nService } from 'src/engine/core-modules/i18n/i18n.service';
 import { RecordPositionService } from 'src/engine/core-modules/record-position/services/record-position.service';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
+import { FieldMetadataService } from 'src/engine/metadata-modules/field-metadata/services/field-metadata.service';
 import { WorkspaceManyOrAllFlatEntityMapsCacheService } from 'src/engine/metadata-modules/flat-entity/services/workspace-many-or-all-flat-entity-maps-cache.service';
-import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
+import { ObjectMetadataService } from 'src/engine/metadata-modules/object-metadata/object-metadata.service';
+import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
 import { PrefillLogicFunctionService } from 'src/engine/workspace-manager/standard-objects-prefill-data/services/prefill-logic-function.service';
 import { type IWorkflowTemplateBuilder } from 'src/modules/tinasoft/workflow-template/services/builders/workflow-template.builder.interface';
 import {
@@ -79,10 +81,10 @@ describe('WorkflowTemplateWorkspaceService', () => {
         .mockResolvedValue({ generatedMaps: [{ id: mockWorkflowId }] }),
     };
 
-    const globalWorkspaceOrmManager = {
+    const workspaceOrmManager = {
       getRepository: jest
         .fn()
-        .mockImplementation((_workspaceId: string, entityName: string) => {
+        .mockImplementation((entityName: string) => {
           if (entityName === 'workflow') {
             return workflowRepository;
           }
@@ -92,7 +94,7 @@ describe('WorkflowTemplateWorkspaceService', () => {
       executeInWorkspaceContext: jest
         .fn()
         .mockImplementation((fn: () => unknown) => fn()),
-    } as unknown as GlobalWorkspaceOrmManager;
+    } as unknown as WorkspaceOrmManager;
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -105,8 +107,21 @@ describe('WorkflowTemplateWorkspaceService', () => {
           inject: [...WORKFLOW_TEMPLATE_BUILDERS],
         },
         {
-          provide: GlobalWorkspaceOrmManager,
-          useValue: globalWorkspaceOrmManager,
+          provide: WorkspaceOrmManager,
+          useValue: workspaceOrmManager,
+        },
+        {
+          provide: ObjectMetadataService,
+          useValue: {
+            findOneWithinWorkspace: jest.fn().mockResolvedValue(null),
+            createOneObject: jest.fn().mockResolvedValue({ id: 'object-id' }),
+          },
+        },
+        {
+          provide: FieldMetadataService,
+          useValue: {
+            createManyFields: jest.fn().mockResolvedValue([]),
+          },
         },
         {
           provide: RecordPositionService,
@@ -137,6 +152,11 @@ describe('WorkflowTemplateWorkspaceService', () => {
               },
               flatFieldMetadataMaps: {
                 byUniversalIdentifier: {
+                  'person-emails-field': {
+                    id: 'person-emails-field-id',
+                    objectMetadataId: 'person-object-id',
+                    name: 'emails',
+                  },
                   'birthday-field': {
                     id: 'birthday-field-id',
                     objectMetadataId: 'person-object-id',
@@ -236,7 +256,7 @@ describe('WorkflowTemplateWorkspaceService', () => {
       workspaceDisplayName: 'Acme',
     });
 
-    expect(templates).toHaveLength(6);
+    expect(templates).toHaveLength(8);
     expect(templates.map(({ id }) => id).sort()).toEqual(
       [
         'new-lead-alert',
@@ -245,6 +265,8 @@ describe('WorkflowTemplateWorkspaceService', () => {
         'customer-30-day-check-in',
         're-purchase-reminder',
         'customer-birthday-email',
+        'hr-cv-intake-matching',
+        'hr-generate-job-description',
       ].sort(),
     );
   });

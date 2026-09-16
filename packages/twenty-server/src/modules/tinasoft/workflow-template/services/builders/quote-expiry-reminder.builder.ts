@@ -100,6 +100,11 @@ export class QuoteExpiryReminderWorkflowTemplateBuilder implements IWorkflowTemp
             input: {
               objectName: 'opportunity',
               limit: 200,
+              pagination: {
+                fetchAll: true,
+                maxRecords: 5000,
+                pageSize: 200,
+              },
               filter: {
                 recordFilterGroups: [findOpportunitiesFilterGroup],
                 recordFilters: [

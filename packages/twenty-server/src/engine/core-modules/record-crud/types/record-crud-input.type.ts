@@ -35,6 +35,11 @@ export type FindRecordsInput = {
   };
   limit?: number;
   offset?: number;
+  pagination?: {
+    fetchAll: boolean;
+    maxRecords: number;
+    pageSize: number;
+  };
 };
 
 export type UpsertRecordInput = {
