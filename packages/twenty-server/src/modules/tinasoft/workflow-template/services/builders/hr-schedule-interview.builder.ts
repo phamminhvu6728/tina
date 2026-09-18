@@ -7,14 +7,12 @@ import { FieldMetadataType } from 'twenty-shared/types';
 import { WorkflowActionType } from 'twenty-shared/workflow';
 
 import { WorkflowTemplateDTO } from 'src/modules/tinasoft/workflow-template/api/dtos/workflow-template.dto';
-import { getWorkflowTemplateLogicFunctionIds } from 'src/modules/tinasoft/workflow-template/catalog/workflow-template-logic-functions.constant';
 import { IWorkflowTemplateBuilder } from 'src/modules/tinasoft/workflow-template/services/builders/workflow-template.builder.interface';
 import {
   type WorkflowTemplateBuildContext,
   type WorkflowTemplateDefinition,
 } from 'src/modules/tinasoft/workflow-template/types/workflow-template.type';
 import { ERROR_HANDLING_OPTIONS } from 'src/modules/tinasoft/workflow-template/utils/workflow-template-builder-helpers.util';
-import { getStringWorkflowTemplateSetting } from 'src/modules/tinasoft/workflow-template/utils/workflow-template-settings.util';
 import { WorkflowTriggerType } from 'src/modules/workflow/workflow-trigger/types/workflow-trigger.type';
 
 @Injectable()
@@ -26,13 +24,13 @@ export class HrScheduleInterviewWorkflowTemplateBuilder
   getDTO(_workspaceDisplayName: string, i18n?: I18n): WorkflowTemplateDTO {
     return {
       id: this.id,
-      name: 'Lên lịch phỏng vấn & tạo link Google Meet',
+      name: 'Lên lịch phỏng vấn & tạo link Google Meet (Kèm chữ ký)',
       description:
-        'HR nhập thông tin buổi phỏng vấn (ứng viên, email, vị trí, người phỏng vấn, ngày và khung giờ bắt đầu/kết thúc), hệ thống kiểm tra hợp lệ và tự động tạo sự kiện Google Calendar kèm link Google Meet, lưu hồ sơ phỏng vấn và gửi thư mời cho ứng viên cùng PM/HR.',
+        'HR nhập thông tin buổi phỏng vấn (ứng viên, email, CC, BCC, vị trí, người phỏng vấn, người ký, ngày và khung giờ bắt đầu/kết thúc), hệ thống kiểm tra hợp lệ và tự động tạo sự kiện Google Calendar kèm link Google Meet, lưu hồ sơ phỏng vấn và gửi thư mời có khối chữ ký điện tử xác nhận cho ứng viên cùng CC/BCC.',
       shortDescription:
-        'Xếp lịch phỏng vấn thủ công, tự động sinh link Google Meet và email thư mời.',
+        'Xếp lịch phỏng vấn, tự động sinh link Google Meet và gửi email thư mời kèm chữ ký điện tử trong 1 workflow duy nhất.',
       purpose:
-        'Rút gọn quy trình sắp xếp phỏng vấn: không còn nhập tay link Meet, mọi cuộc phỏng vấn được lưu lại trên CRM với link và trạng thái theo dõi rõ ràng.',
+        'Rút gọn quy trình thành 1 bước duy nhất: tự động sinh link Meet, lưu CRM và gửi thư mời có kèm chữ ký điện tử chuyên nghiệp.',
       category: 'Tuyển dụng & HR',
       icon: 'IconCalendarEvent',
       requiredSettings: [
@@ -49,40 +47,13 @@ export class HrScheduleInterviewWorkflowTemplateBuilder
   }
 
   build({
-    settings,
-    workspaceId,
+    settings: _settings,
+    workspaceId: _workspaceId,
   }: WorkflowTemplateBuildContext): WorkflowTemplateDefinition {
     const formStepId = uuidv4();
     const interviewScheduleStepId = uuidv4();
     const calendarEventStepId = uuidv4();
     const createRecordStepId = uuidv4();
-    const sendEmailStepId = uuidv4();
-
-    const pmEmail = getStringWorkflowTemplateSetting({
-      settings,
-      key: 'pmEmail',
-    });
-
-    const { interviewSchedule } =
-      getWorkflowTemplateLogicFunctionIds(workspaceId);
-
-    const emailBody = `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8fafc; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0;">
-  <div style="background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); padding: 24px; border-radius: 10px; text-align: center; color: #ffffff; margin-bottom: 20px;">
-    <h2 style="margin: 0 0 6px 0; font-size: 22px;">TINASOFT RECRUITMENT ATS</h2>
-    <p style="margin: 0; font-size: 14px;">Thư mời tham gia phỏng vấn trực tuyến</p>
-  </div>
-  <div style="background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
-    <h3>👤 {{${formStepId}.candidateName}}</h3>
-    <p>Vị trí ứng tuyển: <strong style="color: #2563eb;">{{${formStepId}.jobTitle}}</strong></p>
-    <p>📅 Thời gian: <strong>{{${formStepId}.interviewDate}} — {{${interviewScheduleStepId}.startTime}} → {{${interviewScheduleStepId}.endTime}}</strong> ({{${interviewScheduleStepId}.timeZone}})</p>
-    <p>👥 Người phỏng vấn: {{${formStepId}.interviewer}}</p>
-    <p style="margin-top: 16px;"><a href={{${calendarEventStepId}.conferenceLink}} style="background-color: #25D366; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-weight: 600; font-size: 14px; display: inline-block;">🎥 Tham gia qua Google Meet</a></p>
-    <p style="font-size: 12px; color: #64748b; margin-top: 8px;">Liên kết Meet: {{${calendarEventStepId}.conferenceLink}}</p>
-  </div>
-  <div style="background: #ffffff; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0;">
-    <p style="margin: 0; font-size: 13px; color: #475569;">📝 Ghi chú: {{${formStepId}.notes}}</p>
-  </div>
-</div>`;
 
     return {
       workflowName: 'HR: Lên lịch phỏng vấn & tạo link Google Meet',
@@ -179,6 +150,20 @@ export class HrScheduleInterviewWorkflowTemplateBuilder
                   maxRows: 8,
                 },
               },
+              {
+                id: uuidv4(),
+                name: 'cc',
+                type: FieldMetadataType.TEXT,
+                label: 'CC (Email nhận kèm)',
+                placeholder: 'tuyendung@tinasoft.vn, pm@tinasoft.vn',
+              },
+              {
+                id: uuidv4(),
+                name: 'bcc',
+                type: FieldMetadataType.TEXT,
+                label: 'BCC (Email ẩn danh)',
+                placeholder: 'hr-archive@tinasoft.vn',
+              },
             ],
             outputSchema: {
               candidateName: {
@@ -240,6 +225,18 @@ export class HrScheduleInterviewWorkflowTemplateBuilder
                 label: 'Ghi chú phỏng vấn',
                 isLeaf: true,
                 value: 'Phỏng vấn vòng 1',
+              },
+              cc: {
+                type: FieldMetadataType.TEXT,
+                label: 'CC (Email nhận kèm)',
+                isLeaf: true,
+                value: 'tuyendung@tinasoft.vn',
+              },
+              bcc: {
+                type: FieldMetadataType.TEXT,
+                label: 'BCC (Email ẩn danh)',
+                isLeaf: true,
+                value: '',
               },
             },
             errorHandlingOptions: ERROR_HANDLING_OPTIONS,
@@ -421,6 +418,8 @@ export class HrScheduleInterviewWorkflowTemplateBuilder
                 meetingLink: `{{${calendarEventStepId}.conferenceLink}}`,
                 status: 'SCHEDULED',
                 notes: `{{${formStepId}.notes}}`,
+                cc: `{{${formStepId}.cc}}`,
+                bcc: `{{${formStepId}.bcc}}`,
               },
             },
             outputSchema: {
@@ -431,30 +430,6 @@ export class HrScheduleInterviewWorkflowTemplateBuilder
                 value: '',
               },
             },
-            errorHandlingOptions: ERROR_HANDLING_OPTIONS,
-          },
-          nextStepIds: [sendEmailStepId],
-        },
-        {
-          id: sendEmailStepId,
-          name: 'Gửi Email thư mời phỏng vấn',
-          type: WorkflowActionType.SEND_EMAIL,
-          valid: true,
-          position: { x: 0, y: 750 },
-          settings: {
-            input: {
-              connectedAccountId: '',
-              recipients: {
-                to: `{{${formStepId}.candidateEmail}}`,
-                cc: pmEmail,
-                bcc: '',
-              },
-              subject: `Thư mời phỏng vấn: {{${formStepId}.candidateName}} - {{${formStepId}.jobTitle}}`,
-              body: emailBody,
-              files: [],
-              inReplyTo: '',
-            },
-            outputSchema: {},
             errorHandlingOptions: ERROR_HANDLING_OPTIONS,
           },
           nextStepIds: [],

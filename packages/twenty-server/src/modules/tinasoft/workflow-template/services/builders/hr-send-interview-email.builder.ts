@@ -38,25 +38,8 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder
   build(_context: WorkflowTemplateBuildContext): WorkflowTemplateDefinition {
     const formStepId = uuidv4();
     const findStepId = uuidv4();
+    const codeStepId = uuidv4();
     const sendEmailStepId = uuidv4();
-
-    const emailBody = `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8fafc; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0;">
-  <div style="background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); padding: 24px; border-radius: 10px; text-align: center; color: #ffffff; margin-bottom: 20px;">
-    <h2 style="margin: 0 0 6px 0; font-size: 22px;">TINASOFT RECRUITMENT ATS</h2>
-    <p style="margin: 0; font-size: 14px;">Xác nhận lịch phỏng vấn</p>
-  </div>
-  <div style="background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
-    <h3>👤 {{${findStepId}.first.candidateName}}</h3>
-    <p>Vị trí ứng tuyển: <strong style="color: #2563eb;">{{${findStepId}.first.jobTitle}}</strong></p>
-    <p>📅 Thời gian: <strong>{{${findStepId}.first.dateTime}}</strong></p>
-    <p>🧭 Múi giờ: {{${findStepId}.first.timeZone}}</p>
-    <p>👥 Người phỏng vấn: {{${findStepId}.first.interviewer}}</p>
-    <p>🔗 Link phỏng vấn: <a href="{{${findStepId}.first.meetingLink}}">{{${findStepId}.first.meetingLink}}</a></p>
-  </div>
-  <div style="background: #ffffff; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0;">
-    <p style="margin: 0; font-size: 13px; color: #475569;">📝 Ghi chú: {{${findStepId}.first.notes}}</p>
-  </div>
-</div>`;
 
     return {
       workflowName: 'HR: Gửi email ký xác nhận phỏng vấn',
@@ -74,7 +57,7 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder
       steps: [
         {
           id: formStepId,
-          name: 'Chọn hồ sơ phỏng vấn',
+          name: 'Chọn hồ sơ & Người ký duyệt',
           type: WorkflowActionType.FORM,
           valid: true,
           position: { x: 0, y: 150 },
@@ -87,6 +70,13 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder
                 label: 'Hồ sơ phỏng vấn',
                 settings: { objectName: 'interview' },
               },
+              {
+                id: uuidv4(),
+                name: 'signerName',
+                type: 'TEXT',
+                label: 'Người ký / Đại diện tuyển dụng',
+                placeholder: 'Linh - Trưởng phòng Tuyển dụng',
+              },
             ],
             outputSchema: {
               interview: {
@@ -96,6 +86,12 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder
                 value: {
                   id: `{{${formStepId}.interview.id}}`,
                 },
+              },
+              signerName: {
+                type: 'TEXT',
+                label: 'Người ký / Đại diện tuyển dụng',
+                isLeaf: true,
+                value: 'Linh - Trưởng phòng Tuyển dụng',
               },
             },
             errorHandlingOptions: ERROR_HANDLING_OPTIONS,
@@ -138,10 +134,67 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder
                   timeZone: `{{${findStepId}.first.timeZone}}`,
                   meetingLink: `{{${findStepId}.first.meetingLink}}`,
                   notes: `{{${findStepId}.first.notes}}`,
+                  signature: `{{${findStepId}.first.signature}}`,
                   cc: `{{${findStepId}.first.cc}}`,
                   bcc: `{{${findStepId}.first.bcc}}`,
-                  signature: `{{${findStepId}.first.signature}}`,
                 },
+              },
+            },
+            errorHandlingOptions: ERROR_HANDLING_OPTIONS,
+          },
+          nextStepIds: [codeStepId],
+        },
+        {
+          id: codeStepId,
+          name: 'Xử lý ký duyệt & Gắn chữ ký điện tử vào thư',
+          type: WorkflowActionType.CODE,
+          valid: true,
+          position: { x: 0, y: 450 },
+          settings: {
+            input: {
+              logicFunctionId: 'd3a17e84-5f6b-4c91-a2e3-b78901234567',
+              logicFunctionInput: {
+                candidateName: `{{${findStepId}.first.candidateName}}`,
+                candidateEmail: `{{${findStepId}.first.candidateEmail}}`,
+                jobTitle: `{{${findStepId}.first.jobTitle}}`,
+                interviewer: `{{${findStepId}.first.interviewer}}`,
+                dateTime: `{{${findStepId}.first.dateTime}}`,
+                meetingLink: `{{${findStepId}.first.meetingLink}}`,
+                notes: `{{${findStepId}.first.notes}}`,
+                signature: `{{${findStepId}.first.signature}}`,
+                signerName: `{{${formStepId}.signerName}}`,
+              },
+            },
+            outputSchema: {
+              emailBody: {
+                type: 'TEXT',
+                label: 'Nội dung thư mời (HTML kèm chữ ký)',
+                value: '',
+                isLeaf: true,
+              },
+              emailSubject: {
+                type: 'TEXT',
+                label: 'Tiêu đề email',
+                value: '',
+                isLeaf: true,
+              },
+              candidateName: {
+                type: 'TEXT',
+                label: 'Tên ứng viên',
+                value: '',
+                isLeaf: true,
+              },
+              candidateEmail: {
+                type: 'TEXT',
+                label: 'Email ứng viên',
+                value: '',
+                isLeaf: true,
+              },
+              signerName: {
+                type: 'TEXT',
+                label: 'Người ký duyệt',
+                value: '',
+                isLeaf: true,
               },
             },
             errorHandlingOptions: ERROR_HANDLING_OPTIONS,
@@ -150,10 +203,10 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder
         },
         {
           id: sendEmailStepId,
-          name: 'Gửi email kèm chữ ký',
+          name: 'Gửi Email thư mời phỏng vấn & Chữ ký xác nhận',
           type: WorkflowActionType.SEND_EMAIL,
           valid: true,
-          position: { x: 0, y: 450 },
+          position: { x: 0, y: 600 },
           settings: {
             input: {
               connectedAccountId: '',
@@ -162,9 +215,9 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder
                 cc: `{{${findStepId}.first.cc}}`,
                 bcc: `{{${findStepId}.first.bcc}}`,
               },
-              subject: `Xác nhận lịch phỏng vấn - {{${findStepId}.first.jobTitle}}`,
-              body: emailBody,
-              files: [`{{${findStepId}.first.signature}}`],
+              subject: `{{${codeStepId}.emailSubject}}`,
+              body: `{{${codeStepId}.emailBody}}`,
+              files: [],
             },
             outputSchema: {
               result: {
