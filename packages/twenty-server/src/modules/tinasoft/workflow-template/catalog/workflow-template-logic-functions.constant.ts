@@ -433,6 +433,192 @@ const INTERVIEW_SCHEDULE_SOURCE = `export const main = async (params) => {
   };
 };`;
 
+const HR_SEND_INTERVIEW_EMAIL_SOURCE = `import fs from 'fs';
+
+function findFile(baseDir, targetFileId) {
+  if (!fs.existsSync(baseDir)) return null;
+  const entries = fs.readdirSync(baseDir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = baseDir + '/' + entry.name;
+    if (entry.isDirectory()) {
+      const found = findFile(fullPath, targetFileId);
+      if (found) return found;
+    } else if (entry.isFile() && entry.name.startsWith(targetFileId)) {
+      return fullPath;
+    }
+  }
+  return null;
+}
+
+async function resolveSignatureUrl(signatureParam, workspaceId, applicationId) {
+  const defaultSignatureUrl = 'https://files.catbox.moe/rwrbp0.jpg';
+  if (!signatureParam) {
+    return defaultSignatureUrl;
+  }
+
+  let fileObj = null;
+  if (typeof signatureParam === 'string') {
+    const trimmed = signatureParam.trim();
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+      return trimmed;
+    }
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        fileObj = parsed[0];
+      } else if (typeof parsed === 'object' && parsed !== null) {
+        fileObj = parsed;
+      }
+    } catch (err) {
+      if (/^[0-9a-fA-F-]{36}$/.test(trimmed)) {
+        fileObj = { fileId: trimmed, label: 'signature.jpg' };
+      }
+    }
+  } else if (Array.isArray(signatureParam) && signatureParam.length > 0) {
+    const first = signatureParam[0];
+    if (typeof first === 'string') {
+      try {
+        fileObj = JSON.parse(first);
+      } catch (err) {}
+    } else if (typeof first === 'object' && first !== null) {
+      fileObj = first;
+    }
+  } else if (typeof signatureParam === 'object' && signatureParam !== null) {
+    fileObj = signatureParam;
+  }
+
+  if (!fileObj || !fileObj.fileId) {
+    return defaultSignatureUrl;
+  }
+
+  const fileId = fileObj.fileId;
+  const label = fileObj.label || 'signature.jpg';
+  const cacheFile = '/app/packages/twenty-server/.local-storage/' + workspaceId + '/signature_cache.json';
+
+  let cache = {};
+  try {
+    if (fs.existsSync(cacheFile)) {
+      cache = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
+      if (cache[fileId]) {
+        return cache[fileId];
+      }
+    }
+  } catch (err) {}
+
+  const filesBaseDir = '/app/packages/twenty-server/.local-storage/' + workspaceId + '/' + applicationId + '/files-field';
+  const filePath = findFile(filesBaseDir, fileId);
+
+  if (!filePath) {
+    return defaultSignatureUrl;
+  }
+
+  try {
+    const fileBuffer = fs.readFileSync(filePath);
+    const mimeType = label.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg';
+    const blob = new Blob([fileBuffer], { type: mimeType });
+    const formData = new FormData();
+    formData.append('reqtype', 'fileupload');
+    formData.append('fileToUpload', blob, label);
+
+    const resp = await fetch('https://catbox.moe/user/api.php', {
+      method: 'POST',
+      body: formData,
+    });
+    const uploadedUrl = (await resp.text()).trim();
+
+    if (uploadedUrl && uploadedUrl.startsWith('https://')) {
+      cache[fileId] = uploadedUrl;
+      try {
+        fs.writeFileSync(cacheFile, JSON.stringify(cache, null, 2), 'utf8');
+      } catch (err) {}
+      return uploadedUrl;
+    }
+  } catch (err) {
+    console.error('Error resolving signature image:', err);
+  }
+
+  return defaultSignatureUrl;
+}
+
+export const main = async (params) => {
+  const workspaceId = 'c113a8d7-ea7d-4814-8779-1ed4b4b4b177';
+  const applicationId = '80371161-fb50-49e7-a7fe-7c5d8a30326e';
+
+  const candidateName = typeof params?.candidateName === 'string' && params.candidateName.trim() ? params.candidateName.trim() : 'Ứng viên';
+  const candidateEmail = typeof params?.candidateEmail === 'string' ? params.candidateEmail.trim() : '';
+  const jobTitle = typeof params?.jobTitle === 'string' && params.jobTitle.trim() ? params.jobTitle.trim() : 'Vị trí ứng tuyển';
+  const interviewer = typeof params?.interviewer === 'string' && params.interviewer.trim() ? params.interviewer.trim() : 'Ban Tuyển dụng TINASOFT';
+  const dateTime = typeof params?.dateTime === 'string' ? params.dateTime.trim() : '';
+  const meetingLink = typeof params?.meetingLink === 'string' ? params.meetingLink.trim() : '';
+  const notes = typeof params?.notes === 'string' && params.notes.trim() ? params.notes.trim() : 'Vui lòng chuẩn bị đường truyền mạng ổn định và trang phục lịch sự.';
+  const signerName = typeof params?.signerName === 'string' && params.signerName.trim() ? params.signerName.trim() : 'Linh - Trưởng phòng Tuyển dụng';
+
+  const signatureUrl = await resolveSignatureUrl(params?.signature, workspaceId, applicationId);
+
+  const emailSubject = 'Thư mời phỏng vấn: ' + candidateName + ' - ' + jobTitle;
+
+  const emailBody = '<div style="font-family: -apple-system, BlinkMacSystemFont, \\'Segoe UI\\', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; background-color: #f8fafc; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; color: #1e293b;">' +
+  '<div style="background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); padding: 24px; border-radius: 10px; text-align: center; color: #ffffff; margin-bottom: 20px;">' +
+    '<h2 style="margin: 0 0 6px 0; font-size: 22px; font-weight: 700; letter-spacing: 0.5px;">TINASOFT RECRUITMENT ATS</h2>' +
+    '<p style="margin: 0; font-size: 14px; opacity: 0.95;">Thư mời tham gia phỏng vấn trực tuyến (Đã ký xác nhận)</p>' +
+  '</div>' +
+  '<div style="background: #ffffff; padding: 22px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">' +
+    '<h3 style="margin: 0 0 14px 0; color: #0f172a; font-size: 17px;">Kính gửi bạn: <strong style="color: #2563eb;">' + candidateName + '</strong>,</h3>' +
+    '<p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.6; color: #334155;">Ban Tuyển dụng <strong>TINASOFT VIỆT NAM</strong> xin gửi đến bạn thư mời tham gia buổi phỏng vấn trực tuyến với thông tin chi tiết như sau:</p>' +
+    '<table style="width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px;">' +
+      '<tr>' +
+        '<td style="padding: 8px 0; color: #64748b; width: 140px;">💼 Vị trí ứng tuyển:</td>' +
+        '<td style="padding: 8px 0; font-weight: 600; color: #2563eb;">' + jobTitle + '</td>' +
+      '</tr>' +
+      '<tr>' +
+        '<td style="padding: 8px 0; color: #64748b;">📅 Thời gian:</td>' +
+        '<td style="padding: 8px 0; font-weight: 600;">' + dateTime + '</td>' +
+      '</tr>' +
+      '<tr>' +
+        '<td style="padding: 8px 0; color: #64748b;">👥 Người phỏng vấn:</td>' +
+        '<td style="padding: 8px 0; font-weight: 600;">' + interviewer + '</td>' +
+      '</tr>' +
+    '</table>' +
+    '<div style="margin-top: 20px; text-align: center;">' +
+      '<a href="' + meetingLink + '" target="_blank" style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-weight: 600; font-size: 14px; display: inline-block; box-shadow: 0 2px 4px rgba(37,99,235,0.2);">🎥 Tham gia qua Google Meet</a>' +
+      '<p style="font-size: 12px; color: #64748b; margin-top: 8px;">Đường dẫn trực tiếp: <a href="' + meetingLink + '" style="color: #2563eb;">' + meetingLink + '</a></p>' +
+    '</div>' +
+  '</div>' +
+  '<div style="background: #ffffff; padding: 16px 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px;">' +
+    '<p style="margin: 0; font-size: 13px; color: #475569; line-height: 1.5;">📝 <strong>Ghi chú từ HR:</strong> ' + notes + '</p>' +
+  '</div>' +
+  '<div style="background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb;">' +
+    '<p style="margin: 0 0 12px 0; font-size: 13px; color: #475569; font-style: italic;">Trân trọng cảm ơn & chúc bạn có một buổi phỏng vấn thành công!</p>' +
+    '<div style="border-top: 1px dashed #cbd5e1; padding-top: 14px;">' +
+      '<h4 style="margin: 0 0 4px 0; color: #0f172a; font-size: 15px; font-weight: 700;">' + signerName + '</h4>' +
+      '<p style="margin: 0 0 6px 0; font-size: 13px; font-weight: 600; color: #2563eb;">Bộ phận Tuyển dụng & Phát triển Nhân tài | TINASOFT VIỆT NAM</p>' +
+      '<div style="margin: 10px 0;">' +
+        '<img src="' + signatureUrl + '" alt="Chữ ký xác nhận" style="max-height: 85px; max-width: 250px; object-fit: contain; display: block;" onerror="this.style.display=\\'none\\'" />' +
+      '</div>' +
+      '<div style="font-size: 12px; color: #64748b; line-height: 1.6;">' +
+        '<div>🏢 <strong>Địa chỉ:</strong> Tầng 4, Tòa nhà Stellar Garden, 35 Lê Văn Thiêm, Thanh Xuân, Hà Nội</div>' +
+        '<div>📞 <strong>Hotline:</strong> 0246 686 3998 &nbsp;|&nbsp; ✉️ <strong>Email:</strong> tuyendung@tinasoft.vn</div>' +
+        '<div>🌐 <strong>Website:</strong> <a href="https://tinasoft.vn" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: 600;">https://tinasoft.vn</a></div>' +
+      '</div>' +
+    '</div>' +
+    '<div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #f1f5f9; font-size: 11px; color: #94a3b8; display: flex; justify-content: space-between;">' +
+      '<span>🔒 Xác thực điện tử từ Hệ thống Quản trị Tuyển dụng TinaSoft ATS</span>' +
+      '<span>TINASOFT © 2026</span>' +
+    '</div>' +
+  '</div>' +
+'</div>';
+
+  return {
+    emailBody,
+    emailSubject,
+    candidateName,
+    candidateEmail,
+    jobTitle,
+    signerName,
+    signatureUrl,
+  };
+};`;
+
 export const getWorkflowTemplateLogicFunctionIds = (workspaceId: string) => ({
   filterExpiringOpportunities: uuidv5(
     `${workspaceId}:workflow-template:filter-expiring-opportunities:v2`,
@@ -458,6 +644,7 @@ export const getWorkflowTemplateLogicFunctionIds = (workspaceId: string) => ({
     `${workspaceId}:hr-interview:schedule-datetime`,
     WORKFLOW_TEMPLATE_LOGIC_FUNCTION_NAMESPACE,
   ),
+  hrSendInterviewEmail: 'd3a17e84-5f6b-4c91-a2e3-b78901234567',
 });
 
 export const getWorkflowTemplateLogicFunctionDefinitions = (
@@ -470,6 +657,7 @@ export const getWorkflowTemplateLogicFunctionDefinitions = (
     addOneDay,
     ahpMatching,
     interviewSchedule,
+    hrSendInterviewEmail,
   } = getWorkflowTemplateLogicFunctionIds(workspaceId);
 
   return [
@@ -513,6 +701,13 @@ export const getWorkflowTemplateLogicFunctionDefinitions = (
       description:
         'Validates the interview date and hour/minute fields, ensures the end time is after the start time, and builds ISO 8601 datetime strings with the Asia/Ho_Chi_Minh offset.',
       sourceHandlerCode: INTERVIEW_SCHEDULE_SOURCE,
+    },
+    {
+      id: hrSendInterviewEmail,
+      name: 'Xử lý ký duyệt & Gắn chữ ký điện tử vào thư',
+      description:
+        'Bọc chữ ký điện tử và tạo mẫu email phỏng vấn hoàn chỉnh chuẩn TINASOFT',
+      sourceHandlerCode: HR_SEND_INTERVIEW_EMAIL_SOURCE,
     },
   ];
 };

@@ -1,0 +1,8 @@
+# Use this workspace to collaborate
+workspace:
+  id: 968fbf3e-e92a-4004-8d09-802d6c29ae72
+
+localResources:
+  specs:
+    - ../packages/twenty-utils/graphql-introspection-query.graphql
+    - ../packages/twenty-client-sdk/src/metadata/generated/schema.graphql

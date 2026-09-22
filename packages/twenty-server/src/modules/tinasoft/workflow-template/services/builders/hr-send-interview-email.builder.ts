@@ -196,6 +196,12 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder
                 value: '',
                 isLeaf: true,
               },
+              signatureUrl: {
+                type: 'TEXT',
+                label: 'Đường dẫn ảnh chữ ký được áp dụng',
+                value: '',
+                isLeaf: true,
+              },
             },
             errorHandlingOptions: ERROR_HANDLING_OPTIONS,
           },
