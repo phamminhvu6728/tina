@@ -14,6 +14,279 @@ import {
 import { type WorkflowVersionWorkspaceEntity } from 'src/modules/workflow/common/standard-objects/workflow-version.workspace-entity';
 import { WorkflowActionType } from 'twenty-shared/workflow';
 import { type WorkflowAction } from 'src/modules/workflow/workflow-executor/workflow-actions/types/workflow-action.type';
+import { v4 as uuidv4 } from 'uuid';
+
+export function repairTinasoftInterviewEmailWorkflowSteps({
+  steps,
+  logicFunctionId,
+}: {
+  steps: WorkflowVersionWorkspaceEntity['steps'];
+  logicFunctionId: string;
+}): { steps: WorkflowAction[]; changed: boolean } {
+  if (!Array.isArray(steps)) {
+    return { steps: [], changed: false };
+  }
+
+  const codeStepIndex = steps.findIndex(
+    (step) =>
+      step.type === WorkflowActionType.CODE &&
+      step.settings.input.logicFunctionId === logicFunctionId,
+  );
+  const findStepIndex = steps.findIndex(
+    (step) => step.type === WorkflowActionType.FIND_RECORDS,
+  );
+  const sendEmailStepIndex = steps.findIndex(
+    (step, index) =>
+      index > findStepIndex &&
+      step.type === WorkflowActionType.SEND_EMAIL &&
+      (/phỏng vấn|chữ ký|ký xác nhận/i.test(step.name) ||
+        JSON.stringify(step.settings.input).includes('candidateEmail')),
+  );
+
+  if (findStepIndex < 0 || sendEmailStepIndex < 0) {
+    return { steps, changed: false };
+  }
+
+  const findStep = steps[findStepIndex];
+  const sendEmailStep = steps[sendEmailStepIndex];
+  const formStepIndex = [...steps.slice(0, findStepIndex)]
+    .map((step, index) => ({ step, index }))
+    .reverse()
+    .find(({ step }) => step.type === WorkflowActionType.FORM)?.index;
+
+  if (formStepIndex === undefined) {
+    return { steps, changed: false };
+  }
+
+  const formStep = steps[formStepIndex];
+  const formSettings = formStep.settings as unknown as {
+    input?: unknown;
+    outputSchema?: Record<string, unknown>;
+  };
+  const formInput = Array.isArray(formSettings.input)
+    ? [...formSettings.input]
+    : [];
+  let changed = false;
+
+  for (const field of [
+    {
+      name: 'signerName',
+      label: 'Người ký / Đại diện tuyển dụng',
+      placeholder: 'Linh - Trưởng phòng Tuyển dụng',
+    },
+    {
+      name: 'signature',
+      label: 'Chữ ký điện tử (URL ảnh hoặc JSON file)',
+      placeholder: 'Dán URL ảnh chữ ký hoặc JSON file đã tải lên',
+    },
+  ]) {
+    if (
+      !formInput.some(
+        (input) =>
+          typeof input === 'object' &&
+          input !== null &&
+          (input as { name?: unknown }).name === field.name,
+      )
+    ) {
+      formInput.push({
+        id: uuidv4(),
+        name: field.name,
+        type: 'TEXT',
+        label: field.label,
+        placeholder: field.placeholder,
+      });
+      changed = true;
+    }
+  }
+
+  const formOutputSchema = { ...(formSettings.outputSchema ?? {}) };
+  if (!('signerName' in formOutputSchema)) {
+    formOutputSchema.signerName = {
+      type: 'TEXT',
+      label: 'Người ký / Đại diện tuyển dụng',
+      isLeaf: true,
+      value: 'Linh - Trưởng phòng Tuyển dụng',
+    };
+    changed = true;
+  }
+  if (!('signature' in formOutputSchema)) {
+    formOutputSchema.signature = {
+      type: 'TEXT',
+      label: 'Chữ ký điện tử',
+      isLeaf: true,
+      value: '',
+    };
+    changed = true;
+  }
+
+  const findSettings = findStep.settings as unknown as {
+    input: Record<string, unknown>;
+    outputSchema?: Record<string, unknown>;
+  };
+  const findOutputSchema = { ...(findSettings.outputSchema ?? {}) };
+  const firstOutput = findOutputSchema.first;
+  if (
+    typeof firstOutput === 'object' &&
+    firstOutput !== null &&
+    !Array.isArray(firstOutput) &&
+    typeof (firstOutput as { value?: unknown }).value === 'object' &&
+    (firstOutput as { value?: unknown }).value !== null
+  ) {
+    const firstValue = {
+      ...((firstOutput as { value: Record<string, unknown> }).value ?? {}),
+    };
+    const signatureReference = `{{${findStep.id}.first.signature}}`;
+    if (firstValue.signature !== signatureReference) {
+      firstValue.signature = signatureReference;
+      findOutputSchema.first = {
+        ...(firstOutput as Record<string, unknown>),
+        value: firstValue,
+      };
+      changed = true;
+    }
+  }
+
+  const repairedSteps = steps.map((step, index) => {
+    if (index === formStepIndex) {
+      return {
+        ...step,
+        settings: {
+          ...step.settings,
+          input: formInput,
+          outputSchema: formOutputSchema,
+        },
+      } as WorkflowAction;
+    }
+
+    if (index === findStepIndex) {
+      return {
+        ...step,
+        settings: {
+          ...step.settings,
+          outputSchema: findOutputSchema,
+        },
+        nextStepIds: codeStepIndex >= 0 ? step.nextStepIds : [uuidv4()],
+      } as WorkflowAction;
+    }
+
+    return step;
+  });
+
+  const resolvedFormStep = repairedSteps[formStepIndex];
+  const resolvedFindStep = repairedSteps[findStepIndex];
+  const resolvedCodeStep =
+    codeStepIndex >= 0 ? repairedSteps[codeStepIndex] : undefined;
+  const codeId = resolvedCodeStep?.id ?? uuidv4();
+  const codeStep = (resolvedCodeStep ?? {
+    id: codeId,
+    name: 'Xử lý ký duyệt & Gắn chữ ký điện tử vào thư',
+    type: WorkflowActionType.CODE,
+    valid: true,
+    position: {
+      x: findStep.position.x,
+      y: findStep.position.y + 150,
+    },
+    settings: {
+      input: {
+        logicFunctionId,
+        logicFunctionInput: {},
+      },
+      outputSchema: {
+        emailBody: {
+          type: 'TEXT',
+          label: 'Nội dung thư mời (HTML kèm chữ ký)',
+          value: '',
+          isLeaf: true,
+        },
+        emailSubject: {
+          type: 'TEXT',
+          label: 'Tiêu đề email',
+          value: '',
+          isLeaf: true,
+        },
+        candidateEmail: {
+          type: 'TEXT',
+          label: 'Email ứng viên',
+          value: '',
+          isLeaf: true,
+        },
+        signatureUrl: {
+          type: 'TEXT',
+          label: 'Đường dẫn ảnh chữ ký được áp dụng',
+          value: '',
+          isLeaf: true,
+        },
+      },
+    },
+    nextStepIds: [sendEmailStep.id],
+  }) as WorkflowAction;
+
+  const codeSettings = codeStep.settings as unknown as {
+    input: {
+      logicFunctionId: string;
+      logicFunctionInput: Record<string, unknown>;
+    };
+  };
+  codeSettings.input.logicFunctionId = logicFunctionId;
+  codeSettings.input.logicFunctionInput = {
+    ...codeSettings.input.logicFunctionInput,
+    candidateName: `{{${resolvedFindStep.id}.first.candidateName}}`,
+    candidateEmail: `{{${resolvedFindStep.id}.first.candidateEmail}}`,
+    jobTitle: `{{${resolvedFindStep.id}.first.jobTitle}}`,
+    interviewer: `{{${resolvedFindStep.id}.first.interviewer}}`,
+    dateTime: `{{${resolvedFindStep.id}.first.dateTime}}`,
+    meetingLink: `{{${resolvedFindStep.id}.first.meetingLink}}`,
+    notes: `{{${resolvedFindStep.id}.first.notes}}`,
+    signature: `{{${resolvedFormStep.id}.signature}}`,
+    recordSignature: `{{${resolvedFindStep.id}.first.signature}}`,
+    signerName: `{{${resolvedFormStep.id}.signerName}}`,
+  };
+
+  const updatedFindStep = {
+    ...resolvedFindStep,
+    nextStepIds: [codeId],
+  } as WorkflowAction;
+  const updatedSendEmailStep = {
+    ...sendEmailStep,
+    settings: {
+      ...sendEmailStep.settings,
+      input: {
+        ...sendEmailStep.settings.input,
+        subject: `{{${codeId}.emailSubject}}`,
+        body: `{{${codeId}.emailBody}}`,
+      },
+    },
+  } as WorkflowAction;
+
+  const normalizedSteps = repairedSteps.map((step, index) => {
+    if (index === findStepIndex) return updatedFindStep;
+    if (index === sendEmailStepIndex) return updatedSendEmailStep;
+    if (step.id === codeId) return codeStep;
+    return step;
+  });
+
+  if (codeStepIndex < 0) {
+    const insertAt = normalizedSteps.findIndex(
+      (step) => step.id === sendEmailStep.id,
+    );
+    normalizedSteps.splice(insertAt, 0, codeStep);
+    changed = true;
+  } else if (
+    JSON.stringify(resolvedCodeStep?.settings) !==
+    JSON.stringify(codeStep.settings)
+  ) {
+    changed = true;
+  }
+
+  if (
+    JSON.stringify(sendEmailStep.settings) !==
+    JSON.stringify(updatedSendEmailStep.settings)
+  ) {
+    changed = true;
+  }
+
+  return { steps: normalizedSteps, changed };
+}
 
 @RegisteredWorkspaceCommand('2.36.0', 1790200000000)
 @Command({
@@ -59,7 +332,7 @@ export class RefreshTinasoftWorkflowLogicFunctionsCommand extends ProvisionedWor
     const updatedWorkflowVersions: WorkflowVersionWorkspaceEntity[] = [];
 
     for (const workflowVersion of workflowVersions) {
-      const repairedSteps = this.repairInterviewEmailSteps({
+      const repairedSteps = repairTinasoftInterviewEmailWorkflowSteps({
         steps: workflowVersion.steps,
         logicFunctionId: hrSendInterviewEmail,
       });
@@ -87,113 +360,5 @@ export class RefreshTinasoftWorkflowLogicFunctionsCommand extends ProvisionedWor
     this.logger.log(
       `Refreshed TINASOFT workflow logic functions and repaired ${updatedWorkflowVersions.length} interview workflow version(s) for workspace ${workspaceId}`,
     );
-  }
-
-  private repairInterviewEmailSteps({
-    steps,
-    logicFunctionId,
-  }: {
-    steps: WorkflowVersionWorkspaceEntity['steps'];
-    logicFunctionId: string;
-  }): { steps: WorkflowAction[]; changed: boolean } {
-    if (!Array.isArray(steps)) {
-      return { steps: [], changed: false };
-    }
-
-    const codeStepIndex = steps.findIndex(
-      (step) =>
-        step.type === WorkflowActionType.CODE &&
-        step.settings.input.logicFunctionId === logicFunctionId,
-    );
-
-    if (codeStepIndex < 0) {
-      return { steps, changed: false };
-    }
-
-    const findStep = [...steps.slice(0, codeStepIndex)]
-      .reverse()
-      .find((step) => step.type === WorkflowActionType.FIND_RECORDS);
-
-    if (!findStep) {
-      return { steps, changed: false };
-    }
-
-    const signatureReference = `{{${findStep.id}.first.signature}}`;
-    let changed = false;
-    const repairedSteps = steps.map((step) => {
-      if (
-        step.type === WorkflowActionType.CODE &&
-        step.settings.input.logicFunctionId === logicFunctionId
-      ) {
-        const currentSignature =
-          step.settings.input.logicFunctionInput.signature;
-
-        if (currentSignature !== signatureReference) {
-          changed = true;
-        }
-
-        return {
-          ...step,
-          settings: {
-            ...step.settings,
-            input: {
-              ...step.settings.input,
-              logicFunctionInput: {
-                ...step.settings.input.logicFunctionInput,
-                signature: signatureReference,
-              },
-            },
-          },
-        };
-      }
-
-      if (step.id !== findStep.id) {
-        return step;
-      }
-
-      const outputSchema = step.settings.outputSchema as Record<
-        string,
-        unknown
-      >;
-      const firstOutput = outputSchema.first;
-
-      if (
-        typeof firstOutput !== 'object' ||
-        firstOutput === null ||
-        Array.isArray(firstOutput) ||
-        typeof (firstOutput as { value?: unknown }).value !== 'object' ||
-        (firstOutput as { value?: unknown }).value === null
-      ) {
-        return step;
-      }
-
-      const firstOutputValue = (firstOutput as { value: Record<string, unknown> })
-        .value;
-
-      if ('signature' in firstOutputValue) {
-        return step;
-      }
-
-      changed = true;
-
-      return {
-        ...step,
-        settings: {
-          ...step.settings,
-          outputSchema: {
-            ...outputSchema,
-            first: {
-              ...(firstOutput as Record<string, unknown>),
-              value: {
-                ...firstOutputValue,
-                signature: signatureReference,
-              },
-            },
-          },
-        },
-      };
-    });
-
-    return { steps: repairedSteps as WorkflowAction[], changed };
   }
 }

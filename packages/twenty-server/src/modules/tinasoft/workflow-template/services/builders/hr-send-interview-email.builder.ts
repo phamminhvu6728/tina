@@ -80,6 +80,13 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder implements IWorkflowTem
                 label: 'Người ký / Đại diện tuyển dụng',
                 placeholder: 'Linh - Trưởng phòng Tuyển dụng',
               },
+              {
+                id: uuidv4(),
+                name: 'signature',
+                type: 'TEXT',
+                label: 'Chữ ký điện tử (URL ảnh hoặc JSON file)',
+                placeholder: 'Dán URL ảnh chữ ký hoặc JSON file đã tải lên',
+              },
             ],
             outputSchema: {
               interview: {
@@ -95,6 +102,12 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder implements IWorkflowTem
                 label: 'Người ký / Đại diện tuyển dụng',
                 isLeaf: true,
                 value: 'Linh - Trưởng phòng Tuyển dụng',
+              },
+              signature: {
+                type: 'TEXT',
+                label: 'Chữ ký điện tử',
+                isLeaf: true,
+                value: '',
               },
             },
             errorHandlingOptions: ERROR_HANDLING_OPTIONS,
@@ -164,7 +177,8 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder implements IWorkflowTem
                 dateTime: `{{${findStepId}.first.dateTime}}`,
                 meetingLink: `{{${findStepId}.first.meetingLink}}`,
                 notes: `{{${findStepId}.first.notes}}`,
-                signature: `{{${findStepId}.first.signature}}`,
+                signature: `{{${formStepId}.signature}}`,
+                recordSignature: `{{${findStepId}.first.signature}}`,
                 signerName: `{{${formStepId}.signerName}}`,
               },
             },

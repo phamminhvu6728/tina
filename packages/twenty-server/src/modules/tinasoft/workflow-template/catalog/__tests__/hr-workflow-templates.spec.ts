@@ -140,6 +140,7 @@ describe('HR workflow templates', () => {
       'CODE',
       'CREATE_CALENDAR_EVENT',
       'CREATE_RECORD',
+      'CODE',
       'SEND_EMAIL',
     ]);
 
@@ -154,11 +155,13 @@ describe('HR workflow templates', () => {
         'startMinute',
         'endHour',
         'endMinute',
+        'signerName',
+        'signature',
       ]),
     );
-    expect(
-      formFields?.find(({ name }) => name === 'interviewDate')?.type,
-    ).toBe('DATE');
+    expect(formFields?.find(({ name }) => name === 'interviewDate')?.type).toBe(
+      'DATE',
+    );
     for (const timeField of [
       'startHour',
       'startMinute',

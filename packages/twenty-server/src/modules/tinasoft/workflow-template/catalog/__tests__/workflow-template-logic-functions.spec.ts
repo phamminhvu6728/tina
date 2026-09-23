@@ -247,4 +247,21 @@ describe('workflow template logic functions', () => {
     expect(result.signatureUrl).toBe('');
     expect(result.emailBody).not.toContain('files.catbox.moe/rwrbp0.jpg');
   });
+
+  it('falls back to the signature stored on the selected interview record', async () => {
+    const main = getLogicFunctionByName(
+      'Xử lý ký duyệt & Gắn chữ ký điện tử vào thư',
+    );
+
+    const result = await main({
+      signature: '',
+      recordSignature: [
+        { url: 'https://files.example.com/record-signature.png' },
+      ],
+    });
+
+    expect(result.signatureUrl).toBe(
+      'https://files.example.com/record-signature.png',
+    );
+  });
 });

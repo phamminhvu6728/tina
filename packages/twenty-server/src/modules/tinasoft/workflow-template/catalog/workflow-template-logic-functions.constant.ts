@@ -499,7 +499,11 @@ export const main = async (params) => {
   const notes = typeof params?.notes === 'string' && params.notes.trim() ? params.notes.trim() : 'Vui lòng chuẩn bị đường truyền mạng ổn định và trang phục lịch sự.';
   const signerName = typeof params?.signerName === 'string' && params.signerName.trim() ? params.signerName.trim() : 'Linh - Trưởng phòng Tuyển dụng';
 
-  const signatureUrl = await resolveSignatureUrl(params?.signature);
+  let signatureUrl = await resolveSignatureUrl(params?.signature);
+
+  if (!signatureUrl) {
+    signatureUrl = await resolveSignatureUrl(params?.recordSignature);
+  }
   const signatureMarkup = signatureUrl
     ? '<img src="' + signatureUrl + '" alt="Chữ ký xác nhận" style="max-height: 85px; max-width: 250px; object-fit: contain; display: block;" onerror="this.style.display=\\'none\\'" />'
     : '';

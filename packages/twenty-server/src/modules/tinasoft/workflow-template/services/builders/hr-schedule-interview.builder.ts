@@ -54,23 +54,13 @@ export class HrScheduleInterviewWorkflowTemplateBuilder implements IWorkflowTemp
     const interviewScheduleStepId = uuidv4();
     const calendarEventStepId = uuidv4();
     const createRecordStepId = uuidv4();
+    const signatureStepId = uuidv4();
     const sendEmailStepId = uuidv4();
-    const { interviewSchedule } =
+    const { interviewSchedule, hrSendInterviewEmail } =
       getWorkflowTemplateLogicFunctionIds(workspaceId);
     const pmEmail =
       getStringWorkflowTemplateSetting({ settings, key: 'pmEmail' }) ||
       'tuyendung@tinasoft.vn';
-
-    const emailBody = `<div style="font-family: Arial, sans-serif; max-width: 620px; margin: 0 auto; color: #1e293b;">
-  <h2 style="color: #1e40af;">Thư mời phỏng vấn trực tuyến</h2>
-  <p>Kính gửi <strong>{{${formStepId}.candidateName}}</strong>,</p>
-  <p>Chúng tôi trân trọng mời bạn tham gia phỏng vấn cho vị trí <strong>{{${formStepId}.jobTitle}}</strong>.</p>
-  <p><strong>Thời gian:</strong> {{${formStepId}.interviewDate}} {{${interviewScheduleStepId}.startTime}} - {{${interviewScheduleStepId}.endTime}} ({{${interviewScheduleStepId}.timeZone}})</p>
-  <p><strong>Người phỏng vấn:</strong> {{${formStepId}.interviewer}}</p>
-  <p><a href="{{${calendarEventStepId}.conferenceLink}}">Tham gia qua Google Meet</a></p>
-  <p>{{${formStepId}.notes}}</p>
-  <p>Trân trọng,<br />Ban Tuyển dụng TINASOFT<br /><a href="mailto:${pmEmail}">${pmEmail}</a></p>
-</div>`;
 
     return {
       workflowName: 'HR: Lên lịch phỏng vấn & tạo link Google Meet',
@@ -181,6 +171,20 @@ export class HrScheduleInterviewWorkflowTemplateBuilder implements IWorkflowTemp
                 label: 'BCC (Email ẩn danh)',
                 placeholder: 'hr-archive@tinasoft.vn',
               },
+              {
+                id: uuidv4(),
+                name: 'signerName',
+                type: FieldMetadataType.TEXT,
+                label: 'Người ký / Đại diện tuyển dụng',
+                placeholder: 'Linh - Trưởng phòng Tuyển dụng',
+              },
+              {
+                id: uuidv4(),
+                name: 'signature',
+                type: FieldMetadataType.TEXT,
+                label: 'Chữ ký điện tử (URL ảnh hoặc JSON file)',
+                placeholder: 'Dán URL ảnh chữ ký hoặc JSON file đã tải lên',
+              },
             ],
             outputSchema: {
               candidateName: {
@@ -252,6 +256,18 @@ export class HrScheduleInterviewWorkflowTemplateBuilder implements IWorkflowTemp
               bcc: {
                 type: FieldMetadataType.TEXT,
                 label: 'BCC (Email ẩn danh)',
+                isLeaf: true,
+                value: '',
+              },
+              signerName: {
+                type: FieldMetadataType.TEXT,
+                label: 'Người ký / Đại diện tuyển dụng',
+                isLeaf: true,
+                value: 'Linh - Trưởng phòng Tuyển dụng',
+              },
+              signature: {
+                type: FieldMetadataType.TEXT,
+                label: 'Chữ ký điện tử',
                 isLeaf: true,
                 value: '',
               },
@@ -449,6 +465,57 @@ export class HrScheduleInterviewWorkflowTemplateBuilder implements IWorkflowTemp
             },
             errorHandlingOptions: ERROR_HANDLING_OPTIONS,
           },
+          nextStepIds: [signatureStepId],
+        },
+        {
+          id: signatureStepId,
+          name: 'Xử lý ký duyệt & Gắn chữ ký điện tử vào thư',
+          type: WorkflowActionType.CODE,
+          valid: true,
+          position: { x: 0, y: 750 },
+          settings: {
+            input: {
+              logicFunctionId: hrSendInterviewEmail,
+              logicFunctionInput: {
+                candidateName: `{{${formStepId}.candidateName}}`,
+                candidateEmail: `{{${formStepId}.candidateEmail}}`,
+                jobTitle: `{{${formStepId}.jobTitle}}`,
+                interviewer: `{{${formStepId}.interviewer}}`,
+                dateTime: `{{${interviewScheduleStepId}.startsAt}}`,
+                meetingLink: `{{${calendarEventStepId}.conferenceLink}}`,
+                notes: `{{${formStepId}.notes}}`,
+                signature: `{{${formStepId}.signature}}`,
+                signerName: `{{${formStepId}.signerName}}`,
+              },
+            },
+            outputSchema: {
+              emailBody: {
+                type: FieldMetadataType.TEXT,
+                label: 'Nội dung thư mời (HTML kèm chữ ký)',
+                value: '',
+                isLeaf: true,
+              },
+              emailSubject: {
+                type: FieldMetadataType.TEXT,
+                label: 'Tiêu đề email',
+                value: '',
+                isLeaf: true,
+              },
+              candidateEmail: {
+                type: FieldMetadataType.TEXT,
+                label: 'Email ứng viên',
+                value: '',
+                isLeaf: true,
+              },
+              signatureUrl: {
+                type: FieldMetadataType.TEXT,
+                label: 'Đường dẫn ảnh chữ ký được áp dụng',
+                value: '',
+                isLeaf: true,
+              },
+            },
+            errorHandlingOptions: ERROR_HANDLING_OPTIONS,
+          },
           nextStepIds: [sendEmailStepId],
         },
         {
@@ -456,7 +523,7 @@ export class HrScheduleInterviewWorkflowTemplateBuilder implements IWorkflowTemp
           name: 'Gửi Email thư mời phỏng vấn',
           type: WorkflowActionType.SEND_EMAIL,
           valid: true,
-          position: { x: 0, y: 750 },
+          position: { x: 0, y: 900 },
           settings: {
             input: {
               connectedAccountId: '',
@@ -465,8 +532,8 @@ export class HrScheduleInterviewWorkflowTemplateBuilder implements IWorkflowTemp
                 cc: `{{${formStepId}.cc}}`,
                 bcc: `{{${formStepId}.bcc}}`,
               },
-              subject: `Thư mời phỏng vấn: {{${formStepId}.candidateName}} - {{${formStepId}.jobTitle}}`,
-              body: emailBody,
+              subject: `{{${signatureStepId}.emailSubject}}`,
+              body: `{{${signatureStepId}.emailBody}}`,
               files: [],
               inReplyTo: '',
             },
