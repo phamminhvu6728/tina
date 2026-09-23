@@ -99,3 +99,4 @@ jobs:
             docker push "${IMG}:${IMAGE_TAG}"
           fi
           echo "Pushed ${IMG}:${GITHUB_SHA}"
+          echo "Use TWENTY_IMAGE=${IMG} and TAG=${GITHUB_SHA} when deploying this exact build."

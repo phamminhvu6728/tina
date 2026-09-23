@@ -486,9 +486,7 @@ function getSignatureUrl(signatureParam) {
 }
 
 async function resolveSignatureUrl(signatureParam) {
-  const defaultSignatureUrl = 'https://files.catbox.moe/rwrbp0.jpg';
-
-  return getSignatureUrl(signatureParam) || defaultSignatureUrl;
+  return getSignatureUrl(signatureParam);
 }
 
 export const main = async (params) => {
@@ -502,6 +500,9 @@ export const main = async (params) => {
   const signerName = typeof params?.signerName === 'string' && params.signerName.trim() ? params.signerName.trim() : 'Linh - Trưởng phòng Tuyển dụng';
 
   const signatureUrl = await resolveSignatureUrl(params?.signature);
+  const signatureMarkup = signatureUrl
+    ? '<img src="' + signatureUrl + '" alt="Chữ ký xác nhận" style="max-height: 85px; max-width: 250px; object-fit: contain; display: block;" onerror="this.style.display=\\'none\\'" />'
+    : '';
 
   const emailSubject = 'Thư mời phỏng vấn: ' + candidateName + ' - ' + jobTitle;
 
@@ -541,7 +542,7 @@ export const main = async (params) => {
       '<h4 style="margin: 0 0 4px 0; color: #0f172a; font-size: 15px; font-weight: 700;">' + signerName + '</h4>' +
       '<p style="margin: 0 0 6px 0; font-size: 13px; font-weight: 600; color: #2563eb;">Bộ phận Tuyển dụng & Phát triển Nhân tài | TINASOFT VIỆT NAM</p>' +
       '<div style="margin: 10px 0;">' +
-        '<img src="' + signatureUrl + '" alt="Chữ ký xác nhận" style="max-height: 85px; max-width: 250px; object-fit: contain; display: block;" onerror="this.style.display=\\'none\\'" />' +
+      signatureMarkup +
       '</div>' +
       '<div style="font-size: 12px; color: #64748b; line-height: 1.6;">' +
         '<div>🏢 <strong>Địa chỉ:</strong> Tầng 4, Tòa nhà Stellar Garden, 35 Lê Văn Thiêm, Thanh Xuân, Hà Nội</div>' +

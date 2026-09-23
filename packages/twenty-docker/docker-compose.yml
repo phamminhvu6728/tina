@@ -2,7 +2,7 @@ name: twenty
 
 services:
   server:
-    image: twentycrm/twenty:${TAG:-latest}
+    image: ${TWENTY_IMAGE:-twentycrm/twenty}:${TAG:-latest}
     build:
       context: ../..
       dockerfile: packages/twenty-docker/twenty/Dockerfile
@@ -10,7 +10,7 @@ services:
     volumes:
       - server-local-data:/app/packages/twenty-server/.local-storage
     ports:
-      - "3000:3000"
+      - '3000:3000'
     env_file:
       - path: .env
         required: false
@@ -89,14 +89,14 @@ services:
     restart: always
 
   worker:
-    image: twentycrm/twenty:${TAG:-latest}
+    image: ${TWENTY_IMAGE:-twentycrm/twenty}:${TAG:-latest}
     build:
       context: ../..
       dockerfile: packages/twenty-docker/twenty/Dockerfile
       target: twenty
     volumes:
       - server-local-data:/app/packages/twenty-server/.local-storage
-    command: ["yarn", "worker:prod"]
+    command: ['yarn', 'worker:prod']
     env_file:
       - path: .env
         required: false
@@ -105,8 +105,8 @@ services:
       PG_DATABASE_URL: postgres://${PG_DATABASE_USER:-postgres}:${PG_DATABASE_PASSWORD:-postgres}@${PG_DATABASE_HOST:-db}:${PG_DATABASE_PORT:-5432}/${PG_DATABASE_NAME:-default}
       SERVER_URL: ${SERVER_URL}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-      DISABLE_DB_MIGRATIONS: "true" # it already runs on the server
-      DISABLE_CRON_JOBS_REGISTRATION: "true" # it already runs on the server
+      DISABLE_DB_MIGRATIONS: 'true' # it already runs on the server
+      DISABLE_CRON_JOBS_REGISTRATION: 'true' # it already runs on the server
 
       STORAGE_TYPE: ${STORAGE_TYPE:-local}
       STORAGE_S3_REGION: ${STORAGE_S3_REGION}
@@ -166,7 +166,7 @@ services:
   db:
     image: postgres:16
     ports:
-      - "${PG_DATABASE_HOST_PORT:-5434}:5432"
+      - '${PG_DATABASE_HOST_PORT:-5434}:5432'
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
@@ -183,11 +183,11 @@ services:
   redis:
     image: redis
     ports:
-      - "6379:6379"
+      - '6379:6379'
     restart: always
-    command: ["--maxmemory-policy", "noeviction"]
+    command: ['--maxmemory-policy', 'noeviction']
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ['CMD', 'redis-cli', 'ping']
       interval: 5s
       timeout: 5s
       retries: 10

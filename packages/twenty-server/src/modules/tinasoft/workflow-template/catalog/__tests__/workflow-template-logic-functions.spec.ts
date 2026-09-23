@@ -236,4 +236,15 @@ describe('workflow template logic functions', () => {
       'https://files.example.com/signed/tina3.jpg',
     );
   });
+
+  it('does not fall back to the legacy default signature image', async () => {
+    const main = getLogicFunctionByName(
+      'Xử lý ký duyệt & Gắn chữ ký điện tử vào thư',
+    );
+
+    const result = await main({ signature: [{ fileId: 'file-without-url' }] });
+
+    expect(result.signatureUrl).toBe('');
+    expect(result.emailBody).not.toContain('files.catbox.moe/rwrbp0.jpg');
+  });
 });
