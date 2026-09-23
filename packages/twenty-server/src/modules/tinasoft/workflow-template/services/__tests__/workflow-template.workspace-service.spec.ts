@@ -7,6 +7,7 @@ import { WorkspaceDomainsService } from 'src/engine/core-modules/domain/workspac
 import { I18nService } from 'src/engine/core-modules/i18n/i18n.service';
 import { RecordPositionService } from 'src/engine/core-modules/record-position/services/record-position.service';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
+import { WorkflowVersionCoreSyncService } from 'src/engine/core-modules/workflow/services/workflow-version-core-sync.service';
 import { FieldMetadataService } from 'src/engine/metadata-modules/field-metadata/services/field-metadata.service';
 import { WorkspaceManyOrAllFlatEntityMapsCacheService } from 'src/engine/metadata-modules/flat-entity/services/workspace-many-or-all-flat-entity-maps-cache.service';
 import { ObjectMetadataService } from 'src/engine/metadata-modules/object-metadata/object-metadata.service';
@@ -82,15 +83,13 @@ describe('WorkflowTemplateWorkspaceService', () => {
     };
 
     const workspaceOrmManager = {
-      getRepository: jest
-        .fn()
-        .mockImplementation((entityName: string) => {
-          if (entityName === 'workflow') {
-            return workflowRepository;
-          }
+      getRepository: jest.fn().mockImplementation((entityName: string) => {
+        if (entityName === 'workflow') {
+          return workflowRepository;
+        }
 
-          return workflowVersionRepository;
-        }),
+        return workflowVersionRepository;
+      }),
       executeInWorkspaceContext: jest
         .fn()
         .mockImplementation((fn: () => unknown) => fn()),
@@ -109,6 +108,21 @@ describe('WorkflowTemplateWorkspaceService', () => {
         {
           provide: WorkspaceOrmManager,
           useValue: workspaceOrmManager,
+        },
+        {
+          provide: WorkflowVersionCoreSyncService,
+          useValue: {
+            writeWorkflowVersionAndMirror: jest
+              .fn()
+              .mockImplementation(
+                async (
+                  _workspaceId: string,
+                  write: (
+                    repository: typeof workflowVersionRepository,
+                  ) => Promise<string>,
+                ) => write(workflowVersionRepository),
+              ),
+          },
         },
         {
           provide: ObjectMetadataService,
@@ -256,7 +270,7 @@ describe('WorkflowTemplateWorkspaceService', () => {
       workspaceDisplayName: 'Acme',
     });
 
-    expect(templates).toHaveLength(8);
+    expect(templates).toHaveLength(10);
     expect(templates.map(({ id }) => id).sort()).toEqual(
       [
         'new-lead-alert',
@@ -267,6 +281,8 @@ describe('WorkflowTemplateWorkspaceService', () => {
         'customer-birthday-email',
         'hr-cv-intake-matching',
         'hr-generate-job-description',
+        'hr-schedule-interview',
+        'hr-send-interview-email',
       ].sort(),
     );
   });

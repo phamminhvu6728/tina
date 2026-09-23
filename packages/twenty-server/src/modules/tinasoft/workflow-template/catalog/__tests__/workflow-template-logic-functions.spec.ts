@@ -208,4 +208,32 @@ describe('workflow template logic functions', () => {
       }),
     ).rejects.toThrow('Thời gian kết thúc phải sau thời gian bắt đầu');
   });
+
+  it('uses the signed URL returned by a Files field without depending on local storage', async () => {
+    const main = getLogicFunctionByName(
+      'Xử lý ký duyệt & Gắn chữ ký điện tử vào thư',
+    );
+
+    const result = await main({
+      candidateName: 'Nguyễn Nam Anh',
+      candidateEmail: 'namanh@example.com',
+      jobTitle: 'Backend Developer',
+      signature: [
+        {
+          fileId: 'file-id-from-another-workspace',
+          label: 'tina3.jpg',
+          url: 'https://files.example.com/signed/tina3.jpg',
+        },
+      ],
+    });
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        signatureUrl: 'https://files.example.com/signed/tina3.jpg',
+      }),
+    );
+    expect((result as { emailBody: string }).emailBody).toContain(
+      'https://files.example.com/signed/tina3.jpg',
+    );
+  });
 });

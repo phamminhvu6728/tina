@@ -11,6 +11,7 @@ import { FieldMetadataService } from 'src/engine/metadata-modules/field-metadata
 import { WorkspaceManyOrAllFlatEntityMapsCacheService } from 'src/engine/metadata-modules/flat-entity/services/workspace-many-or-all-flat-entity-maps-cache.service';
 import { buildObjectIdByNameMaps } from 'src/engine/metadata-modules/flat-object-metadata/utils/build-object-id-by-name-maps.util';
 import { ObjectMetadataService } from 'src/engine/metadata-modules/object-metadata/object-metadata.service';
+import { WorkflowVersionCoreSyncService } from 'src/engine/core-modules/workflow/services/workflow-version-core-sync.service';
 import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
 import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
 import { PrefillLogicFunctionService } from 'src/engine/workspace-manager/standard-objects-prefill-data/services/prefill-logic-function.service';
@@ -58,6 +59,7 @@ type WorkflowTemplateStepFilter = {
 export class WorkflowTemplateWorkspaceService {
   constructor(
     private readonly workspaceOrmManager: WorkspaceOrmManager,
+    private readonly workflowVersionCoreSyncService: WorkflowVersionCoreSyncService,
     private readonly recordPositionService: RecordPositionService,
     private readonly i18nService: I18nService,
     private readonly prefillLogicFunctionService: PrefillLogicFunctionService,
@@ -153,12 +155,6 @@ export class WorkflowTemplateWorkspaceService {
         { shouldBypassPermissionChecks: true },
       );
 
-      const workflowVersionRepository =
-        await this.workspaceOrmManager.getRepository<WorkflowVersionWorkspaceEntity>(
-          'workflowVersion',
-          { shouldBypassPermissionChecks: true },
-        );
-
       const workflowPosition =
         await this.recordPositionService.buildRecordPosition({
           value: 'first',
@@ -189,32 +185,48 @@ export class WorkflowTemplateWorkspaceService {
           workspaceId,
         });
 
-      const insertWorkflowVersionResult =
-        await workflowVersionRepository.insert({
-          workflowId,
-          name: 'v1',
-          status: WorkflowVersionStatus.DRAFT,
-          trigger,
-          steps,
-          position: workflowVersionPosition,
-        });
+      let workflowVersion: WorkflowVersionWorkspaceEntity | undefined;
+      let enrichedSteps: WorkflowAction[] = [];
 
-      const workflowVersion = insertWorkflowVersionResult
-        .generatedMaps[0] as WorkflowVersionWorkspaceEntity;
+      await this.workflowVersionCoreSyncService.writeWorkflowVersionAndMirror(
+        workspaceId,
+        async (workflowVersionRepository) => {
+          const insertWorkflowVersionResult =
+            await workflowVersionRepository.insert({
+              workflowId,
+              name: 'v1',
+              status: WorkflowVersionStatus.DRAFT,
+              trigger,
+              steps,
+              position: workflowVersionPosition,
+            });
 
-      const enrichedSteps = await Promise.all(
-        steps.map((step) =>
-          this.workflowSchemaWorkspaceService.enrichOutputSchema({
-            step,
-            workspaceId,
-            workflowVersionId: workflowVersion.id,
-          }),
-        ),
+          const insertedWorkflowVersion = insertWorkflowVersionResult
+            .generatedMaps[0] as WorkflowVersionWorkspaceEntity;
+
+          workflowVersion = insertedWorkflowVersion;
+
+          enrichedSteps = await Promise.all(
+            steps.map((step) =>
+              this.workflowSchemaWorkspaceService.enrichOutputSchema({
+                step,
+                workspaceId,
+                workflowVersionId: insertedWorkflowVersion.id,
+              }),
+            ),
+          );
+
+          await workflowVersionRepository.update(insertedWorkflowVersion.id, {
+            steps: enrichedSteps,
+          });
+
+          return insertedWorkflowVersion.id;
+        },
       );
 
-      await workflowVersionRepository.update(workflowVersion.id, {
-        steps: enrichedSteps,
-      });
+      if (!isDefined(workflowVersion)) {
+        throw new Error('Failed to create workflow draft version');
+      }
 
       return {
         ...workflowVersion,

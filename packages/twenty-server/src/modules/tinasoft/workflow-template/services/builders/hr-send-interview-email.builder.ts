@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { WorkflowActionType } from 'twenty-shared/workflow';
 
 import { WorkflowTemplateDTO } from 'src/modules/tinasoft/workflow-template/api/dtos/workflow-template.dto';
+import { getWorkflowTemplateLogicFunctionIds } from 'src/modules/tinasoft/workflow-template/catalog/workflow-template-logic-functions.constant';
 import { IWorkflowTemplateBuilder } from 'src/modules/tinasoft/workflow-template/services/builders/workflow-template.builder.interface';
 import {
   type WorkflowTemplateBuildContext,
@@ -14,9 +15,7 @@ import { ERROR_HANDLING_OPTIONS } from 'src/modules/tinasoft/workflow-template/u
 import { WorkflowTriggerType } from 'src/modules/workflow/workflow-trigger/types/workflow-trigger.type';
 
 @Injectable()
-export class HrSendInterviewEmailWorkflowTemplateBuilder
-  implements IWorkflowTemplateBuilder
-{
+export class HrSendInterviewEmailWorkflowTemplateBuilder implements IWorkflowTemplateBuilder {
   readonly id = 'hr-send-interview-email' as const;
 
   getDTO(_workspaceDisplayName: string, _i18n?: I18n): WorkflowTemplateDTO {
@@ -35,11 +34,15 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder
     };
   }
 
-  build(_context: WorkflowTemplateBuildContext): WorkflowTemplateDefinition {
+  build({
+    workspaceId,
+  }: WorkflowTemplateBuildContext): WorkflowTemplateDefinition {
     const formStepId = uuidv4();
     const findStepId = uuidv4();
     const codeStepId = uuidv4();
     const sendEmailStepId = uuidv4();
+    const { hrSendInterviewEmail } =
+      getWorkflowTemplateLogicFunctionIds(workspaceId);
 
     return {
       workflowName: 'HR: Gửi email ký xác nhận phỏng vấn',
@@ -152,7 +155,7 @@ export class HrSendInterviewEmailWorkflowTemplateBuilder
           position: { x: 0, y: 450 },
           settings: {
             input: {
-              logicFunctionId: 'd3a17e84-5f6b-4c91-a2e3-b78901234567',
+              logicFunctionId: hrSendInterviewEmail,
               logicFunctionInput: {
                 candidateName: `{{${findStepId}.first.candidateName}}`,
                 candidateEmail: `{{${findStepId}.first.candidateEmail}}`,

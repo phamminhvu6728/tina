@@ -433,117 +433,65 @@ const INTERVIEW_SCHEDULE_SOURCE = `export const main = async (params) => {
   };
 };`;
 
-const HR_SEND_INTERVIEW_EMAIL_SOURCE = `import fs from 'fs';
-
-function findFile(baseDir, targetFileId) {
-  if (!fs.existsSync(baseDir)) return null;
-  const entries = fs.readdirSync(baseDir, { withFileTypes: true });
-  for (const entry of entries) {
-    const fullPath = baseDir + '/' + entry.name;
-    if (entry.isDirectory()) {
-      const found = findFile(fullPath, targetFileId);
-      if (found) return found;
-    } else if (entry.isFile() && entry.name.startsWith(targetFileId)) {
-      return fullPath;
-    }
-  }
-  return null;
+const HR_SEND_INTERVIEW_EMAIL_SOURCE = `function isHttpUrl(value) {
+  return typeof value === 'string' && /^https?:\\/\\//i.test(value.trim());
 }
 
-async function resolveSignatureUrl(signatureParam, workspaceId, applicationId) {
-  const defaultSignatureUrl = 'https://files.catbox.moe/rwrbp0.jpg';
-  if (!signatureParam) {
-    return defaultSignatureUrl;
+function getSignatureUrl(signatureParam) {
+  if (isHttpUrl(signatureParam)) {
+    return signatureParam.trim();
   }
 
-  let fileObj = null;
+  let fileValue = signatureParam;
+
   if (typeof signatureParam === 'string') {
-    const trimmed = signatureParam.trim();
-    if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
-      return trimmed;
-    }
     try {
-      const parsed = JSON.parse(trimmed);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        fileObj = parsed[0];
-      } else if (typeof parsed === 'object' && parsed !== null) {
-        fileObj = parsed;
-      }
-    } catch (err) {
-      if (/^[0-9a-fA-F-]{36}$/.test(trimmed)) {
-        fileObj = { fileId: trimmed, label: 'signature.jpg' };
-      }
+      fileValue = JSON.parse(signatureParam);
+    } catch (error) {
+      return '';
     }
-  } else if (Array.isArray(signatureParam) && signatureParam.length > 0) {
-    const first = signatureParam[0];
-    if (typeof first === 'string') {
-      try {
-        fileObj = JSON.parse(first);
-      } catch (err) {}
-    } else if (typeof first === 'object' && first !== null) {
-      fileObj = first;
-    }
-  } else if (typeof signatureParam === 'object' && signatureParam !== null) {
-    fileObj = signatureParam;
   }
 
-  if (!fileObj || !fileObj.fileId) {
-    return defaultSignatureUrl;
+  if (isHttpUrl(fileValue)) {
+    return fileValue.trim();
   }
 
-  const fileId = fileObj.fileId;
-  const label = fileObj.label || 'signature.jpg';
-  const cacheFile = '/app/packages/twenty-server/.local-storage/' + workspaceId + '/signature_cache.json';
+  if (Array.isArray(fileValue)) {
+    fileValue = fileValue[0];
+  }
 
-  let cache = {};
-  try {
-    if (fs.existsSync(cacheFile)) {
-      cache = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
-      if (cache[fileId]) {
-        return cache[fileId];
-      }
+  if (typeof fileValue === 'string') {
+    try {
+      fileValue = JSON.parse(fileValue);
+    } catch (error) {
+      return '';
     }
-  } catch (err) {}
-
-  const filesBaseDir = '/app/packages/twenty-server/.local-storage/' + workspaceId + '/' + applicationId + '/files-field';
-  const filePath = findFile(filesBaseDir, fileId);
-
-  if (!filePath) {
-    return defaultSignatureUrl;
   }
 
-  try {
-    const fileBuffer = fs.readFileSync(filePath);
-    const mimeType = label.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg';
-    const blob = new Blob([fileBuffer], { type: mimeType });
-    const formData = new FormData();
-    formData.append('reqtype', 'fileupload');
-    formData.append('fileToUpload', blob, label);
+  if (typeof fileValue !== 'object' || fileValue === null) {
+    return '';
+  }
 
-    const resp = await fetch('https://catbox.moe/user/api.php', {
-      method: 'POST',
-      body: formData,
-    });
-    const uploadedUrl = (await resp.text()).trim();
+  const possibleUrlKeys = ['url', 'signedUrl', 'downloadUrl', 'previewUrl'];
 
-    if (uploadedUrl && uploadedUrl.startsWith('https://')) {
-      cache[fileId] = uploadedUrl;
-      try {
-        fs.writeFileSync(cacheFile, JSON.stringify(cache, null, 2), 'utf8');
-      } catch (err) {}
-      return uploadedUrl;
+  for (const key of possibleUrlKeys) {
+    const value = fileValue[key];
+
+    if (isHttpUrl(value)) {
+      return value.trim();
     }
-  } catch (err) {
-    console.error('Error resolving signature image:', err);
   }
 
-  return defaultSignatureUrl;
+  return '';
+}
+
+async function resolveSignatureUrl(signatureParam) {
+  const defaultSignatureUrl = 'https://files.catbox.moe/rwrbp0.jpg';
+
+  return getSignatureUrl(signatureParam) || defaultSignatureUrl;
 }
 
 export const main = async (params) => {
-  const workspaceId = 'c113a8d7-ea7d-4814-8779-1ed4b4b4b177';
-  const applicationId = '80371161-fb50-49e7-a7fe-7c5d8a30326e';
-
   const candidateName = typeof params?.candidateName === 'string' && params.candidateName.trim() ? params.candidateName.trim() : 'Ứng viên';
   const candidateEmail = typeof params?.candidateEmail === 'string' ? params.candidateEmail.trim() : '';
   const jobTitle = typeof params?.jobTitle === 'string' && params.jobTitle.trim() ? params.jobTitle.trim() : 'Vị trí ứng tuyển';
@@ -553,7 +501,7 @@ export const main = async (params) => {
   const notes = typeof params?.notes === 'string' && params.notes.trim() ? params.notes.trim() : 'Vui lòng chuẩn bị đường truyền mạng ổn định và trang phục lịch sự.';
   const signerName = typeof params?.signerName === 'string' && params.signerName.trim() ? params.signerName.trim() : 'Linh - Trưởng phòng Tuyển dụng';
 
-  const signatureUrl = await resolveSignatureUrl(params?.signature, workspaceId, applicationId);
+  const signatureUrl = await resolveSignatureUrl(params?.signature);
 
   const emailSubject = 'Thư mời phỏng vấn: ' + candidateName + ' - ' + jobTitle;
 

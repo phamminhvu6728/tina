@@ -7,18 +7,18 @@ import { FieldMetadataType } from 'twenty-shared/types';
 import { WorkflowActionType } from 'twenty-shared/workflow';
 
 import { WorkflowTemplateDTO } from 'src/modules/tinasoft/workflow-template/api/dtos/workflow-template.dto';
+import { getWorkflowTemplateLogicFunctionIds } from 'src/modules/tinasoft/workflow-template/catalog/workflow-template-logic-functions.constant';
 import { IWorkflowTemplateBuilder } from 'src/modules/tinasoft/workflow-template/services/builders/workflow-template.builder.interface';
 import {
   type WorkflowTemplateBuildContext,
   type WorkflowTemplateDefinition,
 } from 'src/modules/tinasoft/workflow-template/types/workflow-template.type';
 import { ERROR_HANDLING_OPTIONS } from 'src/modules/tinasoft/workflow-template/utils/workflow-template-builder-helpers.util';
+import { getStringWorkflowTemplateSetting } from 'src/modules/tinasoft/workflow-template/utils/workflow-template-settings.util';
 import { WorkflowTriggerType } from 'src/modules/workflow/workflow-trigger/types/workflow-trigger.type';
 
 @Injectable()
-export class HrScheduleInterviewWorkflowTemplateBuilder
-  implements IWorkflowTemplateBuilder
-{
+export class HrScheduleInterviewWorkflowTemplateBuilder implements IWorkflowTemplateBuilder {
   readonly id = 'hr-schedule-interview' as const;
 
   getDTO(_workspaceDisplayName: string, i18n?: I18n): WorkflowTemplateDTO {
@@ -47,13 +47,30 @@ export class HrScheduleInterviewWorkflowTemplateBuilder
   }
 
   build({
-    settings: _settings,
-    workspaceId: _workspaceId,
+    settings,
+    workspaceId,
   }: WorkflowTemplateBuildContext): WorkflowTemplateDefinition {
     const formStepId = uuidv4();
     const interviewScheduleStepId = uuidv4();
     const calendarEventStepId = uuidv4();
     const createRecordStepId = uuidv4();
+    const sendEmailStepId = uuidv4();
+    const { interviewSchedule } =
+      getWorkflowTemplateLogicFunctionIds(workspaceId);
+    const pmEmail =
+      getStringWorkflowTemplateSetting({ settings, key: 'pmEmail' }) ||
+      'tuyendung@tinasoft.vn';
+
+    const emailBody = `<div style="font-family: Arial, sans-serif; max-width: 620px; margin: 0 auto; color: #1e293b;">
+  <h2 style="color: #1e40af;">Thư mời phỏng vấn trực tuyến</h2>
+  <p>Kính gửi <strong>{{${formStepId}.candidateName}}</strong>,</p>
+  <p>Chúng tôi trân trọng mời bạn tham gia phỏng vấn cho vị trí <strong>{{${formStepId}.jobTitle}}</strong>.</p>
+  <p><strong>Thời gian:</strong> {{${formStepId}.interviewDate}} {{${interviewScheduleStepId}.startTime}} - {{${interviewScheduleStepId}.endTime}} ({{${interviewScheduleStepId}.timeZone}})</p>
+  <p><strong>Người phỏng vấn:</strong> {{${formStepId}.interviewer}}</p>
+  <p><a href="{{${calendarEventStepId}.conferenceLink}}">Tham gia qua Google Meet</a></p>
+  <p>{{${formStepId}.notes}}</p>
+  <p>Trân trọng,<br />Ban Tuyển dụng TINASOFT<br /><a href="mailto:${pmEmail}">${pmEmail}</a></p>
+</div>`;
 
     return {
       workflowName: 'HR: Lên lịch phỏng vấn & tạo link Google Meet',
@@ -230,7 +247,7 @@ export class HrScheduleInterviewWorkflowTemplateBuilder
                 type: FieldMetadataType.TEXT,
                 label: 'CC (Email nhận kèm)',
                 isLeaf: true,
-                value: 'tuyendung@tinasoft.vn',
+                value: pmEmail,
               },
               bcc: {
                 type: FieldMetadataType.TEXT,
@@ -430,6 +447,30 @@ export class HrScheduleInterviewWorkflowTemplateBuilder
                 value: '',
               },
             },
+            errorHandlingOptions: ERROR_HANDLING_OPTIONS,
+          },
+          nextStepIds: [sendEmailStepId],
+        },
+        {
+          id: sendEmailStepId,
+          name: 'Gửi Email thư mời phỏng vấn',
+          type: WorkflowActionType.SEND_EMAIL,
+          valid: true,
+          position: { x: 0, y: 750 },
+          settings: {
+            input: {
+              connectedAccountId: '',
+              recipients: {
+                to: `{{${formStepId}.candidateEmail}}`,
+                cc: `{{${formStepId}.cc}}`,
+                bcc: `{{${formStepId}.bcc}}`,
+              },
+              subject: `Thư mời phỏng vấn: {{${formStepId}.candidateName}} - {{${formStepId}.jobTitle}}`,
+              body: emailBody,
+              files: [],
+              inReplyTo: '',
+            },
+            outputSchema: {},
             errorHandlingOptions: ERROR_HANDLING_OPTIONS,
           },
           nextStepIds: [],
