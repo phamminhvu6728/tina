@@ -5,6 +5,7 @@ import { RewriteIsNotNullWorkflowFilterOperandsCommand } from 'src/database/comm
 import { AddCallRecordingSummaryAndTranscriptTabsCommand } from 'src/database/commands/upgrade-version-command/2-36/2-36-workspace-command-1787746350922-add-call-recording-summary-and-transcript-tabs.command';
 import { RefreshTinasoftWorkflowLogicFunctionsCommand } from 'src/database/commands/upgrade-version-command/2-36/2-36-workspace-command-1790200000000-refresh-tinasoft-workflow-logic-functions.command';
 import { ApplicationModule } from 'src/engine/core-modules/application/application.module';
+import { WorkflowVersionCoreModule } from 'src/engine/core-modules/workflow/workflow-version-core.module';
 import { WorkspaceCacheModule } from 'src/engine/workspace-cache/workspace-cache.module';
 import { StandardObjectsPrefillModule } from 'src/engine/workspace-manager/standard-objects-prefill-data/standard-objects-prefill.module';
 import { WorkspaceMigrationModule } from 'src/engine/workspace-manager/workspace-migration/workspace-migration.module';
@@ -12,6 +13,7 @@ import { WorkspaceMigrationModule } from 'src/engine/workspace-manager/workspace
 @Module({
   imports: [
     ApplicationModule,
+    WorkflowVersionCoreModule,
     WorkspaceCacheModule,
     WorkspaceIteratorModule,
     WorkspaceMigrationModule,
